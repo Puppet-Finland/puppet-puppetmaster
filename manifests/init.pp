@@ -1,12 +1,9 @@
-#
-# == Class: puppetmaster
-#
 # A simple wrapper class for setting up puppetmasters. Primarily aimed for use
 # in Kafo installers.
 #
-# == Parameters
+# == Parameters:
 #
-# $puppetserver::	Setup puppetserver
+# $puppetserver::       Setup puppetserver
 #
 class puppetmaster
 (
