@@ -34,11 +34,11 @@
 # $server_reports:: Reporting to where
 class puppetmaster
 (
-  Boolean $puppetserver           = true
-  Boolean $with_puppetdb          = false
-  Boolean $with_puppetboard       = false
-  Boolean $with_foreman           = false
-  Boolean $with_foreman_proxy     = false
+  Boolean $puppetserver           = true,
+  Boolean $with_puppetdb          = false,
+  Boolean $with_puppetboard       = false,
+  Boolean $with_foreman           = false,
+  Boolean $with_foreman_proxy     = false,
   # Puppetserver spesific parameters using foreman puppet module
   String $reports_liftime         = '14d',
   String $logs_liftime            = '90d',
