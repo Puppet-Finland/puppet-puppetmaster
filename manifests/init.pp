@@ -49,14 +49,14 @@ class puppetmaster
   Array[String] $primary_names    = [ 'puppetserver.tietoteema.vm' ],
   String $server_reports          = 'store',
 ) {
-
+    
   if $with_puppetboard and ! $with_puppetdb {
     notify { "Puppetboard needs Puppetdb. installing Puppetdb too": }
     $with_puppetdb = true
   }            
-    
+  
   if $puppetserver {
-
+    
     class { '::hosts':
       primary_names => $primary_names,
     }               
@@ -77,7 +77,7 @@ class puppetmaster
     file { '/etc/puppetlabs/puppet/fileserver.conf':
       ensure => 'present'
     }
-
+    
     ini_setting { 'files_path':
       ensure            => present,
       path              => '/etc/puppetlabs/puppet/fileserver.conf',
@@ -87,7 +87,7 @@ class puppetmaster
       key_val_separator => ' ',
       require           => File['/etc/puppetlabs/puppet/fileserver.conf'],
     }
-
+    
     ini_setting { 'files_allow':
       ensure            => present,
       path              => '/etc/puppetlabs/puppet/fileserver.conf',
@@ -97,7 +97,7 @@ class puppetmaster
       key_val_separator => ' ',
       require           => File['/etc/puppetlabs/puppet/fileserver.conf'],
     }
-
+    
     puppet_authorization::rule { 'files':
       match_request_path   => '^/puppet/v3/file_(content|metadata)s?/files/',
       match_request_type   => 'regex',
@@ -105,7 +105,7 @@ class puppetmaster
       sort_order           => 400,
       path                 => '/etc/puppetlabs/puppetserver/conf.d/auth.conf',
     }
-
+    
     class { '::puppet':
       server                => true,
       show_diff             => $show_diff,
@@ -117,7 +117,7 @@ class puppetmaster
       server_reports        => $server_reports,
       require               => [ File['/etc/puppetlabs/puppet/fileserver.conf'], Puppet_authorization::Rule['files'] ],
     }
-
+    
     tidy { '/opt/puppetlabs/server/data/puppetserver/reports':
       age          => $reports_lifetime,
       matches      => "*.yaml",
@@ -133,6 +133,14 @@ class puppetmaster
       rmdirs       => false,
       type         => ctime,
     }
-  } # if $puppetserver
-
+  }
+  
+  if $with_foreman {
+    #
+  }
+  
+  if $with_foreman_proxy {
+    #
+  }
+  
 }
