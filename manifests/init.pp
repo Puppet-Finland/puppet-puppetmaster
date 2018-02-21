@@ -78,7 +78,7 @@ class puppetmaster
       ensure => 'present'
     }
 
-    ini_setting { 'files':
+    ini_setting { 'files_path':
       ensure            => present,
       path              => '/etc/puppetlabs/puppet/fileserver.conf',
       section           => 'files',
@@ -88,7 +88,7 @@ class puppetmaster
       require           => File['/etc/puppetlabs/puppet/fileserver.conf'],
     }
 
-    ini_setting { 'files':
+    ini_setting { 'files_allow':
       ensure            => present,
       path              => '/etc/puppetlabs/puppet/fileserver.conf',
       section           => 'files',
