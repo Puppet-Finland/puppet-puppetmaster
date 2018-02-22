@@ -51,7 +51,7 @@ class puppetmaster::puppetdb
   
   class { '::postgresql::globals':
     manage_package_repo => true,
-    version             => $puppetdb_postgresql_version,
+    version             => '9.6',
   }
   
   ::postgresql::server::role { $puppetdb_database_username:
