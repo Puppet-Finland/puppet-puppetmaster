@@ -55,20 +55,23 @@ class puppetmaster::puppetdb
   }
   
   ::postgresql::server::role { $puppetdb_database_username:
-    password_hash => postgresql_password($puppetdb_database_username, $puppetdb_database_password),
+    password_hash    => postgresql_password($puppetdb_database_username, $puppetdb_database_password),
     connection_limit => $puppetdb_connection_limit,
+    require          => Class['::postgresql::globals'],
   }
   
   ::postgresql::server::database_grant { 'Grant access to puppetdb':
     privilege => 'ALL',
     db        => $puppetdb_database_name,
     role      => $puppetdb_database_username,
+    require   => Class['::postgresql::globals'],
   }
   
   ::postgresql::server::extension { 'Add trgm extension':
     database     => $puppetdb_database_name,
     package_name => $puppetdb_contrib_package_name,
     extension    => 'pg_trgm',
+    require      => Class['::postgresql::globals'],
   }    
   
   class { '::puppetdb':
