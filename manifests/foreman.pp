@@ -36,7 +36,7 @@ class puppetmaster::foreman
 )
 {
 
-  if versioncmp($version, '1.16') <= 0 {
+  if versioncmp($foreman_version, '1.16') <= 0 {
     $dynflow_in_core = false
   }
   else {
