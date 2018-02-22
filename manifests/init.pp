@@ -63,6 +63,8 @@
 # $puppetdb_contrib_package_name:: Name of the contrib package
 #
 # $puppetdb_ssl_deploy_certs:: Whether to deploy certificates
+#
+# $puppetdb_postgresql_version:: PostgreSQL version
 class puppetmaster
 (
   Boolean $puppetserver                 = true,
@@ -94,6 +96,7 @@ class puppetmaster
   String $puppetdb_db_connection_limit  = '-1',
   String $puppetdb_contrib_package_name = 'postgresql-contrib-96',
   Boolean $puppetdb_ssl_deploy_certs    = true,
+  String $puppetdb_postgresql_version   = '9.6',
   ) {
     
   if $with_puppetboard and !$with_puppetdb {
@@ -191,13 +194,14 @@ class puppetmaster
       puppetdb_database_name        => $puppetdb_database_name,
       puppetdb_database_username    => $puppetdb_database_username,
       puppetdb_database_password    => $puppetdb_database_password,
-      puppetdb_manage_dbserver     => $puppetdb_manage_dbserver,
-      puppetdb_manage_package_repo => $puppetdb_manage_package_repo,
+      puppetdb_manage_dbserver      => $puppetdb_manage_dbserver,
+      puppetdb_manage_package_repo  => $puppetdb_manage_package_repo,
       puppetdb_puppetdb_server      => $puppetdb_puppetdb_server,
       puppetdb_connection_limit     => $puppetdb_connection_limit,
       puppetdb_db_connection_limit  => $puppetdb_db_connection_limit,
       puppetdb_contrib_package_name => $puppetdb_contrib_package_name,
-      puppetdb_ssl_deploy_certs    => $puppetdb_ssl_deploy_certs,
+      puppetdb_ssl_deploy_certs     => $puppetdb_ssl_deploy_certs,
+      puppetdb_postgresql_version   => $puppetdb_postgresql_version,
     }
   }
- }
+}
