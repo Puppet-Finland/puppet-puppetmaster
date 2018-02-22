@@ -181,23 +181,23 @@ class puppetmaster
     }
   }
 
-  if $with_puppetdb {
+#  if $with_puppetdb {
     
-    class { 'puppetmaster::puppetdb': 
-      puppetdb_listen_address       => $puppetdb_listen_address,
-      puppetdb_listen_port          => $puppetdb_listen_port,
-      puppetdb_ssl_listen_port      => $puppetdb_ssl_listen_port,
-      puppetdb_database_host        => $puppetdb_database_host,
-      puppetdb_database_name        => $puppetdb_database_name,
-      puppetdb_database_username    => $uppetdb_database_username,
-      puppetdb_database_password    => $puppetdb_database_password,
-      puppetdb_manage_dbserver     => $puppetdb_manage_dbserver,
-      puppetdb_manage_package_repo => $puppetdb_manage_package_repo,
-      puppetdb_puppetdb_server      => $puppetdb_puppetdb_server,
-      puppetdb_connection_limit     => $puppetdb_connection_limit,
-      puppetdb_db_connection_limit  => $puppetdb_db_connection_limit,
-      puppetdb_contrib_package_name => $puppetdb_contrib_package_name,
-      puppetdb_ssl_deploy_certs    => $puppetdb_ssl_deploy_certs,
-    }
-  }
+#    class { 'puppetmaster::puppetdb': 
+#      puppetdb_listen_address       => $puppetdb_listen_address,
+#      puppetdb_listen_port          => $puppetdb_listen_port,
+#      puppetdb_ssl_listen_port      => $puppetdb_ssl_listen_port,
+#      puppetdb_database_host        => $puppetdb_database_host,
+#      puppetdb_database_name        => $puppetdb_database_name,
+#      puppetdb_database_username    => $uppetdb_database_username,
+#      puppetdb_database_password    => $puppetdb_database_password,
+#      puppetdb_manage_dbserver     => $puppetdb_manage_dbserver,
+#      puppetdb_manage_package_repo => $puppetdb_manage_package_repo,
+#      puppetdb_puppetdb_server      => $puppetdb_puppetdb_server,
+#      puppetdb_connection_limit     => $puppetdb_connection_limit,
+#      puppetdb_db_connection_limit  => $puppetdb_db_connection_limit,
+#      puppetdb_contrib_package_name => $puppetdb_contrib_package_name,
+#      puppetdb_ssl_deploy_certs    => $puppetdb_ssl_deploy_certs,
+#    }
+#  }
 }
