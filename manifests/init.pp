@@ -187,6 +187,8 @@ class puppetmaster
   Boolean $foreman_selinux                   = false,
   Boolean $foreman_unattended                = true,
   Boolean $foreman_foreman_plugin_cockpit    = true,
+  String $foreman_admin_email                = 'hostmaster@examples.com',
+  String $foreman_admin_first_name           = 'Joakim',
   ) {
     
   if $with_puppetboard and !$with_puppetdb {
