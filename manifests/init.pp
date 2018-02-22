@@ -198,7 +198,7 @@ class puppetmaster
   String $foreman_db_type                    = 'postgresql',
   String $foreman_db_username                = 'foreman',
   Boolean $foreman_organizations_enabled     = false,
-  String $foreman_serveraliases              = 'foreman',
+  Array[String] $foreman_serveraliases       = [ 'foreman' ],
   String $foreman_servername                 = 'kafo.tietoteema.vm',
   ) {
     
