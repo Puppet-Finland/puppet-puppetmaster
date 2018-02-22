@@ -181,9 +181,15 @@ class puppetmaster
     }
   }
 
-#  if $with_puppetdb {
+  if $with_puppetdb {
     
-#    class { 'puppetmaster::puppetdb': 
+    include '::puppetmaster::puppetdb'
+
+  }
+
+      
+
+    #    class { 'puppetmaster::puppetdb': 
 #      puppetdb_listen_address       => $puppetdb_listen_address,
 #      puppetdb_listen_port          => $puppetdb_listen_port,
 #      puppetdb_ssl_listen_port      => $puppetdb_ssl_listen_port,
