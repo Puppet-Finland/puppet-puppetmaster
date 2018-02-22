@@ -343,7 +343,6 @@ class puppetmaster
       foreman_db_type                    => $foreman_db_type,
       foreman_db_username                => $foreman_db_username,
       foreman_organizations_enabled      => $foreman_organizations_enabled,
-      foreman_db_username                => $foreman_db_username,
       foreman_serveraliases              => $foreman_serveraliases,
       foreman_servername                 => $foreman_servername,
     }
