@@ -32,6 +32,37 @@
 # $primary_names:: Primary names for this machine
 # 
 # $server_reports:: Reporting to where
+#
+#
+# Puppetdb spesific parameters
+#
+# $puppetdb_listen_address:: Address to listen to
+#
+# $puppetdb_listen_port:: Port to listen to 
+#
+# $puppetdb_ssl_listen_port:: SSL port to listen to
+#
+# $puppetdb_database_host:: Database host 
+#
+# $puppetdb_database_name:: Database name 
+#
+# $puppetdb_database_username:: Database user name
+#
+# $puppetdb_database_password:: Datbase password
+#
+# $puppetdb_manage_dbserver:: Whether to manage DB server 
+#
+# $puppetdb_manage_package_repo:: Whether to manage package repo
+#
+# $puppetdb_puppetdb_server:: Server   
+#
+# $puppetdb_connection_limit:: Connection limit  
+#
+# $puppetdb_db_connection_limit:: Database connection limit
+#
+# $puppetdb_contrib_package_name:: Name of the contrib package
+#
+# $puppetdb_ssl_deploy_certs:: Whether to deploy certificates
 class puppetmaster
 (
   Boolean $puppetserver                 = true,
@@ -152,7 +183,7 @@ class puppetmaster
 
   if $with_puppetdb {
 
-    if ($database_host == '127.0.0.1') {
+    if ($puppetdb_database_host == '127.0.0.1') {
       
       firewall { '5432 allow incoming database':
         chain       => 'INPUT',
@@ -167,7 +198,7 @@ class puppetmaster
       firewall { '5432 allow outgoing database':
         chain       => 'OUTPUT',
         state       => ['NEW'],
-        destination => $database_host,
+        destination => $puppetdb_database_host,
         dport       => '5432',
         proto       => 'tcp',
         action      => 'accept',
@@ -182,42 +213,42 @@ class puppetmaster
       action      => 'accept',
     }           
     
-    if $manage_dbserver {
+    if $puppetdb_manage_dbserver {
       
-      ::postgresql::server::role { $database_username:
-        password_hash => postgresql_password($database_username, $database_password),
-        connection_limit => $connection_limit,
+      ::postgresql::server::role { $puppetdb_database_username:
+        password_hash => postgresql_password($puppetdb_database_username, $puppetdb_database_password),
+        connection_limit => $puppetdb_connection_limit,
       }
       
       ::postgresql::server::database_grant { 'Grant access to puppetdb':
         privilege => 'ALL',
-        db        => $database_name,
-        role      => $database_username,
+        db        => $puppetdb_database_name,
+        role      => $puppetdb_database_username,
       }
       
       ::postgresql::server::extension { 'Add trgm':
-        database     => $database_name,
-        package_name => $contrib_package_name,
+        database     => $puppetdb_database_name,
+        package_name => $puppetdb_contrib_package_name,
         extension    => 'pg_trgm',
       }    
     }
     
     class { '::puppetdb':
-      listen_address      => $listen_address,
-      listen_port         => $listen_port,
-      ssl_listen_port     => $ssl_listen_port,
-      manage_dbserver     => $manage_dbserver,
-      database_name       => $database_name,
-      database_host       => $database_host,
-      manage_package_repo => $manage_package_repo,
-      database_username   => $database_username,
-      database_password   => $database_password,
-      ssl_deploy_certs    => $ssl_deploy_certs,
+      listen_address      => $puppetdb_listen_address,
+      listen_port         => $puppetdb_listen_port,
+      ssl_listen_port     => $puppetdb_ssl_listen_port,
+      manage_dbserver     => $puppetdb_manage_dbserver,
+      database_name       => $puppetdb_database_name,
+      database_host       => $puppetdb_database_host,
+      manage_package_repo => $puppetdb_manage_package_repo,
+      database_username   => $puppetdb_database_username,
+      database_password   => $puppetdb_database_password,
+      ssl_deploy_certs    => $puppetdb_ssl_deploy_certs,
       require             => Postgresql::Server::Extension['Add trgm'],
     }
     
     class { '::puppetdb::master::config':
-      puppetdb_server     => $puppetdb_server,
+      puppetdb_server     => $puppetdb_puppetdb_server,
       restart_puppet      => false,
     }
   }
