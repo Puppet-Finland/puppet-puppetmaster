@@ -107,7 +107,7 @@
 #
 # $foreman_admin_password:: XXX
 #
-# $foreman_puppetdb_dashboard_address::
+# $foreman_puppetdb_dashboard_address:: XXX
 #
 # $foreman_puppetdb_address:: XXX
 #
@@ -169,7 +169,7 @@ class puppetmaster
   String $puppetdb_postgresql_listen_address = '127.0.0.1',
   # Foreman spesific parameters
   String $foreman_initial_organization       = 'tietoteema.com',
-  Boolean $foreman_ocations_enabled          = false, 
+  Boolean $foreman_locations_enabled          = false, 
   String $foreman_initial_location           = 'Virtualbox',
   String $foreman_admin_username             = 'admin',
   String $foreman_admin_password             = 'changeme',
