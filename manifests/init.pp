@@ -1,5 +1,5 @@
 # A wrapper class for setting up puppetmasters.
-# in Kafo installers. Note this is designed to also work in a control repo case for testing and development.
+# in Kafo installers. 
 #
 # == Parameters:
 #
@@ -12,7 +12,6 @@
 # $with_foreman:: Setup puppetserver with foreman
 #
 # $with_foreman_proxy:: Setup puppetserver with foreman_proxy
-#
 #
 #
 # Puppetmaster spesific parameters:
@@ -69,36 +68,36 @@
 # $puppetdb_postgresql_listen_address:: PostgreSQL listen address
 class puppetmaster
 (
-  Boolean $puppetserver                 = true,
-  Boolean $with_puppetdb                = false,
-  Boolean $with_puppetboard             = false,
-  Boolean $with_foreman                 = false,
-  Boolean $with_foreman_proxy           = false,
+  Boolean $puppetserver                      = true,
+  Boolean $with_puppetdb                     = false,
+  Boolean $with_puppetboard                  = false,
+  Boolean $with_foreman                      = false,
+  Boolean $with_foreman_proxy                = false,
   # Puppetserver spesific parameters using foreman puppet module
-  String $reports_liftime               = '14d',
-  String $logs_liftime                  = '90d',
-  Boolean $show_diff                    = false,
-  Boolean $server_foreman               = false,
-  Boolean $autosign                     = false,
-  Array[String] $autosign_entries       = [ '*.tietoteema.vm' ],
-  Array[String] $primary_names          = [ 'kafo.tietoteema.vm', 'kafo' ],
-  String $server_reports                = 'store',
+  String $reports_liftime                    = '14d',
+  String $logs_liftime                       = '90d',
+  Boolean $show_diff                         = false,
+  Boolean $server_foreman                    = false,
+  Boolean $autosign                          = false,
+  Array[String] $autosign_entries            = [ '*.tietoteema.vm' ],
+  Array[String] $primary_names               = [ 'kafo.tietoteema.vm', 'kafo' ],
+  String $server_reports                     = 'store',
   # Puppetdb spesific parameters
-  String $puppetdb_listen_address       = '0.0.0.0',
-  String $puppetdb_listen_port          = '8082',
-  String $puppetdb_ssl_listen_port      = '8081',
-  String $puppetdb_database_host        = '127.0.0.1',
-  String $puppetdb_database_name        = 'puppetdb',
-  String $puppetdb_database_username    = 'puppetdb',
-  String $puppetdb_database_password    = 'puppetdb',
-  Boolean $puppetdb_manage_dbserver     = false,
-  Boolean $puppetdb_manage_package_repo = false,
-  String $puppetdb_puppetdb_server      = 'kafo.tietoteema.vm',
-  String $puppetdb_connection_limit     = '-1',
-  String $puppetdb_db_connection_limit  = '-1',
-  String $puppetdb_contrib_package_name = 'postgresql96-contrib',
-  Boolean $puppetdb_ssl_deploy_certs    = true,
-  String $puppetdb_postgresql_version   = '9.6',
+  String $puppetdb_listen_address            = '127.0.0.1',
+  String $puppetdb_listen_port               = '8082',
+  String $puppetdb_ssl_listen_port           = '8081',
+  String $puppetdb_database_host             = '127.0.0.1',
+  String $puppetdb_database_name             = 'puppetdb',
+  String $puppetdb_database_username         = 'puppetdb',
+  String $puppetdb_database_password         = 'puppetdb',
+  Boolean $puppetdb_manage_dbserver          = false,
+  Boolean $puppetdb_manage_package_repo      = false,
+  String $puppetdb_puppetdb_server           = 'kafo.tietoteema.vm',
+  String $puppetdb_connection_limit          = '-1',
+  String $puppetdb_db_connection_limit       = '-1',
+  String $puppetdb_contrib_package_name      = 'postgresql96-contrib',
+  Boolean $puppetdb_ssl_deploy_certs         = true,
+  String $puppetdb_postgresql_version        = '9.6',
   String $puppetdb_postgresql_listen_address = '127.0.0.1',
   ) {
     
@@ -190,22 +189,22 @@ class puppetmaster
   if $with_puppetdb {
     
     class { 'puppetmaster::puppetdb': 
-      puppetdb_listen_address                  => $puppetdb_listen_address,
-      puppetdb_listen_port                     => $puppetdb_listen_port,
-      puppetdb_ssl_listen_port                 => $puppetdb_ssl_listen_port,
-      puppetdb_database_host                   => $puppetdb_database_host,
-      puppetdb_database_name                   => $puppetdb_database_name,
-      puppetdb_database_username               => $puppetdb_database_username,
-      puppetdb_database_password               => $puppetdb_database_password,
-      puppetdb_manage_dbserver                 => $puppetdb_manage_dbserver,
-      puppetdb_manage_package_repo             => $puppetdb_manage_package_repo,
-      puppetdb_puppetdb_server                 => $puppetdb_puppetdb_server,
-      puppetdb_connection_limit                => $puppetdb_connection_limit,
-      puppetdb_db_connection_limit             => $puppetdb_db_connection_limit,
-      puppetdb_contrib_package_name            => $puppetdb_contrib_package_name,
-      puppetdb_ssl_deploy_certs                => $puppetdb_ssl_deploy_certs,
-      puppetdb_postgresql_version              => $puppetdb_postgresql_version,
-      puppetdb_postgresql_listen_address       => $puppetdb_postgresql_listen_address,
+      puppetdb_listen_address            => $puppetdb_listen_address,
+      puppetdb_listen_port               => $puppetdb_listen_port,
+      puppetdb_ssl_listen_port           => $puppetdb_ssl_listen_port,
+      puppetdb_database_host             => $puppetdb_database_host,
+      puppetdb_database_name             => $puppetdb_database_name,
+      puppetdb_database_username         => $puppetdb_database_username,
+      puppetdb_database_password         => $puppetdb_database_password,
+      puppetdb_manage_dbserver           => $puppetdb_manage_dbserver,
+      puppetdb_manage_package_repo       => $puppetdb_manage_package_repo,
+      puppetdb_puppetdb_server           => $puppetdb_puppetdb_server,
+      puppetdb_connection_limit          => $puppetdb_connection_limit,
+      puppetdb_db_connection_limit       => $puppetdb_db_connection_limit,
+      puppetdb_contrib_package_name      => $puppetdb_contrib_package_name,
+      puppetdb_ssl_deploy_certs          => $puppetdb_ssl_deploy_certs,
+      puppetdb_postgresql_version        => $puppetdb_postgresql_version,
+      puppetdb_postgresql_listen_address => $puppetdb_postgresql_listen_address,
     }
   }
 }
