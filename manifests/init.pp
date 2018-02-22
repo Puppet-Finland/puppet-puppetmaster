@@ -194,7 +194,7 @@ class puppetmaster
   String $foreman_db_database                = 'foreman',
   String $foreman_db_host                    = '127.0.0.1',
   Boolean $foreman_db_manage                 = true,
-  String $db_database                        = 'foreman',
+  String $foreman_db_database                = 'foreman',
   String $foreman_db_password                = 'changeme',
   String $foreman_db_type                    = 'postgresql',
   String $foreman_db_username                = 'foreman',
