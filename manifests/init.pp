@@ -189,7 +189,7 @@ class puppetmaster
       puppetdb_ssl_listen_port      => $puppetdb_ssl_listen_port,
       puppetdb_database_host        => $puppetdb_database_host,
       puppetdb_database_name        => $puppetdb_database_name,
-      puppetdb_database_username    => $uppetdb_database_username,
+      puppetdb_database_username    => $puppetdb_database_username,
       puppetdb_database_password    => $puppetdb_database_password,
       puppetdb_manage_dbserver     => $puppetdb_manage_dbserver,
       puppetdb_manage_package_repo => $puppetdb_manage_package_repo,
