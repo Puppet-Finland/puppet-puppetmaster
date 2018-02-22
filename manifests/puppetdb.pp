@@ -91,7 +91,7 @@ class puppetmaster::puppetdb
     database_username   => $puppetdb_database_username,
     database_password   => $puppetdb_database_password,
     ssl_deploy_certs    => $puppetdb_ssl_deploy_certs,
-    require             => Postgresql::Server::Extension['Add trgm'],
+    require             => Postgresql::Server::Extension['Add trgm extension'],
   }
   
   class { '::puppetdb::master::config':
