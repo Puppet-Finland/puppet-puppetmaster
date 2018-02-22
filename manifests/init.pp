@@ -1,5 +1,4 @@
-# A wrapper class for setting up puppetmasters.
-# in Kafo installers. 
+# A wrapper class for setting up puppetmasters in Kafo installers. 
 #
 # == Parameters:
 #
@@ -169,7 +168,7 @@ class puppetmaster
   String $puppetdb_postgresql_listen_address = '127.0.0.1',
   # Foreman spesific parameters
   String $foreman_initial_organization       = 'tietoteema.com',
-  Boolean $foreman_locations_enabled          = false, 
+  Boolean $foreman_locations_enabled         = false, 
   String $foreman_initial_location           = 'Virtualbox',
   String $foreman_admin_username             = 'admin',
   String $foreman_admin_password             = 'changeme',
@@ -187,8 +186,21 @@ class puppetmaster
   Boolean $foreman_selinux                   = false,
   Boolean $foreman_unattended                = true,
   Boolean $foreman_foreman_plugin_cockpit    = true,
-  String $foreman_admin_email                = 'hostmaster@examples.com',
-  String $foreman_admin_first_name           = 'Joakim',
+  String $foreman_admin_email                = 'hostmaster@tietoteema.fi',
+  String $foreman_admin_first_name           = 'Admin',
+  String $foreman_admin_last_name            = 'User',
+  Boolean $foreman_authentication            = true,
+  String $foreman_connection_limit           = '-1',
+  String $foreman_db_database                = 'foreman',
+  String $foreman_db_host                    = '127.0.0.1',
+  Boolean $foreman_db_manage                 = true,
+  String $db_database                        = 'foreman',
+  String $foreman_db_password                = 'changeme',
+  String $foreman_db_type                    = 'postgresql',
+  String $foreman_db_username                = 'foreman',
+  Boolean $foreman_organizations_enabled     = false,
+  String $foreman_serveraliases              = 'foreman',
+  String $foreman_servername                 = 'kafo.tietoteema.vm',
   ) {
     
   if $with_puppetboard and !$with_puppetdb {
@@ -295,6 +307,47 @@ class puppetmaster
       puppetdb_ssl_deploy_certs          => $puppetdb_ssl_deploy_certs,
       puppetdb_postgresql_version        => $puppetdb_postgresql_version,
       puppetdb_postgresql_listen_address => $puppetdb_postgresql_listen_address,
+    }
+  }
+
+  if $with_foreman {
+    
+    class { 'puppetmaster::foreman': 
+      foreman_initial_organization       => $foreman_initial_organization,    
+      foreman_locations_enabled          => $foreman_locations_enabled,      
+      foreman_initial_location           => $foreman_initial_location,      
+      foreman_admin_username             => $foreman_admin_username,     
+      foreman_admin_password             => $foreman_admin_password,
+      foreman_puppetdb_dashboard_address => $foreman_puppetdb_dashboard_address,
+      foreman_puppetdb_address           => $foreman_puppetdb_address,
+      foreman_foreman_url                => $foreman_foreman_url,
+      foreman_repo                       => $foreman_repo,
+      foreman_version                    => $foreman_version,
+      foreman_manage_memcached           => $foreman_manage_memcached,
+      foreman_memcached_max_memory       => $foreman_memcached_max_memory,   
+      foreman_configure_epel_repo        => $foreman_configure_epel_repo,
+      foreman_configure_scl_repo         => $foreman_configure_scl_repo,
+      foreman_oauth_consumer_key         => $foreman_oauth_consumer_key,
+      foreman_oauth_consumer_secret      => $foreman_oauth_consumer_secret,
+      foreman_selinux                    => $foreman_selinux,
+      foreman_unattended                 => $foreman_unattended,
+      foreman_foreman_plugin_cockpit     => $foreman_foreman_plugin_cockpit,
+      foreman_admin_email                => $foreman_admin_email,
+      foreman_admin_first_name           => $foreman_admin_first_name,
+      foreman_admin_last_name            => $foreman_admin_last_name,
+      foreman_authentication             => $foreman_authentication,
+      foreman_connection_limit           => $foreman_connection_limit,
+      foreman_db_database                => $foreman_db_database,
+      foreman_db_host                    => $foreman_db_host,
+      foreman_db_manage                  => $foreman_db_manage,
+      foreman_db_database                => $db_database,
+      foreman_db_password                => $foreman_db_password,
+      foreman_db_type                    => $foreman_db_type,
+      foreman_db_username                => $foreman_db_username,
+      foreman_organizations_enabled      => $foreman_organizations_enabled,
+      foreman_db_username                => $foreman_db_username,
+      foreman_serveraliases              => $foreman_serveraliases,
+      foreman_servername                 => $foreman_servername,
     }
   }
 }
