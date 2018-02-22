@@ -1,65 +1,40 @@
-#
-# == Class: puppetmaster::foreman
-#
-# Install and configures Foreman
-#
-# === Parameters
-#
-# None
-#
-# === Variables
-#
-# None
-#
-# === Examples
-#
-#  include puppetdb::base
-#
-# === Authors
-#
-# Petri Lammi <petri.lammi@tietoteema.fi>
-#
-# === Copyright
-#
-# Copyright 2018 Petri Lammi
-#
 class puppetmaster::foreman
+(
+  $foreman_db_manage,
+  $foreman_db_type,
+  $foreman_db_host,
+  $foreman_db_database,
+  $foreman_db_username,
+  $foreman_db_password,
+  $foreman_connection_limit,
+  $foreman_authentication,
+  $foreman_servername,
+  $serveraliases,
+  $foreman_admin_first_name,
+  $foreman_admin_last_name,
+  $foreman_admin_email,
+  $foreman_organizations_enabled,
+  $foreman_initial_organization,
+  $lforeman_ocations_enabled,
+  $initial_location,
+  $foreman_admin_username,
+  $foreman_admin_password,
+  $foreman_puppetdb_dashboard_address,
+  $foreman_puppetdb_address,
+  $foreman_foreman_url,
+  $foreman_repo,
+  $foreman_version,
+  $foreman_manage_memcached,
+  $foreman_memcached_max_memory,
+  $foreman_configure_epel_repo,
+  $foreman_configure_scl_repo,
+  $foreman_oauth_consumer_key,
+  $foreman_oauth_consumer_secret,
+  $foreman_selinux,
+  $foreman_unattended,
+  $foreman_foreman_plugin_cockpit,
+)
 {
-  # database
-  $foreman_db_manage = false,
-  $foreman_db_type = hiera(profile::foreman::db_type,'postgresql')
-  $foreman_db_host = hiera(profile::foreman::db_host, '127.0.0.1') 
-  $foreman_db_database = hiera(profile::foreman::db_database, 'foreman')
-  $foreman_db_username = hiera(profile::foreman::db_username, 'foreman')    
-  $foreman_db_password = hiera(profile::foreman::db_password, 'changeme')
-  $foreman_connection_limit = hiera(profile::foreman::connection_limit, '-1')
-  
-  $foreman_authentication = hiera(profile::foreman::authentication, true)
-  $foreman_servername = hiera(profile::foreman::servername, 'puppet.tietoteema.vm')
-  # $serveraliases = hiera(profile::foreman::serveraliases, '')
-  $foreman_admin_first_name = hiera(profile::foreman::admin_first_name, 'Joakim')
-  $foreman_admin_last_name = hiera(profile::foreman::admin_last_name, 'Hirvi')
-  $foreman_admin_email = hiera(profile::foreman::admin_email, 'hostmaster@tietoteema.fi')
-  $foreman_organizations_enabled = hiera(profile::foreman::organizations_enabled, false) 
-  $foreman_initial_organization = hiera(profile::foreman::initial_organization, 'tietoteema.com')
-  $lforeman_ocations_enabled = hiera(profile::foreman::locations_enabled, false) 
-  $initial_location = hiera(profile::foreman::initial_location, 'Virtualbox')
-  $foreman_admin_username = hiera(profile::foreman::admin_username, 'admin')
-  $foreman_admin_password = hiera(profile::foreman::admin_password, 'changeme')
-  $foreman_puppetdb_dashboard_address = hiera(profile::foreman::puppetdb_dashboard_address,'http://puppet.tietoteema.vm:8080/pdb/dashboard')
-  $foreman_puppetdb_address = hiera(profile::foreman::puppetdb_address,'https://puppet.tietoteema.vm:8081/v2/commands')
-  $foreman_foreman_url = hiera(profile::foreman::foreman_url,'https://puppet.tietoteema.vm')
-  $foreman_repo = hiera(profile::foreman::repo,'1.15')
-  $foreman_version = hiera(profile::foreman::version,'1.15.6')
-  $foreman_manage_memcached = hiera(profile::foreman::manage_memcached, true)
-  $foreman_memcached_max_memory = hiera(profile::foreman::memcached_max_memory, '8%')
-  $foreman_configure_epel_repo = hiera(profile::foreman::configure_epel_repo, false)
-  $foreman_configure_scl_repo = hiera(profile::foreman::configure_scl_repo, true)
-  $foreman_oauth_consumer_key = hiera(profile::foreman::oauth_consumer_key, 'xEL7pzhskio8AHqWhMWCwskzvWNgvQRB')
-  $foreman_oauth_consumer_secret = hiera(profile::foreman::oauth_consumer_secret, '2F5iKu5VzuRzVYRaYFQiNcPghihYn7dP')      
-  $foreman_selinux = hiera(profile::foreman::selinux, false)
-  $foreman_unattended = hiera(profile::foreman::unattended, true)
-  $foreman_foreman_plugin_cockpit = lookup(profile::foreman::plugin_cockpit, Boolean, 'first', true)
 
   if versioncmp($version, '1.16') <= 0 {
     $dynflow_in_core = false
@@ -177,7 +152,7 @@ class puppetmaster::foreman
     admin_username        => $foreman_admin_username,
     admin_password        => $foreman_admin_password,
     servername            => $foreman_servername,
-    # $serveraliases      => $serveraliases,
+    $serveraliases        => $serveraliases,
     admin_first_name      => $foreman_admin_first_name,
     admin_last_name       => $foreman_admin_last_name,
     admin_email           => $foreman_admin_email, 
