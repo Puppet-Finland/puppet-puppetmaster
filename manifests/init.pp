@@ -67,73 +67,73 @@
 #
 # $puppetdb_postgresql_listen_address:: PostgreSQL listen address
 #
-# Foreman spesific parameters::
+# Foreman spesific parameters
 #
-#  $foreman_db_manage:: XXX
+# $foreman_db_manage:: XXX
 #
-#  $foreman_db_type:: XXX
+# $foreman_db_type:: XXX
 #
-#  $foreman_db_host:: XXX
+# $foreman_db_host:: XXX
 #
-#  $foreman_db_database:: XXX
+# $foreman_db_database:: XXX
 #
-#  $foreman_db_username:: XXX
+# $foreman_db_username:: XXX
 #
-#  $foreman_db_password:: XXX
+# $foreman_db_password:: XXX
 #
-#  $foreman_connection_limit:: XXX
+# $foreman_connection_limit:: XXX
 #  
-#  $foreman_authentication:: XXX
+# $foreman_authentication:: XXX
 #
-#  $foreman_servername:: XXX
+# $foreman_servername:: XXX
 #
 # $serveraliases:: XXX
 #
-#  $foreman_admin_first_name:: XXX
+# $foreman_admin_first_name:: XXX
 #
-#  $foreman_admin_last_name:: XXX
+# $foreman_admin_last_name:: XXX
 #
-#  $foreman_admin_email:: XXX
+# $foreman_admin_email:: XXX
 #
-#  $foreman_organizations_enabled:: XXX
+# $foreman_organizations_enabled:: XXX
 #
-#  $foreman_initial_organization:: XXX
+# $foreman_initial_organization:: XXX
 #
-#  $lforeman_ocations_enabled:: XXX
+# $lforeman_ocations_enabled:: XXX
 #
-#  $initial_location:: XXX
+# $initial_location:: XXX
 #
-#  $foreman_admin_username:: XXX
+# $foreman_admin_username:: XXX
 #
-#  $foreman_admin_password:: XXX
+# $foreman_admin_password:: XXX
 #
-#  $foreman_puppetdb_dashboard_address::
+# $foreman_puppetdb_dashboard_address::
 #
-#  $foreman_puppetdb_address:: XXX
+# $foreman_puppetdb_address:: XXX
 #
-#  $foreman_foreman_url:: XXX
+# $foreman_foreman_url:: XXX
 #
-#  $foreman_repo:: XXX
+# $foreman_repo:: XXX
 #
-#  $foreman_version:: XXX
+# $foreman_version:: XXX
 #
-#  $foreman_manage_memcached:: XXX
+# $foreman_manage_memcached:: XXX
 #
-#  $foreman_memcached_max_memory:: XXX
+# $foreman_memcached_max_memory:: XXX
 #
-#  $foreman_configure_epel_repo:: XXX
+# $foreman_configure_epel_repo:: XXX
 #
-#  $foreman_configure_scl_repo:: XXX
+# $foreman_configure_scl_repo:: XXX
 #
-#  $foreman_oauth_consumer_key:: XXX
+# $foreman_oauth_consumer_key:: XXX
 #
-#  $foreman_oauth_consumer_secret:: XXX
+# $foreman_oauth_consumer_secret:: XXX
 #
-#  $foreman_selinux:: XXX
+# $foreman_selinux:: XXX
 #
-#  $foreman_unattended:: XXX
+# $foreman_unattended:: XXX
 #
-#  $foreman_foreman_plugin_cockpit:: XXX
+# $foreman_foreman_plugin_cockpit:: XXX
 class puppetmaster
 (
   Boolean $puppetserver                      = true,
