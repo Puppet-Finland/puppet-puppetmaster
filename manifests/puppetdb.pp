@@ -16,6 +16,7 @@ class puppetmaster::puppetdb
   String $puppetdb_contrib_package_name,
   Boolean $puppetdb_ssl_deploy_certs,
   String $puppetdb_postgresql_version,
+  String $puppetdb_postgresql_listen_address,
 )
 {
     
@@ -54,6 +55,11 @@ class puppetmaster::puppetdb
     version             => '9.6',
   }
   
+  class { '::postgresql::server':
+    listen_addresses => $puppetdb_postgresql_listen_address,
+    require          => Class['::postgresql::globals']
+  }           
+
   ::postgresql::server::role { $puppetdb_database_username:
     password_hash    => postgresql_password($puppetdb_database_username, $puppetdb_database_password),
     connection_limit => $puppetdb_connection_limit,
