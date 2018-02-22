@@ -339,7 +339,6 @@ class puppetmaster
       foreman_db_database                => $foreman_db_database,
       foreman_db_host                    => $foreman_db_host,
       foreman_db_manage                  => $foreman_db_manage,
-      foreman_db_database                => $db_database,
       foreman_db_password                => $foreman_db_password,
       foreman_db_type                    => $foreman_db_type,
       foreman_db_username                => $foreman_db_username,
