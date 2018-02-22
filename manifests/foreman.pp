@@ -42,7 +42,7 @@ class puppetmaster::foreman
   else {
     $dynflow_in_core = true
   }
-      
+
   firewall { '443 accept incpming foreman template and UI':
     chain  => 'INPUT',
     state  => ['NEW'],
@@ -57,8 +57,8 @@ class puppetmaster::foreman
     dport  => '8443',
     proto  => 'tcp',
     action => 'accept',
-  }                     
-  
+  }
+
   firewall { '8140 allow incoming puppet':
     chain  => 'INPUT',
     state  => ['NEW'],
@@ -101,6 +101,7 @@ class puppetmaster::foreman
     }
   }
 
+  # Is this still needed?
   package { 'tfm-rubygem-foreman_azure':
     ensure => present,
     require => Class['::foreman'],
@@ -152,7 +153,7 @@ class puppetmaster::foreman
     admin_username        => $foreman_admin_username,
     admin_password        => $foreman_admin_password,
     servername            => $foreman_servername,
-    $serveraliases        => $serveraliases,
+    serveraliases         => $serveraliases,
     admin_first_name      => $foreman_admin_first_name,
     admin_last_name       => $foreman_admin_last_name,
     admin_email           => $foreman_admin_email, 
