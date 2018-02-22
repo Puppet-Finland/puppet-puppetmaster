@@ -34,23 +34,38 @@
 # $server_reports:: Reporting to where
 class puppetmaster
 (
-  Boolean $puppetserver           = true,
-  Boolean $with_puppetdb          = false,
-  Boolean $with_puppetboard       = false,
-  Boolean $with_foreman           = false,
-  Boolean $with_foreman_proxy     = false,
+  Boolean $puppetserver                 = true,
+  Boolean $with_puppetdb                = false,
+  Boolean $with_puppetboard             = false,
+  Boolean $with_foreman                 = false,
+  Boolean $with_foreman_proxy           = false,
   # Puppetserver spesific parameters using foreman puppet module
-  String $reports_liftime         = '14d',
-  String $logs_liftime            = '90d',
-  Boolean $show_diff              = false,
-  Boolean $server_foreman         = false,
-  Boolean $autosign               = false,
-  Array[String] $autosign_entries = [ '*.tietoteema.vm' ],
-  Array[String] $primary_names    = [ 'puppetserver.tietoteema.vm' ],
-  String $server_reports          = 'store',
-) {
+  String $reports_liftime               = '14d',
+  String $logs_liftime                  = '90d',
+  Boolean $show_diff                    = false,
+  Boolean $server_foreman               = false,
+  Boolean $autosign                     = false,
+  Array[String] $autosign_entries       = [ '*.example.com' ],
+  Array[String] $primary_names          = [ 'foo.example.com', 'foo' ],
+  String $server_reports                = 'store',
+  # Puppetdb spesific parameters
+  String $puppetdb_listen_address       = '0.0.0.0',
+  String $puppetdb_listen_port          = '8082',
+  String $puppetdb_ssl_listen_port      = '8081',
+  String $puppetdb_database_host        = '127.0.0.1',
+  String $puppetdb_database_name        = 'puppetdb',
+  String $puppetdb_database_username    = 'puppetdb',
+  String $puppetdb_database_password    = 'puppetdb',
+  Boolean $puppetdb_manage_dbserver     = false,
+  Boolean $puppetdb_manage_package_repo = false,
+  String $puppetdb_puppetdb_server      = 'puppet.tietoteema.vm',
+  String $puppetdb_connection_limit     = '-1',
+  String $puppetdb_db_connection_limit  = '-1',
+  String $puppetdb_contrib_package_name = 'postgresql-contrib-96',
+  Boolean $puppetdb_ssl_deploy_certs    = true,
+  ) {
     
-  if $with_puppetboard and ! $with_puppetdb {
+  if $with_puppetboard and !$with_puppetdb {
     notify { "Puppetboard needs Puppetdb. installing Puppetdb too": }
     $with_puppetdb = true
   }            
@@ -134,13 +149,76 @@ class puppetmaster
       type         => ctime,
     }
   }
-  
-  if $with_foreman {
-    #
+
+  if $with_puppetdb {
+
+    if ($database_host == '127.0.0.1') {
+      
+      firewall { '5432 allow incoming database':
+        chain       => 'INPUT',
+        state       => ['NEW'],
+        destination => '127.0.0.1/8',
+        dport       => '5432',
+        proto       => 'tcp',
+        action      => 'accept',
+      }
+    }
+    else {
+      firewall { '5432 allow outgoing database':
+        chain       => 'OUTPUT',
+        state       => ['NEW'],
+        destination => $database_host,
+        dport       => '5432',
+        proto       => 'tcp',
+        action      => 'accept',
+      }                       
+    }
+    
+    firewall { '8081 allow incoming puppetdb':
+      chain       => 'INPUT',
+      state       => ['NEW'],
+      dport       => ['8080','8081'], 
+      proto       => 'tcp',
+      action      => 'accept',
+    }           
+    
+    if $manage_dbserver {
+      
+      ::postgresql::server::role { $database_username:
+        password_hash => postgresql_password($database_username, $database_password),
+        connection_limit => $connection_limit,
+      }
+      
+      ::postgresql::server::database_grant { 'Grant access to puppetdb':
+        privilege => 'ALL',
+        db        => $database_name,
+        role      => $database_username,
+      }
+      
+      ::postgresql::server::extension { 'Add trgm':
+        database     => $database_name,
+        package_name => $contrib_package_name,
+        extension    => 'pg_trgm',
+      }    
+    }
+    
+    class { '::puppetdb':
+      listen_address      => $listen_address,
+      listen_port         => $listen_port,
+      ssl_listen_port     => $ssl_listen_port,
+      manage_dbserver     => $manage_dbserver,
+      database_name       => $database_name,
+      database_host       => $database_host,
+      manage_package_repo => $manage_package_repo,
+      database_username   => $database_username,
+      database_password   => $database_password,
+      ssl_deploy_certs    => $ssl_deploy_certs,
+      require             => Postgresql::Server::Extension['Add trgm'],
+    }
+    
+    class { '::puppetdb::master::config':
+      puppetdb_server     => $puppetdb_server,
+      restart_puppet      => false,
+    }
   }
-  
-  if $with_foreman_proxy {
-    #
-  }
-  
 }
