@@ -87,7 +87,7 @@
 #
 # $foreman_servername:: XXX
 #
-# $serveraliases:: XXX
+# $foreman_serveraliases:: XXX
 #
 # $foreman_admin_first_name:: XXX
 #
@@ -99,9 +99,9 @@
 #
 # $foreman_initial_organization:: XXX
 #
-# $lforeman_ocations_enabled:: XXX
+# $foreman_locations_enabled:: XXX
 #
-# $initial_location:: XXX
+# $foreman_initial_location:: XXX
 #
 # $foreman_admin_username:: XXX
 #
