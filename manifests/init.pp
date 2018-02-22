@@ -66,6 +66,74 @@
 # $puppetdb_postgresql_version:: PostgreSQL version
 #
 # $puppetdb_postgresql_listen_address:: PostgreSQL listen address
+#
+# Foreman spesific parameters::
+#
+#  $foreman_db_manage:: XXX
+#
+#  $foreman_db_type:: XXX
+#
+#  $foreman_db_host:: XXX
+#
+#  $foreman_db_database:: XXX
+#
+#  $foreman_db_username:: XXX
+#
+#  $foreman_db_password:: XXX
+#
+#  $foreman_connection_limit:: XXX
+#  
+#  $foreman_authentication:: XXX
+#
+#  $foreman_servername:: XXX
+#
+# $serveraliases:: XXX
+#
+#  $foreman_admin_first_name:: XXX
+#
+#  $foreman_admin_last_name:: XXX
+#
+#  $foreman_admin_email:: XXX
+#
+#  $foreman_organizations_enabled:: XXX
+#
+#  $foreman_initial_organization:: XXX
+#
+#  $lforeman_ocations_enabled:: XXX
+#
+#  $initial_location:: XXX
+#
+#  $foreman_admin_username:: XXX
+#
+#  $foreman_admin_password:: XXX
+#
+#  $foreman_puppetdb_dashboard_address::
+#
+#  $foreman_puppetdb_address:: XXX
+#
+#  $foreman_foreman_url:: XXX
+#
+#  $foreman_repo:: XXX
+#
+#  $foreman_version:: XXX
+#
+#  $foreman_manage_memcached:: XXX
+#
+#  $foreman_memcached_max_memory:: XXX
+#
+#  $foreman_configure_epel_repo:: XXX
+#
+#  $foreman_configure_scl_repo:: XXX
+#
+#  $foreman_oauth_consumer_key:: XXX
+#
+#  $foreman_oauth_consumer_secret:: XXX
+#
+#  $foreman_selinux:: XXX
+#
+#  $foreman_unattended:: XXX
+#
+#  $foreman_foreman_plugin_cockpit:: XXX
 class puppetmaster
 (
   Boolean $puppetserver                      = true,
@@ -99,6 +167,26 @@ class puppetmaster
   Boolean $puppetdb_ssl_deploy_certs         = true,
   String $puppetdb_postgresql_version        = '9.6',
   String $puppetdb_postgresql_listen_address = '127.0.0.1',
+  # Foreman spesific parameters
+  String $foreman_initial_organization       = 'tietoteema.com'
+  Boolean $foreman_ocations_enabled          = false 
+  String $foreman_initial_location           = 'Virtualbox'
+  String $foreman_admin_username             = 'admin'
+  String $foreman_admin_password             = 'changeme'
+  String $foreman_puppetdb_dashboard_address = 'http://puppet.tietoteema.vm:8080/pdb/dashboard'
+  String $foreman_puppetdb_address           = 'https://puppet.tietoteema.vm:8081/v2/commands'
+  String $foreman_foreman_url                = 'https://puppet.tietoteema.vm'
+  String $foreman_repo                       = '1.15'
+  String $foreman_version                    = '1.15.6'
+  String $foreman_manage_memcached           = true
+  String $foreman_memcached_max_memory       = '8%'
+  Boolean $foreman_configure_epel_repo       = false
+  Boolean $foreman_configure_scl_repo        = true
+  String $foreman_oauth_consumer_key         = 'xEL7pzhskio8AHqWhMWCwskzvWNgvQRB'
+  String $foreman_oauth_consumer_secret      = '2F5iKu5VzuRzVYRaYFQiNcPghihYn7dP'      
+  Boolean $foreman_selinux                   = false
+  Boolean $foreman_unattended                = true
+  Boolean $foreman_foreman_plugin_cockpit    = true
   ) {
     
   if $with_puppetboard and !$with_puppetdb {
