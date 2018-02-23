@@ -348,6 +348,7 @@ class puppetmaster
       foreman_organizations_enabled      => $foreman_organizations_enabled,
       foreman_serveraliases              => $foreman_serveraliases,
       foreman_servername                 => $foreman_servername,
+      foreman_dynflow_in_core            => $foreman_dynflow_in_core,
     }
   }
 }
