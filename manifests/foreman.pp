@@ -134,11 +134,8 @@ class puppetmaster::foreman
   }
   
   file { '/etc/foreman/plugins/foreman_default_hostgroup.yaml':
-    source       => $::fqdn ? {
-      /^.*\.vm$/ => "/opt/local/server/files/foreman_default_hostgroup.yaml",
-      default    => "/opt/local/server/files/foreman_default_hostgroup.yaml",
-    },
-  require        => Class['::foreman::plugin::default_hostgroup'],
+    source  => 'puppet:///puppetmaster/files/foreman_default_hostgroup.yaml',
+    require => Class['::foreman::plugin::default_hostgroup'],
   }
   
   class { '::foreman':
