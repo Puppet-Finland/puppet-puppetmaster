@@ -37,6 +37,7 @@ class puppetmaster::foreman
 )
 {
 
+  # See https://github.com/theforeman/puppet-foreman#foreman-version-compatibility-notes
   if versioncmp($foreman_version, '1.16') <= 0 {
     $foreman_dynflow_in_core = false
   }
