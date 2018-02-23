@@ -33,14 +33,15 @@ class puppetmaster::foreman
   $foreman_selinux,
   $foreman_unattended,
   $foreman_foreman_plugin_cockpit,
+  $foreman_dynflow_in_core,
 )
 {
 
   if versioncmp($foreman_version, '1.16') <= 0 {
-    $dynflow_in_core = false
+    $foreman_dynflow_in_core = false
   }
   else {
-    $dynflow_in_core = true
+    $foreman_dynflow_in_core = true
   }
 
   firewall { '443 accept incoming foreman template and UI':
