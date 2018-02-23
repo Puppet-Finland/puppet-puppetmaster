@@ -133,11 +133,28 @@ class puppetmaster::foreman
     require     => Class['::foreman'],
   }
   
+  $default_hostgroup_template = @(END)
+  ---
+  :force_hostgroup_match: false
+  :force_hostgroup_match_only_new: false
+  :default_hostgroup:
+    :facts_map:
+      "default_linux_group":
+        "kernel": "Linux"
+      "default_windows_group":
+        "kernel": "windows"
+      "default_mac_group":
+        "kernel": "Darwin"
+      "default_other_group":
+        "kernel": ".*"
+  END
+              
   file { '/etc/foreman/plugins/foreman_default_hostgroup.yaml':
-    source  => 'puppet:///puppetmaster/files/foreman_default_hostgroup.yaml',
+    ensure  => file, 
+    content => inline_epp($default_hostgroup_template),
     require => Class['::foreman::plugin::default_hostgroup'],
   }
-  
+
   class { '::foreman':
     foreman_url           => $foreman_foreman_url, 
     db_manage             => $foreman_db_manage,
