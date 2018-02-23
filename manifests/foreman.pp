@@ -33,18 +33,16 @@ class puppetmaster::foreman
   $foreman_selinux,
   $foreman_unattended,
   $foreman_foreman_plugin_cockpit,
-  $foreman_dynflow_in_core,
 )
 {
-
   # See https://github.com/theforeman/puppet-foreman#foreman-version-compatibility-notes
   if versioncmp($foreman_version, '1.16') <= 0 {
-    $foreman_dynflow_in_core = false
+    $dynflow_in_core = false
   }
   else {
-    $foreman_dynflow_in_core = true
+    $dynflow_in_core = true
   }
-
+  
   firewall { '443 accept incoming foreman template and UI':
     chain  => 'INPUT',
     state  => ['NEW'],
@@ -168,7 +166,7 @@ class puppetmaster::foreman
     initial_location      => $foreman_initial_location,
     selinux               => $foreman_selinux,
     unattended            => $foreman_unattended,
-    dynflow_in_core       => $foreman_dynflow_in_core,
+    dynflow_in_core       => $dynflow_in_core,
   }
 
   include ::foreman::compute::vmware

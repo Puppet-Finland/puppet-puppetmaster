@@ -134,7 +134,6 @@
 #
 # $foreman_foreman_plugin_cockpit:: XXX
 #
-# $foreman_dynflow_in_core:: Whether dynflow is in the core or not, depending on the version. 
 class puppetmaster
 (
   Boolean $puppetserver                      = true,
@@ -202,7 +201,6 @@ class puppetmaster
   Boolean $foreman_organizations_enabled     = false,
   Array[String] $foreman_serveraliases       = [ 'foreman' ],
   String $foreman_servername                 = 'kafo.tietoteema.vm',
-  Boolean $foreman_dynflow_in_core           = false,
   ) {
     
   if $with_puppetboard and !$with_puppetdb {
@@ -348,7 +346,6 @@ class puppetmaster
       foreman_organizations_enabled      => $foreman_organizations_enabled,
       foreman_serveraliases              => $foreman_serveraliases,
       foreman_servername                 => $foreman_servername,
-      foreman_dynflow_in_core            => $foreman_dynflow_in_core,
     }
   }
 }
