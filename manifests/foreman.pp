@@ -43,7 +43,7 @@ class puppetmaster::foreman
     $dynflow_in_core = true
   }
 
-  firewall { '443 accept incpming foreman template and UI':
+  firewall { '443 accept incoming foreman template and UI':
     chain  => 'INPUT',
     state  => ['NEW'],
     dport  => ['80','443'],
