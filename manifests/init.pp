@@ -179,7 +179,7 @@ class puppetmaster
   String $foreman_version                    = '1.15.6',
   String $foreman_manage_memcached           = true,
   String $foreman_memcached_max_memory       = '8%',
-  Boolean $foreman_configure_epel_repo       = false,
+  Boolean $foreman_configure_epel_repo       = true,
   Boolean $foreman_configure_scl_repo        = true,
   String $foreman_oauth_consumer_key         = 'xEL7pzhskio8AHqWhMWCwskzvWNgvQRB',
   String $foreman_oauth_consumer_secret      = '2F5iKu5VzuRzVYRaYFQiNcPghihYn7dP',     
