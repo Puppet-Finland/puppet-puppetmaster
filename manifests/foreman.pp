@@ -134,18 +134,18 @@ class puppetmaster::foreman
   }
   
   $default_hostgroup_template = @(END)
-  ---
-  :default_hostgroup:
-    :facts_map:
-      "default_linux_group":
-        "kernel": "Linux"
-      "default_windows_group":
-        "kernel": "windows"
-      "default_mac_group":
-        "kernel": "Darwin"
-      "default_other_group":
-        "kernel": ".*"
-  END
+---
+:default_hostgroup:
+  :facts_map:
+    "default_linux_group":
+      "kernel": "Linux"
+    "default_windows_group":
+      "kernel": "windows"
+    "default_mac_group":
+      "kernel": "Darwin"
+    "default_other_group":
+      "kernel": ".*"
+END
               
   file { '/etc/foreman/plugins/foreman_default_hostgroup.yaml':
     ensure  => file, 
