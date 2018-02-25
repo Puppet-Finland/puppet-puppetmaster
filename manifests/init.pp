@@ -134,6 +134,41 @@
 #
 # $foreman_foreman_plugin_cockpit:: XXX
 #
+#  $foreman_compute_libvirt::
+#
+#  $foreman_compute_ec2:: XXX
+#
+#  $foreman_compute_gce:: XXX
+#
+#  $foreman_compute_openstack:: XXX
+#
+#  $foreman_compute_ovirt:: XXX
+#
+#  $foreman_compute_rackspace:: XXX
+#
+#  $foreman_plugin_ansible:: XXX
+#
+#  $foreman_plugin_docker:: XXX
+#
+#  $foreman_plugin_bootdisk:: XXX
+#
+#  $foreman_plugin_default_hostgroup:: XXX
+#
+#  $foreman_plugin_dhcp_browser:: XXX
+#
+#  $foreman_plugin_digitalocean:: XXX
+#
+#  $foreman_plugin_discovery:: XXX
+#
+#  $foreman_plugin_hooks:: XXX
+#
+#  $foreman_plugin_memcache:: XXX
+#
+#  $foreman_plugin_remote_execution:: XXX
+#
+#  $foreman_plugin_tasks:: XXX
+#
+#  $foreman_plugin_templates:: XXX    
 class puppetmaster
 (
   Boolean $puppetserver                      = true,
@@ -201,6 +236,25 @@ class puppetmaster
   Boolean $foreman_organizations_enabled     = false,
   Array[String] $foreman_serveraliases       = [ 'foreman' ],
   String $foreman_servername                 = 'kafo.tietoteema.vm',
+  Boolean $foreman_compute_libvirt,
+  Boolean $foreman_compute_ec2,
+  Boolean $foreman_compute_gce,
+  Boolean $foreman_compute_openstack,
+  Boolean $foreman_compute_ovirt,
+  Boolean $foreman_compute_rackspace,
+  Boolean $foreman_plugin_ansible,
+  Boolean $foreman_plugin_docker,
+  Boolean $foreman_plugin_bootdisk,
+  Boolean $foreman_plugin_default_hostgroup,
+  Boolean $foreman_plugin_dhcp_browser,
+  Boolean $foreman_plugin_digitalocean,
+  Boolean $foreman_plugin_discovery,
+  Boolean $foreman_plugin_hooks,
+  Boolean $foreman_plugin_memcache,
+  Boolean $foreman_plugin_remote_execution,
+  Boolean $foreman_plugin_tasks,
+  Boolean $foreman_plugin_templates,    
+
   ) {
     
   if $with_puppetboard and !$with_puppetdb {
