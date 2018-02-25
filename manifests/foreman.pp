@@ -101,12 +101,12 @@ class puppetmaster::foreman
     }
   }
 
-  # Is this still needed?
-  package { 'tfm-rubygem-foreman_azure':
-    ensure => present,
-    require => Class['::foreman'],
-  }
-
+  #  # Is this still needed?
+  #  package { 'tfm-rubygem-foreman_azure':
+    #    ensure => present,
+    #    require => Class['::foreman'],
+    #  }
+  
   cron { 'Collect trend data':
     environment => 'PATH=/opt/puppetlabs/bin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin', 
     command     => '/sbin/foreman-rake foreman-rake trends:counter',
