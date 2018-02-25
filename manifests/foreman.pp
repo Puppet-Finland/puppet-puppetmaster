@@ -135,8 +135,6 @@ class puppetmaster::foreman
   
   $default_hostgroup_template = @(END)
   ---
-  :force_hostgroup_match: false
-  :force_hostgroup_match_only_new: false
   :default_hostgroup:
     :facts_map:
       "default_linux_group":
