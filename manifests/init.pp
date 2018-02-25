@@ -247,7 +247,7 @@ class puppetmaster
   Boolean $foreman_plugin_bootdisk           = false,
   Boolean $foreman_plugin_default_hostgroup  = false,
   Boolean $foreman_plugin_dhcp_browser       = false,
-  Boolean $foreman_plugin_digitalocean,
+  Boolean $foreman_plugin_digitalocean       = false,
   Boolean $foreman_plugin_discovery          = false,
   Boolean $foreman_plugin_hooks              = false,
   Boolean $foreman_plugin_memcache           = false,
