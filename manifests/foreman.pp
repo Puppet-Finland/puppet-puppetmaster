@@ -75,7 +75,7 @@ class puppetmaster::foreman
     action      => 'accept',
   }
 
-  if !$foreman_db_manage {
+  if $foreman_db_manage {
   
     ::postgresql::server::role { $foreman_db_username:
       password_hash => postgresql_password($foreman_db_username, $foreman_db_password),
