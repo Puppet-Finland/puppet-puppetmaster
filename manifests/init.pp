@@ -134,7 +134,7 @@
 #
 # $foreman_foreman_plugin_cockpit:: XXX
 #
-#  $foreman_compute_libvirt::
+#  $foreman_compute_libvirt:: XXX
 #
 #  $foreman_compute_ec2:: XXX
 #
@@ -236,25 +236,24 @@ class puppetmaster
   Boolean $foreman_organizations_enabled     = false,
   Array[String] $foreman_serveraliases       = [ 'foreman' ],
   String $foreman_servername                 = 'kafo.tietoteema.vm',
-  Boolean $foreman_compute_libvirt,
-  Boolean $foreman_compute_ec2,
-  Boolean $foreman_compute_gce,
-  Boolean $foreman_compute_openstack,
-  Boolean $foreman_compute_ovirt,
-  Boolean $foreman_compute_rackspace,
-  Boolean $foreman_plugin_ansible,
-  Boolean $foreman_plugin_docker,
-  Boolean $foreman_plugin_bootdisk,
-  Boolean $foreman_plugin_default_hostgroup,
-  Boolean $foreman_plugin_dhcp_browser,
+  Boolean $foreman_compute_libvirt           = false,
+  Boolean $foreman_compute_ec2               = false,
+  Boolean $foreman_compute_gce               = false,
+  Boolean $foreman_compute_openstack         = false,
+  Boolean $foreman_compute_ovirt             = false,
+  Boolean $foreman_compute_rackspace         = false,
+  Boolean $foreman_plugin_ansible            = false,
+  Boolean $foreman_plugin_docker             = false,
+  Boolean $foreman_plugin_bootdisk           = false,
+  Boolean $foreman_plugin_default_hostgroup  = false,
+  Boolean $foreman_plugin_dhcp_browser       = false,
   Boolean $foreman_plugin_digitalocean,
-  Boolean $foreman_plugin_discovery,
-  Boolean $foreman_plugin_hooks,
-  Boolean $foreman_plugin_memcache,
-  Boolean $foreman_plugin_remote_execution,
-  Boolean $foreman_plugin_tasks,
-  Boolean $foreman_plugin_templates,    
-
+  Boolean $foreman_plugin_discovery          = false,
+  Boolean $foreman_plugin_hooks              = false,
+  Boolean $foreman_plugin_memcache           = false,
+  Boolean $foreman_plugin_remote_execution   = false,
+  Boolean $foreman_plugin_tasks              = false,
+  Boolean $foreman_plugin_templates          = false,    
   ) {
     
   if $with_puppetboard and !$with_puppetdb {
