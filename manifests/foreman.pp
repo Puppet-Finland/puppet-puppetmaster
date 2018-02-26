@@ -270,7 +270,7 @@ END
     include ::foreman::plugin::remote_execution
   }
 
-  if $foreman_plugin_remote_tasks {
+  if $foreman_plugin_tasks {
     include ::foreman::plugin::tasks
   }
 
