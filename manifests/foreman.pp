@@ -274,7 +274,7 @@ END
     include ::foreman::plugin::tasks
   }
 
-  if $foreman_plugin_remote_templates {
+  if $foreman_plugin_templates {
     include ::foreman::plugin::templates
   }
 
