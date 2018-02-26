@@ -263,6 +263,17 @@ class puppetmaster
     notify { "Puppetboard needs Puppetdb. installing Puppetdb too": }
     $with_puppetdb = true
   }            
+
+  if $with_foreman {
+    $puppetserver_server_external_nodes = '/etc/puppetlabs/puppet/node.rb' 
+    $puppetserver_show_diff             = true
+    $puppetserver_server_reports        = 'log, foreman'
+  }
+  else {
+    $puppetserver_server_external_nodes = '' # this is needed to prevent foreman to try ENC
+    $puppetserver_show_diff             = $show_diff
+    $puppetserver_server_reports        = $server_reports
+  }
   
   if $puppetserver {
     
@@ -317,13 +328,13 @@ class puppetmaster
     
     class { '::puppet':
       server                => true,
-      show_diff             => $show_diff,
-      server_foreman        => false,
+      show_diff             => $puppetserver_show_diff,
+      server_foreman        => $puppetserver_server_foreman,
       autosign              => $autosign,
       autosign_entries      => $autosign_entries,
-      server_external_nodes => '', # this is needed for the module that tends towards foreman
+      server_external_nodes => $puppetserver_server_external_nodes,
       additional_settings   => $additional_settings,
-      server_reports        => $server_reports,
+      server_reports        => $puppetserver_server_reports,
       require               => [ File['/etc/puppetlabs/puppet/fileserver.conf'], Puppet_authorization::Rule['files'] ],
     }
     
