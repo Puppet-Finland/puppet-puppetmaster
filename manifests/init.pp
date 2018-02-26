@@ -259,7 +259,7 @@ class puppetmaster
   Boolean $foreman_plugin_templates                        = false,    
   # foreman proxy spesific settings
   String $foreman_proxy_user                               = 'foreman-proxy',
-  String $foreman_proxy_group                              = 'foreman-proxy'
+  String $foreman_proxy_group                              = 'foreman-proxy',
   Array[String] $foreman_proxy_additional_groups           = ['puppet'],
   String $foreman_proxy_oauth_consumer_key                 = 'xEL7pzhskio8AHqWhMWCwskzvWNgvQRB',
   String $foreman_proxy_oauth_consumer_secret              = '2F5iKu5VzuRzVYRaYFQiNcPghihYn7dP',
@@ -268,7 +268,7 @@ class puppetmaster
   String $foreman_proxy_template_url                       = 'http://puppet.tietoteema.vm:8000',
   Boolean $foreman_proxy_http                              = true,
   String $foreman_proxy_http_port                          = '8000',
-  Boolean $foreman_proxy_manage_sudoersd false,
+  Boolean $foreman_proxy_manage_sudoersd                   = false,
   Boolean $foreman_proxy_use_sudoersd                      = false,
   # puppet
   String $foreman_proxy_puppet_url                         = 'https://puppet.tietoteema.vm:8140',
@@ -305,7 +305,7 @@ class puppetmaster
   Array[String] $foreman_proxy_dhcp_subnets                = ['192.168.137.0/255.255.255.0'],
   String $foreman_proxy_dhcp_gateway                       = '192.168.137.10',
   String $foreman_proxy_dhcp_range                         = '192.168.137.100 192.168.137.200',
-  String $foreman_proxy_dhcp_nameservers                   = '192.168.137.10')    
+  String $foreman_proxy_dhcp_nameservers                   = '192.168.137.10',    
   String $foreman_proxy_dhcp_pxeserver                     = '192.168.137.201',
   # dns
   Boolean $foreman_proxy_dns                               = false,
