@@ -134,6 +134,8 @@
 #
 # $foreman_foreman_plugin_cockpit:: XXX
 #
+# $foreman_compute_vmware:: XXX
+#
 # $foreman_compute_libvirt:: XXX
 #
 # $foreman_compute_ec2:: XXX
@@ -236,6 +238,7 @@ class puppetmaster
   Boolean $foreman_organizations_enabled     = false,
   Array[String] $foreman_serveraliases       = [ 'foreman' ],
   String $foreman_servername                 = 'kafo.tietoteema.vm',
+  Boolean $foreman_compute_vmware            = false,
   Boolean $foreman_compute_libvirt           = false,
   Boolean $foreman_compute_ec2               = false,
   Boolean $foreman_compute_gce               = false,
@@ -399,6 +402,7 @@ class puppetmaster
       foreman_organizations_enabled      => $foreman_organizations_enabled,
       foreman_serveraliases              => $foreman_serveraliases,
       foreman_servername                 => $foreman_servername,
+      foreman_compute_vmware             => $foreman_compute_vmware,
       foreman_compute_libvirt            => $foreman_compute_libvirt,
       foreman_compute_ec2                => $foreman_compute_ec2,
       foreman_compute_gce                => $foreman_compute_gce,

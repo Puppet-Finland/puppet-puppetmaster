@@ -33,6 +33,7 @@ class puppetmaster::foreman
   $foreman_selinux,
   $foreman_unattended,
   $foreman_foreman_plugin_cockpit,
+  $foreman_compute_vmware,
   $foreman_compute_libvirt,
   $foreman_compute_ec2,
   $foreman_compute_gce,
