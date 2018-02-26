@@ -32,7 +32,7 @@ class puppetmaster::foreman
   $foreman_oauth_consumer_secret,
   $foreman_selinux,
   $foreman_unattended,
-  $foreman_foreman_plugin_cockpit,
+  $foreman_plugin_cockpit,
   $foreman_compute_vmware,
   $foreman_compute_libvirt,
   $foreman_compute_ec2,
@@ -276,10 +276,6 @@ END
 
   if $foreman_plugin_remote_templates {
     include ::foreman::plugin::templates
-  }
-
-  if $foreman_plugin_cockpit {
-    include ::foreman::plugin::cockpit
   }
 
   class { '::foreman::plugin::puppetdb':

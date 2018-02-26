@@ -132,7 +132,7 @@
 #
 # $foreman_unattended:: XXX
 #
-# $foreman_foreman_plugin_cockpit:: XXX
+# $foreman_plugin_cockpit:: XXX
 #
 # $foreman_compute_vmware:: XXX
 #
@@ -223,7 +223,7 @@ class puppetmaster
   String $foreman_oauth_consumer_secret      = '2F5iKu5VzuRzVYRaYFQiNcPghihYn7dP',     
   Boolean $foreman_selinux                   = false,
   Boolean $foreman_unattended                = true,
-  Boolean $foreman_foreman_plugin_cockpit    = true,
+  Boolean $foreman_plugin_cockpit            = true,
   String $foreman_admin_email                = 'hostmaster@tietoteema.fi',
   String $foreman_admin_first_name           = 'Admin',
   String $foreman_admin_last_name            = 'User',
@@ -387,7 +387,7 @@ class puppetmaster
       foreman_oauth_consumer_secret      => $foreman_oauth_consumer_secret,
       foreman_selinux                    => $foreman_selinux,
       foreman_unattended                 => $foreman_unattended,
-      foreman_foreman_plugin_cockpit     => $foreman_foreman_plugin_cockpit,
+      foreman_plugin_cockpit             => $foreman_plugin_cockpit,
       foreman_admin_email                => $foreman_admin_email,
       foreman_admin_first_name           => $foreman_admin_first_name,
       foreman_admin_last_name            => $foreman_admin_last_name,
