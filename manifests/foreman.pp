@@ -205,7 +205,12 @@ class puppetmaster::foreman
   }
 
   if $foreman_plugin_ansible {
-    include ::foreman::plugin::docker
+
+    include ::foreman::plugin::ansible
+    package { 'ansible':
+      ensure  => installed,
+      require => Class['::foreman::plugin::ansible'],
+    }
   }
 
   if $foreman_plugin_docker {
@@ -287,10 +292,4 @@ END
     password              => $foreman_admin_password,
     manage_root_config    => true,
   }
-
-  package { 'ansible':
-    ensure                => installed,
-    require               => Class['::foreman::plugin::ansible'],
-  }
-
 }
