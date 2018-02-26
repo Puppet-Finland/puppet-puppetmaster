@@ -145,26 +145,6 @@ class puppetmaster::foreman
     require     => Class['::foreman'],
   }
   
-  $default_hostgroup_template = @(END)
----
-:default_hostgroup:
-  :facts_map:
-    "default_linux_group":
-      "kernel": "Linux"
-    "default_windows_group":
-      "kernel": "windows"
-    "default_mac_group":
-      "kernel": "Darwin"
-    "default_other_group":
-      "kernel": ".*"
-END
-              
-  file { '/etc/foreman/plugins/foreman_default_hostgroup.yaml':
-    ensure  => file, 
-    content => inline_epp($default_hostgroup_template),
-    require => Class['::foreman::plugin::default_hostgroup'],
-  }
-
   class { '::foreman':
     foreman_url           => $foreman_foreman_url, 
     db_manage             => $foreman_db_manage,
@@ -237,7 +217,27 @@ END
   }
 
   if $foreman_plugin_default_hostgroup {
+
     include ::foreman::plugin::default_hostgroup
+    $default_hostgroup_template = @(END)
+---
+:default_hostgroup:
+  :facts_map:
+    "default_linux_group":
+      "kernel": "Linux"
+    "default_windows_group":
+      "kernel": "windows"
+    "default_mac_group":
+      "kernel": "Darwin"
+    "default_other_group":
+      "kernel": ".*"
+END
+              
+    file { '/etc/foreman/plugins/foreman_default_hostgroup.yaml':
+      ensure  => file, 
+      content => inline_epp($default_hostgroup_template),
+      require => Class['::foreman::plugin::default_hostgroup'],
+    }
   }
 
   if $foreman_plugin_dhcp_browser {
