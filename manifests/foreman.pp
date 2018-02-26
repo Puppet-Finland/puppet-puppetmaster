@@ -119,12 +119,6 @@ class puppetmaster::foreman
     }
   }
 
-  #  # Is this still needed?
-  #  package { 'tfm-rubygem-foreman_azure':
-    #    ensure => present,
-    #    require => Class['::foreman'],
-    #  }
-  
   cron { 'Collect trend data':
     environment => 'PATH=/opt/puppetlabs/bin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin', 
     command     => '/sbin/foreman-rake foreman-rake trends:counter',
@@ -202,26 +196,81 @@ END
     dynflow_in_core       => $dynflow_in_core,
   }
 
-  include ::foreman::compute::vmware
-  include ::foreman::compute::libvirt
-  include ::foreman::compute::ec2
-  include ::foreman::compute::gce
-  include ::foreman::compute::openstack
-  include ::foreman::compute::ovirt
-  include ::foreman::compute::rackspace
-  include ::foreman::plugin::ansible
-  include ::foreman::plugin::docker
-  include ::foreman::plugin::bootdisk
-  include ::foreman::plugin::default_hostgroup
-  include ::foreman::plugin::dhcp_browser
-  include ::foreman::plugin::digitalocean
-  include ::foreman::plugin::discovery
-  include ::foreman::plugin::hooks
-  include ::foreman::plugin::memcache
-  include ::foreman::plugin::remote_execution
-  include ::foreman::plugin::tasks
-  include ::foreman::plugin::templates
+  if $foreman_compute_vmware {
+    include ::foreman::compute::vmware
+  }
 
+  if $foreman_compute_libvirt {
+    include ::foreman::compute::libvirt
+  }
+
+  if $foreman_compute_ec2 {
+    include ::foreman::compute::ec2
+  }
+
+  if $foreman_compute_gce {
+    include ::foreman::compute::gce
+  }
+
+  if $foreman_compute_openstack {
+    include ::foreman::compute::openstack
+  }
+  
+  if $foreman_compute_ovirt {
+    include ::foreman::compute::ovirt
+  }
+  
+  if $foreman_plugin_cockpit {
+    include ::foreman::plugin::cockpit
+  }
+
+  if $foreman_plugin_ansible {
+    include ::foreman::plugin::docker
+  }
+
+  if $foreman_plugin_docker {
+    include ::foreman::plugin::docker
+  }
+
+  if $foreman_plugin_bootdisk {
+    include ::foreman::plugin::bootdisk
+  }
+
+  if $foreman_plugin_default_hostgroup {
+    include ::foreman::plugin::default_hostgroup
+  }
+
+  if $foreman_plugin_dhcp_browser {
+    include ::foreman::plugin::dhcp_browrser
+  }
+
+  if $foreman_plugin_digitalocean {
+    include ::foreman::plugin::digitalocean
+  }
+
+  if $foreman_plugin_discovery {
+    include ::foreman::plugin::discovery
+  }
+
+  if $foreman_plugin_hooks {
+    include ::foreman::plugin::hooks
+  }
+
+  if $foreman_plugin_memcache {
+    include ::foreman::plugin::memcache
+  }
+
+  if $foreman_plugin_remote_execution {
+    include ::foreman::plugin::remote_execution
+  }
+
+  if $foreman_plugin_remote_tasks {
+    include ::foreman::plugin::tasks
+  }
+
+  if $foreman_plugin_remote_templates {
+    include ::foreman::plugin::templates
+  }
 
   if $foreman_plugin_cockpit {
     include ::foreman::plugin::cockpit
