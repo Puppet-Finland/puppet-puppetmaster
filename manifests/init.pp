@@ -311,6 +311,8 @@
 # $foreman_proxy_include_epel::               Whether to configure EPEL
 #
 # $foreman_proxy_version::                    Foreman proxy version
+#
+# $foreman_proxy_ensure_packages_version::    Ensure extra packages version
 class puppetmaster
 (
   Boolean $puppetserver                                    = true,
@@ -475,6 +477,8 @@ class puppetmaster
   Array[String] $foreman_proxy_trusted_hosts               = [ 'kafo.tietoteema.vm' ],
   Boolean $foreman_proxy_use_sudoers                       = true,
   String $foreman_proxy_version                            = '1.15.6',
+  String $foreman_proxy_ensure_packages_version            = '1.15.6',
+  String $foreman_proxy_repo                               = '1.15.6',
   ) {
     
   if $with_puppetboard and !$with_puppetdb {
