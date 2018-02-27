@@ -673,7 +673,7 @@ class puppetmaster
       foreman_proxy_repo                    => $foreman_proxy_repo,
       foreman_proxy_registered_name         => $foreman_proxy_registered_name,
       foreman_proxy_registered_proxy_url    => $foreman_proxy_registered_proxy_url,
-      foreman_proxy_foreman_base_ur         => $foreman_proxy_foreman_base_url,
+      foreman_proxy_foreman_base_url        => $foreman_proxy_foreman_base_url,
       foreman_proxy_trusted_hosts           => $foreman_proxy_trusted_hosts,
       foreman_proxy_bind_host               => $foreman_proxy_bind_host,
       foreman_proxy_puppet                  => $foreman_proxy_puppet,
