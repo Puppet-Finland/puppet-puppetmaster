@@ -539,7 +539,6 @@ class puppetmaster
   String $foreman_proxy_puppet_url                         = 'https://kafo.tietoteema.vm:8140',
   Boolean $foreman_proxy_puppet_use_environment_api        = true,
   Boolean $foreman_proxy_puppet_use_cache                  = true,
-  Boolean $foreman_proxy_puppet_manage_authorization_rules = false,
   # puppetca settings
   Boolean $foreman_proxy_puppetca                          = false,
   String $foreman_proxy_puppetca_listen_on                 = 'https',
