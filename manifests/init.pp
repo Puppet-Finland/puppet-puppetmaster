@@ -175,6 +175,7 @@
 #
 # Foreman Proxy spesific parameters
 #
+# foreman_proxy_http                          Enable http
 #
 # $foreman_proxy_http_port::                  HTTP port to listen on (if http is enabled)
 #
