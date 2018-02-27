@@ -479,6 +479,7 @@ class puppetmaster
   String $foreman_proxy_version                            = '1.15.6',
   String $foreman_proxy_ensure_packages_version            = '1.15.6',
   String $foreman_proxy_repo                               = '1.15.6',
+  String $foreman_proxy_base_url                            = 'https://kafo.tietoteema.vm',
   ) {
     
   if $with_puppetboard and !$with_puppetdb {
