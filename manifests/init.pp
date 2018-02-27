@@ -433,6 +433,8 @@
 # $foreman_proxy_dhcp_load_balance::          Cutoff after which load balancing is disabled
 #
 # $foreman_proxy_dhcp_manage_acls::           Whether to manage DHCP directory ACLs. This allows the Foreman Proxy user to access even if the directory mode is 0750.
+#
+# foreman_proxy_include_epel                  Whether to configure EPEL
 class puppetmaster
 (
   Boolean $puppetserver                                    = true,

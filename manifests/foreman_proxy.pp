@@ -346,5 +346,6 @@ class puppetmaster::foreman_proxy
     tftp_servername         => $foreman_proxy_tftp_servername,
     manage_sudoersd         => $foreman_proxy_manage_sudoersd,
     use_sudoersd            => $foreman_proxy_use_sudoersd,
+    include_epel            => $foreman_proxy_include_epel,
   }
 }
