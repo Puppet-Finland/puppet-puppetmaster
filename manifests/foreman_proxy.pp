@@ -26,6 +26,7 @@ class puppetmaster::foreman_proxy
   $foreman_proxy_http,                   
   $foreman_proxy_http_port,              
   $foreman_proxy_manage_sudoersd,
+  $foreman_proxy_use_sudoers,
   $foreman_proxy_use_sudoersd,    
   # puppet
   $foreman_proxy_puppet_url,      
@@ -342,6 +343,7 @@ class puppetmaster::foreman_proxy
     tftp_servername         => $foreman_proxy_tftp_servername,
     manage_sudoersd         => $foreman_proxy_manage_sudoersd,
     use_sudoersd            => $foreman_proxy_use_sudoersd,
+    use_sudoers             => $foreman_proxy_use_sudoers,
     include_epel            => $foreman_proxy_include_epel,
     register_in_foreman     => $foreman_proxy_register_in_foreman,
   }

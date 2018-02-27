@@ -469,6 +469,10 @@ class puppetmaster
   Boolean $foreman_proxy_include_epel                      = false,
   String $foreman_proxy_log_level                          = 'DEBUG',
   Boolean $foreman_proxy_register_in_foreman               = true,
+  String $foreman_proxy_registered_name                    = 'kafo.tietoteema.vm',
+  String $foreman_proxy_registered_proxy_url               = 'https://kafo.tietoteema.vm:8443',
+  Array[String] $foreman_proxy_trusted_hosts               = [ 'kafo.tietoteema.vm' ],
+  Boolean $foreman_proxy_use_sudoers                       = true,
   ) {
     
   if $with_puppetboard and !$with_puppetdb {
@@ -694,6 +698,8 @@ class puppetmaster
       foreman_proxy_http                    => $foreman_proxy_http,
       foreman_proxy_log_level               => $foreman_proxy_log_level,
       foreman_proxy_register_in_foreman     => $foreman_proxy_register_in_foreman,
+      foreman_proxy_use_sudoers             => $foreman_proxy_use_sudoers,
+      foreman_proxy_use_sudoersd            => $foreman_proxy_use_sudoersd,
     }
   }
 }
