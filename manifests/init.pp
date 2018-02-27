@@ -175,7 +175,7 @@
 #
 # Foreman Proxy spesific parameters
 #
-# foreman_proxy_http                          Enable http
+# $foreman_proxy_http                          Enable http
 #
 # $foreman_proxy_http_port::                  HTTP port to listen on (if http is enabled)
 #
@@ -187,7 +187,7 @@
 #
 # $foreman_proxy_user::                       User under which foreman proxy will run
 #
-# $foreman_proxy_groups::                     Group under which foreman proxy will run
+# $foreman_proxy_group::                      Group under which foreman proxy will run
 #
 # $foreman_proxy_groups::                     Array of additional groups for the foreman proxy user
 #
