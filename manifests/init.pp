@@ -463,7 +463,7 @@ class puppetmaster
   String $foreman_proxy_tftp_root                          = '/var/lib/tftpboot',
   # BMC
   Boolean $foreman_proxy_bmc                               = false,
-  Boolean $foreman_proxy_bmc_listen_on                     = 'https',
+  String $foreman_proxy_bmc_listen_on                      = 'https',
   String $foreman_proxy_bmc_default_provider               = 'ipmitool',
   # misc
   Boolean $foreman_proxy_include_epel                      = false,
