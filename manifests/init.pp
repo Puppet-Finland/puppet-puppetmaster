@@ -520,7 +520,7 @@ class puppetmaster
   # foreman proxy spesific settings
   String $foreman_proxy_user                               = 'foreman-proxy',
   String $foreman_proxy_group                              = 'foreman-proxy',
-  Array[String] $foreman_proxy_additional_groups           = ['puppet'],
+  Array[String] $foreman_proxy_groups                      = ['puppet'],
   String $foreman_proxy_oauth_consumer_key                 = 'xEL7pzhskio8AHqWhMWCwskzvWNgvQRB',
   String $foreman_proxy_oauth_consumer_secret              = '2F5iKu5VzuRzVYRaYFQiNcPghihYn7dP',
   Boolean $foreman_proxy_templates                         = false,
@@ -812,6 +812,7 @@ class puppetmaster
       foreman_proxy_bmc_listen_on                        => $foreman_proxy_bmc_listen_on,
       foreman_proxy_bmc_default_provider                 => $foreman_proxy_bmc_default_provider,
       foreman_proxy_include_epel                         => $foreman_proxy_include_epel 
+      foreman_proxy_groups                               => $foreman_proxy_groups, 
     }
   }
 }
