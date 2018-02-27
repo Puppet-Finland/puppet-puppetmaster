@@ -179,10 +179,6 @@
 #
 # $foreman_proxy_http_port::                  HTTP port to listen on (if http is enabled)
 #
-# $foreman_proxy_ssl::                        Enable SSL, ensure feature is added with "https://" protocol if true
-#
-# $foreman_proxy_ssl_port::                   HTTPS port to listen on (if ssl is enabled)
-#
 # $foreman_proxy_user::                       User under which foreman proxy will run
 #
 # $foreman_proxy_group::                      Group under which foreman proxy will run
@@ -190,26 +186,6 @@
 # $foreman_proxy_groups::                     Array of additional groups for the foreman proxy user
 #
 # $foreman_proxy_log_level::                  Foreman proxy log level
-#
-# $foreman_proxy_log_buffer::                 Log buffer size
-#
-# $foreman_proxy_log_buffer_errors::          Additional log buffer size for errors
-#
-# $foreman_proxy_ssl_ca::                     SSL CA to validate the client certificates used to access the proxy
-#
-# $foreman_proxy_ssl_cert::                   SSL certificate to be used to run the foreman proxy via https.
-#
-# $foreman_proxy_foreman_ssl_ca::             SSL CA used to verify connections when accessing the Foreman API.
-#                               When not specified, the ssl_ca is used instead.
-#
-# $foreman_proxy_foreman_ssl_cert::           SSL client certificate used when accessing the Foreman API
-#                               When not specified, the ssl_cert is used instead.
-#
-# $foreman_proxy_foreman_ssl_key::            Corresponding key to a foreman_ssl_cert certificate
-#                               When not specified, the ssl_key is used instead.
-# $foreman_proxy_ssl_disabled_ciphers::       List of OpenSSL cipher suite names that will be disabled from the default
-#
-# $foreman_proxy_tls_disabled_versions::      List of TLS versions that will be disabled from the default
 #
 # $foreman_proxy_trusted_hosts::              Only hosts listed will be permitted, empty array to disable authorization
 #
@@ -245,16 +221,9 @@
 #
 # $foreman_proxy_puppetssh_sudo::             Whether to use sudo before commands when using puppetrun_provider puppetssh
 #
-# $foreman_proxy_puppetssh_command::          The command used by puppetrun_provider puppetssh
-#
 # $foreman_proxy_puppetssh_user::             The user for puppetrun_provider puppetssh
 #
 # $foreman_proxy_puppetssh_keyfile::          The keyfile for puppetrun_provider puppetssh commands
-#
-# $foreman_proxy_puppetssh_wait::             Whether to wait for completion of the Puppet command over SSH and return
-#                               the exit code
-#
-# $foreman_proxy_salt_puppetrun_cmd::         Salt command to trigger Puppet run
 #
 # $foreman_proxy_puppet_url::                 URL of the Puppet master itself for API requests
 #
@@ -274,14 +243,9 @@
 #
 # $foreman_proxy_tftp_manage_wget::           If enabled will install the wget package
 #
-# $foreman_proxy_tftp_syslinux_filenames::    Syslinux files to install on TFTP (full paths)
-#
 # $foreman_proxy_tftp_root::                  TFTP root directory
-# $foreman_proxy_tftp_dirs::                  Directories to be create in $tftp_root
 #
 # $foreman_proxy_tftp_servername::            Defines the TFTP Servername to use, overrides the name in the subnet declaration
-#
-# $foreman_proxy_tftp_replace_grub2_cfg::     Determines if grub2.cfg will be replaced
 #
 # $foreman_proxy_dhcp::                       Enable DHCP feature
 #
@@ -339,8 +303,6 @@
 # $foreman_proxy_registered_name::            Proxy name which is registered in Foreman
 #
 # $foreman_proxy_registered_proxy_url::       Proxy URL which is registered in Foreman
-#
-# $foreman_proxy_foreman_base_url::           Base Foreman URL used for REST interaction
 #
 # $foreman_proxy_oauth_consumer_key::         OAuth key to be used for REST interaction
 #
