@@ -86,7 +86,7 @@ class puppetmaster::foreman_proxy
   $foreman_proxy_bmc_default_provider,             
   # misc
   $foreman_proxy_include_epel,                     
-  $foreman_proxy_log_level
+  $foreman_proxy_log_level,
   $foreman_proxy_register_in_foreman,
 )
 { 
