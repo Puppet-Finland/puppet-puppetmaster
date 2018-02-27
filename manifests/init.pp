@@ -199,8 +199,6 @@
 #
 # $foreman_proxy_puppetca_listen_on::         Protocols for the Puppet CA feature to listen on
 #
-# $foreman_proxy_ssldir::                     Puppet CA SSL directory
-#
 # $foreman_proxy_puppetdir::                  Puppet var directory
 #
 # $foreman_proxy_puppetca_cmd::               Puppet CA command to be allowed in sudoers
@@ -300,9 +298,9 @@
 #
 # $foreman_proxy_register_in_foreman::        Register proxy back in Foreman
 #
-# $foreman_proxy_registered_name::            Proxy name which is registered in Foreman
+# $foreman_proxy_registered_name:: Proxy name which is registered in Foreman
 #
-# $foreman_proxy_registered_proxy_url::       Proxy URL which is registered in Foreman
+# $foreman_proxy_registered_proxy_url:: Proxy URL which is registered in Foreman
 #
 # $foreman_proxy_oauth_consumer_key::         OAuth key to be used for REST interaction
 #
