@@ -87,6 +87,7 @@ class puppetmaster::foreman_proxy
   # misc
   $foreman_proxy_include_epel,                     
   $foreman_proxy_log_level,
+  $foreman_proxy_base_url,
 )
 { 
   if ($foreman_proxy_include_epel) {
@@ -345,5 +346,6 @@ class puppetmaster::foreman_proxy
     use_sudoers             => $foreman_proxy_use_sudoers,
     include_epel            => $foreman_proxy_include_epel,
     register_in_foreman     => $foreman_proxy_register_in_foreman,
+    foreman_proxy_base_url  => $foreman_proxy_base_url,
   }
 }
