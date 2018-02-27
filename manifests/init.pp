@@ -696,7 +696,7 @@ class puppetmaster
       foreman_proxy_dhcp_search_domains     => $foreman_proxy_dhcp_search_domains,
       foreman_proxy_dhcp_pxeserver          => $foreman_proxy_dhcp_pxeserver,
       foreman_proxy_dns                     => $foreman_proxy_dns,
-      foreman_proxy_dns                     => $foreman_proxy_dns_managed,
+      foreman_proxy_dns_managed             => $foreman_proxy_dns_managed,
       foreman_proxy_dns_interface           => $foreman_proxy_dns_interface,
       foreman_proxy_dns_zone                => $foreman_proxy_dns_zone,
       foreman_proxy_dns_forwarders          => $foreman_proxy_dns_forwarders,
