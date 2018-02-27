@@ -32,7 +32,6 @@ class puppetmaster::foreman_proxy
   $foreman_proxy_puppet_use_environment_api,
   $foreman_proxy_puppet_use_cache,          
   $foreman_proxy_puppet_manage_authorization_rules,
-  $foreman_proxy_puppet_configure_puppetserver,    
   # puppetca settings
   $foreman_proxy_puppetca,                         
   $foreman_proxy_puppetca_listen_on,               
