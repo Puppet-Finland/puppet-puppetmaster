@@ -183,15 +183,11 @@
 #
 # $foreman_proxy_ssl_port::                   HTTPS port to listen on (if ssl is enabled)
 #
-# $foreman_proxy_dir::                        Foreman proxy install directory
-#
 # $foreman_proxy_user::                       User under which foreman proxy will run
 #
 # $foreman_proxy_group::                      Group under which foreman proxy will run
 #
 # $foreman_proxy_groups::                     Array of additional groups for the foreman proxy user
-#
-# $foreman_proxy_log::                        Foreman proxy log file, 'STDOUT' or 'SYSLOG'
 #
 # $foreman_proxy_log_level::                  Foreman proxy log level
 #
@@ -202,8 +198,6 @@
 # $foreman_proxy_ssl_ca::                     SSL CA to validate the client certificates used to access the proxy
 #
 # $foreman_proxy_ssl_cert::                   SSL certificate to be used to run the foreman proxy via https.
-#
-# $foreman_proxy_ssl_key::                    Corresponding key to a ssl_cert certificate
 #
 # $foreman_proxy_foreman_ssl_ca::             SSL CA used to verify connections when accessing the Foreman API.
 #                               When not specified, the ssl_ca is used instead.
@@ -235,11 +229,6 @@
 #
 # $foreman_proxy_puppetca_cmd::               Puppet CA command to be allowed in sudoers
 #
-# $foreman_proxy_puppet_group::               Groups of Foreman proxy user
-#
-# $foreman_proxy_manage_puppet_group::        Whether to ensure the $puppet_group exists.  Also ensures group owner of ssl keys and certs is $puppet_group
-#                               Not applicable when ssl is false.
-#
 # $foreman_proxy_puppet::                     Enable Puppet module for environment imports and Puppet runs
 #
 # $foreman_proxy_puppet_listen_on::           Protocols for the Puppet feature to listen on
@@ -267,29 +256,15 @@
 #
 # $foreman_proxy_salt_puppetrun_cmd::         Salt command to trigger Puppet run
 #
-# $foreman_proxy_puppet_user::                Which user to invoke sudo as to run puppet commands
-#
 # $foreman_proxy_puppet_url::                 URL of the Puppet master itself for API requests
-#
-# $foreman_proxy_puppet_ssl_ca::              SSL CA used to verify connections when accessing the Puppet master API
-#
-# $foreman_proxy_puppet_ssl_cert::            SSL certificate used when accessing the Puppet master API
-#
-# $foreman_proxy_puppet_ssl_key::             SSL private key used when accessing the Puppet master API
 #
 # $foreman_proxy_puppet_use_environment_api:: Override use of Puppet's API to list environments.  When unset, the proxy will
 #                               try to determine this automatically.
-#
-# $foreman_proxy_puppet_api_timeout::         Timeout in seconds when accessing Puppet environment classes API
-#
 # $foreman_proxy_templates::                  Enable templates feature
 #
 # $foreman_proxy_templates_listen_on::        Templates proxy to listen on https, http, or both
 #
 # $foreman_proxy_template_url::               URL a client should use for provisioning templates
-#
-# $foreman_proxy_logs::                       Enable Logs (log buffer) feature
-# $foreman_proxy_logs_listen_on::             Logs proxy to listen on https, http, or both
 #
 # $foreman_proxy_tftp::                       Enable TFTP feature
 #
@@ -323,10 +298,6 @@
 #
 # $foreman_proxy_dhcp_interface::             DHCP listen interface
 #
-# $foreman_proxy_dhcp_additional_interfaces:: Additional DHCP listen interfaces (in addition to dhcp_interface). Note: as opposed to dhcp_interface
-#                               *no* subnet will be provisioned for any of the additional DHCP listen interfaces. Please configure any
-#                               additional subnets using `dhcp::pool` and related resource types (provided by the theforeman/puppet-dhcp
-#                               module).
 # $foreman_proxy_dhcp_gateway::               DHCP pool gateway
 #
 # $foreman_proxy_dhcp_range::                 Space-separated DHCP pool range
@@ -336,12 +307,6 @@
 # $foreman_proxy_dhcp_pxeserver::             DHCP "next-server" value, defaults otherwise to IP of dhcp_interface
 #
 # $foreman_proxy_dhcp_server::                Address of DHCP server to manage
-#
-# $foreman_proxy_dhcp_omapi_port::            DHCP server OMAPI port
-#
-# $foreman_proxy_dhcp_node_type::             DHCP node type
-#
-# $foreman_proxy_dhcp_peer_address::          The other DHCP servers address
 #
 # $foreman_proxy_dns::                        Enable DNS feature
 #
@@ -358,38 +323,16 @@
 # $foreman_proxy_dns_reverse::                DNS reverse zone name
 #
 # $foreman_proxy_dns_server::                 Address of DNS server to manage
+#
 # $foreman_proxy_dns_ttl::                    DNS default TTL override
 #
-# $foreman_proxy_dns_tsig_keytab::            Kerberos keytab for DNS updates using GSS-TSIG authentication
-#
-# $foreman_proxy_dns_tsig_principal::         Kerberos principal for DNS updates using GSS-TSIG authentication
-#
 # $foreman_proxy_dns_forwarders::             DNS forwarders
-#
-# $foreman_proxy_libvirt_connection::         Connection string of libvirt DNS/DHCP provider (e.g. "qemu:///system")
-#
-# $foreman_proxy_libvirt_network::            Network for libvirt DNS/DHCP provider
 #
 # $foreman_proxy_bmc::                        Enable BMC feature
 #
 # $foreman_proxy_bmc_listen_on::              BMC proxy to listen on https, http, or both
 #
 # $foreman_proxy_bmc_default_provider::       BMC default provider.
-#
-# $foreman_proxy_keyfile::                    DNS server keyfile path
-#
-# $foreman_proxy_realm::                      Enable realm management feature
-# $foreman_proxy_realm_listen_on::            Realm proxy to listen on https, http, or both
-#
-# $foreman_proxy_realm_provider::             Realm management provider
-#
-# $foreman_proxy_realm_keytab::               Kerberos keytab path to authenticate realm updates
-#
-# $foreman_proxy_realm_principal::            Kerberos principal for realm updates
-#
-# $foreman_proxy_freeipa_config::             Path to FreeIPA default.conf configuration file
-#
-# $foreman_proxy_freeipa_remove_dns::         Remove DNS entries from FreeIPA when deleting hosts from realm
 #
 # $foreman_proxy_register_in_foreman::        Register proxy back in Foreman
 #
@@ -398,8 +341,6 @@
 # $foreman_proxy_registered_proxy_url::       Proxy URL which is registered in Foreman
 #
 # $foreman_proxy_foreman_base_url::           Base Foreman URL used for REST interaction
-#
-# $foreman_proxy_oauth_effective_user::       User to be used for REST interaction
 #
 # $foreman_proxy_oauth_consumer_key::         OAuth key to be used for REST interaction
 #
@@ -568,6 +509,8 @@ class puppetmaster
   String $foreman_proxy_bmc_default_provider               = 'ipmitool',
   # misc
   Boolean $foreman_proxy_include_epel                      = false,
+  String $foreman_proxy_log_level                          = 'DEBUG',
+  Boolean $foreman_proxy_register_in_foreman               = true,
   ) {
     
   if $with_puppetboard and !$with_puppetdb {
@@ -791,6 +734,8 @@ class puppetmaster
       foreman_proxy_group                   => $foreman_proxy_group, 
       foreman_proxy_groups                  => $foreman_proxy_groups, 
       foreman_proxy_http                    => $foreman_proxy_http,
+      foreman_proxy_log_level               => $foreman_proxy_log_level,
+      foreman_proxy_register_in_foreman     => $foreman_proxy_register_in_foreman,
     }
   }
 }

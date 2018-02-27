@@ -87,6 +87,8 @@ class puppetmaster::foreman_proxy
   $foreman_proxy_bmc_default_provider,             
   # misc
   $foreman_proxy_include_epel,                     
+  $foreman_proxy_log_level
+  $foreman_proxy_register_in_foreman,
 )
 { 
   if ($foreman_proxy_include_epel) {
@@ -306,11 +308,10 @@ class puppetmaster::foreman_proxy
     puppetca                => $foreman_proxy_puppetca,
     puppetdir               => $foreman_proxy_puppetdir,
     puppetca_cmd            => $foreman_proxy_puppetca_cmd,
-    log_level               => 'DEBUG',
+    log_level               => $foreman_proxy_log_level,
     tftp                    => $foreman_proxy_tftp,
     tftp_managed            => $foreman_proxy_tftp_managed,
     tftp_manage_wget        => $foreman_proxy_tftp_manage_wget,
-    #tftp_dirs              => $foreman_proxy_tftp_dirs,
     dhcp_managed            => $foreman_proxy_dhcp_managed,
     dhcp                    => $foreman_proxy_dhcp,
     dhcp_listen_on          => $foreman_proxy_dhcp_listen_on,
@@ -321,7 +322,6 @@ class puppetmaster::foreman_proxy
     dhcp_nameservers        => $foreman_proxy_dhcp_nameservers,
     dhcp_option_domain      => $foreman_proxy_dhcp_option_domain, 
     dhcp_search_domains     => $foreman_proxy_dhcp_search_domains,
-    # dhcp_pxeserver          => $foreman_proxy_dhcp_pxeserver,
     dns                     => $foreman_proxy_dns,
     dns_managed             => $foreman_proxy_dns_managed,
     dns_interface           => $foreman_proxy_dns_interface,
@@ -345,5 +345,6 @@ class puppetmaster::foreman_proxy
     manage_sudoersd         => $foreman_proxy_manage_sudoersd,
     use_sudoersd            => $foreman_proxy_use_sudoersd,
     include_epel            => $foreman_proxy_include_epel,
+    register_in_foreman     => $foreman_proxy_register_in_foreman,
   }
 }
