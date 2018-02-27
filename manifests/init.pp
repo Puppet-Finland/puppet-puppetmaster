@@ -313,6 +313,12 @@
 # $foreman_proxy_version::                    Foreman proxy version
 #
 # $foreman_proxy_ensure_packages_version::    Ensure extra packages version
+#
+# $foreman_proxy_base_url::                   Base url of the foreman proxy
+#
+# $foreman_proxy_bind_host::                  Bind address of the foreman proxy
+#
+# $foreman_proxy_repo::                       Version of the repo
 class puppetmaster
 (
   Boolean $puppetserver                                    = true,
