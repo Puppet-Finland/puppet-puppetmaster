@@ -175,7 +175,7 @@
 #
 # Foreman Proxy spesific parameters
 #
-# $foreman_proxy_http                          Enable http
+# $foreman_proxy_http                         Enable http
 #
 # $foreman_proxy_http_port::                  HTTP port to listen on (if http is enabled)
 #
@@ -817,6 +817,7 @@ class puppetmaster
       foreman_proxy_include_epel            => $foreman_proxy_include_epel, 
       foreman_proxy_group                   => $foreman_proxy_group, 
       foreman_proxy_groups                  => $foreman_proxy_groups, 
+      foreman_proxy_http                    => $foreman_proxy_http,
     }
   }
 }
