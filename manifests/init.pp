@@ -431,7 +431,6 @@ class puppetmaster
   Boolean $foreman_proxy_puppetssh_sudo                    = false,
   String $foreman_proxy_puppetssh_user                     = 'vagrant',
   String $foreman_proxy_puppetssh_keyfile                  = '/etc/foreman-proxy/id_rsa',
-  Boolean $foreman_proxy_puppetssh_wait                    = false,
   # dhcp
   Boolean $foreman_proxy_dhcp                              = false,
   Boolean $foreman_proxy_dhcp_managed                      = false,
@@ -464,7 +463,6 @@ class puppetmaster
   Boolean $foreman_proxy_tftp_manage_wget                  = true,
   String $foreman_proxy_tftp_listen_on                     = 'both',  
   String $foreman_proxy_tftp_root                          = '/var/lib/tftpboot',
-  Array[String] $foreman_proxy_tftp_dirs                   = ["${tftp_root}/pxelinux.cfg","${tftp_root}/boot","${tftp_root}/ztp.cfg","${tftp_root}/poap.cfg"],
   # BMC
   Boolean $foreman_proxy_bmc                               = false,
   Boolean $foreman_proxy_bmc_listen_on                     = 'https',

@@ -47,7 +47,6 @@ class puppetmaster::foreman_proxy
   $foreman_proxy_puppetssh_sudo,                   
   $foreman_proxy_puppetssh_user,                   
   $foreman_proxy_puppetssh_keyfile,                
-  $foreman_proxy_puppetssh_wait,                   
   # dhcp
   $foreman_proxy_dhcp,                             
   $foreman_proxy_dhcp_managed,                     
@@ -80,7 +79,6 @@ class puppetmaster::foreman_proxy
   $foreman_proxy_tftp_manage_wget,                 
   $foreman_proxy_tftp_listen_on,                   
   $foreman_proxy_tftp_root,                        
-  $foreman_proxy_tftp_dirs,                        
   # BMC
   $foreman_proxy_bmc,                              
   $foreman_proxy_bmc_listen_on,                    
