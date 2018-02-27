@@ -672,7 +672,7 @@ class puppetmaster
       foreman_proxy_tftp_manage_wget        => $foreman_proxy_tftp_manage_wget,
       foreman_proxy_tftp_dirs               => $foreman_proxy_tftp_dirs,
       foreman_proxy_dhcp_managed            => $foreman_proxy_dhcp_managed,
-      foreman_proxy_dhcp_managed            => $foreman_proxy_dhcp,
+      foreman_proxy_dhcp                    => $foreman_proxy_dhcp,
       foreman_proxy_dhcp_listen_on          => $foreman_proxy_dhcp_listen_on,
       foreman_proxy_dhcp_interface          => $foreman_proxy_dhcp_interface,
       foreman_proxy_dhcp_subnets            => $foreman_proxy_dhcp_subnets, 
