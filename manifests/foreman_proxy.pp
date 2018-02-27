@@ -87,7 +87,6 @@ class puppetmaster::foreman_proxy
   # misc
   $foreman_proxy_include_epel,                     
   $foreman_proxy_log_level,
-  $foreman_proxy_register_in_foreman,
 )
 { 
   if ($foreman_proxy_include_epel) {
