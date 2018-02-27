@@ -237,8 +237,6 @@
 #
 # $foreman_proxy_puppet_group::               Groups of Foreman proxy user
 #
-# $foreman_proxy_autosignfile::               Path to the autosign file
-#
 # $foreman_proxy_manage_puppet_group::        Whether to ensure the $puppet_group exists.  Also ensures group owner of ssl keys and certs is $puppet_group
 #                               Not applicable when ssl is false.
 #
@@ -339,14 +337,6 @@
 #
 # $foreman_proxy_dhcp_server::                Address of DHCP server to manage
 #
-# $foreman_proxy_dhcp_config::                DHCP config file path
-#
-# $foreman_proxy_dhcp_leases::                DHCP leases file
-#
-# $foreman_proxy_dhcp_key_name::              DHCP key name
-#
-# $foreman_proxy_dhcp_key_secret::            DHCP password
-#
 # $foreman_proxy_dhcp_omapi_port::            DHCP server OMAPI port
 #
 # $foreman_proxy_dhcp_node_type::             DHCP node type
@@ -416,24 +406,6 @@
 # $foreman_proxy_oauth_consumer_secret::      OAuth secret to be used for REST interaction
 #
 # $foreman_proxy_puppet_use_cache::           Whether to enable caching of puppet classes
-#
-# === Advanced parameters:
-#
-# $foreman_proxy_dhcp_failover_address::      Address for DHCP to listen for connections from its peer
-#
-# $foreman_proxy_dhcp_failover_port::         Port for DHCP to listen & communicate with it DHCP peer
-#
-# $foreman_proxy_dhcp_max_response_delay::    Seconds after it will assume that connection has failed to DHCP peer
-#
-# $foreman_proxy_dhcp_max_unacked_updates::   How many BNDUPD messages DHCP can send before it receives a BNDACK from the local system
-#
-# $foreman_proxy_dhcp_mclt::                  Seconds for which a lease may be renewed by either failover peer without contacting the other
-#
-# $foreman_proxy_dhcp_load_split::            Split leases between Primary and Secondary. 255 means Primary is chiefly responsible. 0 means Secondary is chiefly responsible.
-#
-# $foreman_proxy_dhcp_load_balance::          Cutoff after which load balancing is disabled
-#
-# $foreman_proxy_dhcp_manage_acls::           Whether to manage DHCP directory ACLs. This allows the Foreman Proxy user to access even if the directory mode is 0750.
 #
 # $foreman_proxy_include_epel::               Whether to configure EPEL
 #
