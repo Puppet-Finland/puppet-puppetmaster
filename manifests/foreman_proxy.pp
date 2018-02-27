@@ -334,6 +334,7 @@ class puppetmaster::foreman_proxy
     bmc                     => $foreman_proxy_bmc,
     bmc_listen_on           => $foreman_proxy_bmc_listen_on,
     bmc_default_provider    => $foreman_proxy_bmc_default_provider,
+    group                   => $foreman_proxy_group, 
     groups                  => $foreman_proxy_groups, 
     oauth_consumer_key      => $foreman_proxy_oauth_consumer_key,
     oauth_consumer_secret   => $foreman_proxy_oauth_consumer_secret,

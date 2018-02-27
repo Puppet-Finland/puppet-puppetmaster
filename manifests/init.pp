@@ -186,6 +186,8 @@
 #
 # $foreman_proxy_user::                       User under which foreman proxy will run
 #
+# $foreman_proxy_groups::                     Group under which foreman proxy will run
+#
 # $foreman_proxy_groups::                     Array of additional groups for the foreman proxy user
 #
 # $foreman_proxy_log::                        Foreman proxy log file, 'STDOUT' or 'SYSLOG'
@@ -811,7 +813,8 @@ class puppetmaster
       foreman_proxy_bmc                                  => $foreman_proxy_bmc,
       foreman_proxy_bmc_listen_on                        => $foreman_proxy_bmc_listen_on,
       foreman_proxy_bmc_default_provider                 => $foreman_proxy_bmc_default_provider,
-      foreman_proxy_include_epel                         => $foreman_proxy_include_epel 
+      foreman_proxy_include_epel                         => $foreman_proxy_include_epel, 
+      foreman_proxy_group                                => $foreman_proxy_group, 
       foreman_proxy_groups                               => $foreman_proxy_groups, 
     }
   }
