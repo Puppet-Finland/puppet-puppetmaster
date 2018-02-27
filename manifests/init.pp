@@ -479,7 +479,8 @@ class puppetmaster
   String $foreman_proxy_version                            = '1.15.6',
   String $foreman_proxy_ensure_packages_version            = '1.15.6',
   String $foreman_proxy_repo                               = '1.15.6',
-  String $foreman_proxy_base_url                            = 'https://kafo.tietoteema.vm',
+  String $foreman_proxy_base_url                           = 'https://kafo.tietoteema.vm',
+  String $foreman_proxy_bind_host                          = '0.0.0.0',
   ) {
     
   if $with_puppetboard and !$with_puppetdb {
@@ -677,7 +678,6 @@ class puppetmaster
       foreman_proxy_tftp                    => $foreman_proxy_tftp,
       foreman_proxy_tftp_managed            => $foreman_proxy_tftp_managed,
       foreman_proxy_tftp_manage_wget        => $foreman_proxy_tftp_manage_wget,
-      foreman_proxy_tftp_dirs               => $foreman_proxy_tftp_dirs,
       foreman_proxy_dhcp_managed            => $foreman_proxy_dhcp_managed,
       foreman_proxy_dhcp                    => $foreman_proxy_dhcp,
       foreman_proxy_dhcp_listen_on          => $foreman_proxy_dhcp_listen_on,
