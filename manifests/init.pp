@@ -310,6 +310,7 @@
 #
 # $foreman_proxy_include_epel::               Whether to configure EPEL
 #
+# $foreman_proxy_version::                    Foreman proxy version
 class puppetmaster
 (
   Boolean $puppetserver                                    = true,
@@ -473,6 +474,7 @@ class puppetmaster
   String $foreman_proxy_registered_proxy_url               = 'https://kafo.tietoteema.vm:8443',
   Array[String] $foreman_proxy_trusted_hosts               = [ 'kafo.tietoteema.vm' ],
   Boolean $foreman_proxy_use_sudoers                       = true,
+  String $foreman_proxy_version                            = '1.15.6',
   ) {
     
   if $with_puppetboard and !$with_puppetdb {
