@@ -1,20 +1,16 @@
 class puppetmaster::foreman_proxy
 (  # foreman
   $foreman_proxy_foreman_url,
-  $foreman_proxy_foreman_admin_user,
-  $foreman_proxy_foreman_admin_password,
   # foreman-proxy
   $foreman_proxy_bind_host,             
   $foreman_proxy_trusted_hosts,         
   $foreman_proxy_register_in_foreman,   
   $foreman_proxy_registered_name,       
   $foreman_proxy_registered_proxy_url,  
-  $foreman_proxy_foreman_base_url,      
+  $foreman_proxy_base_url,      
   $foreman_proxy_version,               
   $foreman_proxy_repo,                                
   $foreman_proxy_ensure_packages_version,
-  $foreman_proxy_manage_memcached,       
-  $foreman_proxy_memcached_max_memory,   
   $foreman_proxy_user,                   
   $foreman_proxy_group,                  
   $foreman_proxy_groups,      
@@ -87,7 +83,6 @@ class puppetmaster::foreman_proxy
   # misc
   $foreman_proxy_include_epel,                     
   $foreman_proxy_log_level,
-  $foreman_proxy_base_url,
 )
 { 
   if ($foreman_proxy_include_epel) {
@@ -295,11 +290,12 @@ class puppetmaster::foreman_proxy
 
   class { '::foreman_proxy':
     version                 => $foreman_proxy_version,
+    user                    => $foreman_proxy_user,
     ensure_packages_version => $foreman_proxy_ensure_packages_version,
     repo                    => $foreman_proxy_repo,
     registered_name         => $foreman_proxy_registered_name,
     registered_proxy_url    => $foreman_proxy_registered_proxy_url,
-    foreman_base_url        => $foreman_proxy_foreman_base_url,
+    foreman_proxy_base_url  => $foreman_proxy_base_url,
     trusted_hosts           => $foreman_proxy_trusted_hosts,
     bind_host               => $foreman_proxy_bind_host,
     puppet                  => $foreman_proxy_puppet,

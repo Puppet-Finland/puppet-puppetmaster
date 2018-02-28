@@ -314,7 +314,7 @@
 #
 # $foreman_proxy_ensure_packages_version::    Ensure extra packages version
 #
-# $foreman_proxy_base_url::                   Base url of the foreman proxy
+# $foreman_proxy_foreman_base_url::          Base url of Foreman for REST 
 #
 # $foreman_proxy_bind_host::                  Bind address of the foreman proxy
 #
@@ -485,7 +485,7 @@ class puppetmaster
   String $foreman_proxy_version                            = '1.15.6',
   String $foreman_proxy_ensure_packages_version            = '1.15.6',
   String $foreman_proxy_repo                               = '1.15.6',
-  String $foreman_proxy_base_url                           = 'https://kafo.tietoteema.vm',
+  String $foreman_proxy_foreman_base_url                   = 'https://kafo.tietoteema.vm',
   String $foreman_proxy_bind_host                          = '0.0.0.0',
   ) {
     
@@ -673,7 +673,7 @@ class puppetmaster
       foreman_proxy_repo                    => $foreman_proxy_repo,
       foreman_proxy_registered_name         => $foreman_proxy_registered_name,
       foreman_proxy_registered_proxy_url    => $foreman_proxy_registered_proxy_url,
-      foreman_proxy_base_url                => $foreman_proxy_base_url,
+      foreman_proxy_foreman_base_url        => $foreman_proxy_foreman_base_url,
       foreman_proxy_trusted_hosts           => $foreman_proxy_trusted_hosts,
       foreman_proxy_bind_host               => $foreman_proxy_bind_host,
       foreman_proxy_puppet                  => $foreman_proxy_puppet,
@@ -716,3 +716,4 @@ class puppetmaster
     }
   }
 }
+B
