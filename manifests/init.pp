@@ -181,8 +181,6 @@
 #
 # $foreman_proxy_user::                       User under which foreman proxy will run
 #
-# $foreman_proxy_group::                      Group under which foreman proxy will run
-#
 # $foreman_proxy_groups::                     Array of additional groups for the foreman proxy user
 #
 # $foreman_proxy_log_level::                  Foreman proxy log level
@@ -308,8 +306,6 @@
 #
 # $foreman_proxy_puppet_use_cache::           Whether to enable caching of puppet classes
 #
-# $foreman_proxy_include_epel::               Whether to configure EPEL
-#
 # $foreman_proxy_version::                    Foreman proxy version
 #
 # $foreman_proxy_ensure_packages_version::    Ensure extra packages version
@@ -407,7 +403,6 @@ class puppetmaster
   Boolean $foreman_plugin_templates                        = false,    
   # foreman proxy spesific settings
   String $foreman_proxy_user                               = 'foreman-proxy',
-  String $foreman_proxy_group                              = 'foreman-proxy',
   Array[String] $foreman_proxy_groups                      = ['puppet'],
   String $foreman_proxy_oauth_consumer_key                 = 'xEL7pzhskio8AHqWhMWCwskzvWNgvQRB',
   String $foreman_proxy_oauth_consumer_secret              = '2F5iKu5VzuRzVYRaYFQiNcPghihYn7dP',
@@ -475,7 +470,6 @@ class puppetmaster
   String $foreman_proxy_bmc_listen_on                      = 'https',
   String $foreman_proxy_bmc_default_provider               = 'ipmitool',
   # misc
-  Boolean $foreman_proxy_include_epel                      = false,
   String $foreman_proxy_log_level                          = 'DEBUG',
   Boolean $foreman_proxy_register_in_foreman               = true,
   String $foreman_proxy_registered_name                    = 'kafo.tietoteema.vm',
@@ -706,8 +700,6 @@ class puppetmaster
       foreman_proxy_bmc                        => $foreman_proxy_bmc,
       foreman_proxy_bmc_listen_on              => $foreman_proxy_bmc_listen_on,
       foreman_proxy_bmc_default_provider       => $foreman_proxy_bmc_default_provider,
-      foreman_proxy_include_epel               => $foreman_proxy_include_epel, 
-      foreman_proxy_group                      => $foreman_proxy_group, 
       foreman_proxy_groups                     => $foreman_proxy_groups, 
       foreman_proxy_http                       => $foreman_proxy_http,
       foreman_proxy_log_level                  => $foreman_proxy_log_level,
