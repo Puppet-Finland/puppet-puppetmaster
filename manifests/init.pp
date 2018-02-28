@@ -411,8 +411,8 @@ class puppetmaster
   String $foreman_proxy_template_url                       = 'http://puppet.tietoteema.vm:8000',
   Boolean $foreman_proxy_http                              = true,
   Integer $foreman_proxy_http_port                         = 8000,
-  Boolean $foreman_proxy_manage_sudoersd                   = false,
-  Boolean $foreman_proxy_use_sudoersd                      = false,
+  Boolean $foreman_proxy_manage_sudoersd                   = true,
+  Boolean $foreman_proxy_use_sudoersd                      = true,
   # puppet
   String $foreman_proxy_puppet_url                         = 'https://kafo.tietoteema.vm:8140',
   Boolean $foreman_proxy_puppet_use_environment_api        = true,
