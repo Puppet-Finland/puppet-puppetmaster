@@ -1,7 +1,5 @@
 class puppetmaster::foreman_proxy
-(  # foreman
-  $foreman_proxy_foreman_url,
-  # foreman-proxy
+( 
   $foreman_proxy_bind_host,             
   $foreman_proxy_trusted_hosts,         
   $foreman_proxy_register_in_foreman,   
