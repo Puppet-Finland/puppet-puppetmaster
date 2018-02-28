@@ -415,7 +415,7 @@ class puppetmaster
   String $foreman_proxy_templates_listen_on                = 'http',
   String $foreman_proxy_template_url                       = 'http://puppet.tietoteema.vm:8000',
   Boolean $foreman_proxy_http                              = true,
-  String $foreman_proxy_http_port                          = '8000',
+  Integer $foreman_proxy_http_port                         = 8000,
   Boolean $foreman_proxy_manage_sudoersd                   = false,
   Boolean $foreman_proxy_use_sudoersd                      = false,
   # puppet
@@ -462,7 +462,7 @@ class puppetmaster
   String $foreman_proxy_dns_zone                           = $::domain,  
   String $foreman_proxy_dns_reverse                        = '137.168.192.in-addr.arpa',  
   String $foreman_proxy_dns_server                         = '192.168.137.10',
-  String $foreman_proxy_dns_ttl                            = '86400',  
+  Integer $foreman_proxy_dns_ttl                           = 86400,  
   # tftp
   Boolean $foreman_proxy_tftp                              = false,
   Boolean $foreman_proxy_tftp_managed                      = false,
@@ -483,7 +483,7 @@ class puppetmaster
   Array[String] $foreman_proxy_trusted_hosts               = [ 'kafo.tietoteema.vm' ],
   Boolean $foreman_proxy_use_sudoers                       = true,
   String $foreman_proxy_version                            = '1.15.6',
-  String $foreman_proxy_ensure_packages_version            = '1.15.6',
+  Enum['absent', 'installed', 'latest', 'present'] $foreman_proxy_ensure_packages_version            = 'installed',
   String $foreman_proxy_repo                               = '1.15.6',
   String $foreman_proxy_foreman_base_url                   = 'https://kafo.tietoteema.vm',
   String $foreman_proxy_bind_host                          = '0.0.0.0',
