@@ -78,14 +78,9 @@ class puppetmaster::foreman_proxy
   $foreman_proxy_bmc_listen_on,                    
   $foreman_proxy_bmc_default_provider,             
   # misc
-  $foreman_proxy_include_epel,                     
   $foreman_proxy_log_level,
 )
 { 
-  if ($foreman_proxy_include_epel) {
-    include epel
-  }
-  
   if defined(Service['foreman::service']) {
     service { 'foreman::service':
       ensure => running,
