@@ -418,7 +418,7 @@ class puppetmaster
   Boolean $foreman_proxy_puppet_use_environment_api        = true,
   Boolean $foreman_proxy_puppet_use_cache                  = true,
   # puppetca settings
-  Boolean $foreman_proxy_puppetca                          = false,
+  Boolean $foreman_proxy_puppetca                          = true,
   String $foreman_proxy_puppetca_listen_on                 = 'https',
   String $foreman_proxy_puppetca_cmd                       = '/opt/puppetlabs/bin/puppet cert', 
   String $foreman_proxy_puppetdir                          = '/etc/puppetlabs/puppet',
