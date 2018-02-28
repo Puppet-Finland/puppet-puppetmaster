@@ -478,7 +478,7 @@ class puppetmaster
   Boolean $foreman_proxy_use_sudoers                       = true,
   String $foreman_proxy_version                            = '1.15.6',
   Enum['absent', 'installed', 'latest', 'present'] $foreman_proxy_ensure_packages_version            = 'installed',
-  String $foreman_proxy_repo                               = '1.15.6',
+  String $foreman_proxy_repo                               = '1.15',
   String $foreman_proxy_foreman_base_url                   = 'https://kafo.tietoteema.vm',
   Array[String] $foreman_proxy_bind_host                   = [ '0.0.0.0' ],
   ) {
