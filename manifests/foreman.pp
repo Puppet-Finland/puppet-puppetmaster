@@ -87,17 +87,17 @@ class puppetmaster::foreman
   }
 
   firewall { '8443 allow outgoing traffic to smart proxies':
-    chain       => 'OUTPUT',
-    state       => ['NEW'],
-    dport       => '8443',
-    proto       => 'tcp',
-    action      => 'accept',
+    chain  => 'OUTPUT',
+    state  => ['NEW'],
+    dport  => '8443',
+    proto  => 'tcp',
+    action => 'accept',
   }
 
   if ! $foreman_db_manage {
   
     ::postgresql::server::role { $foreman_db_username:
-      password_hash => postgresql_password($foreman_db_username, $foreman_db_password),
+      password_hash    => postgresql_password($foreman_db_username, $foreman_db_password),
       connection_limit => $foreman_db_connection_limit,
     }
     
@@ -180,19 +180,19 @@ class puppetmaster::foreman
   if $foreman_compute_vmware {
     include ::foreman::compute::vmware
   }
-
+  
   if $foreman_compute_libvirt {
     include ::foreman::compute::libvirt
   }
-
+  
   if $foreman_compute_ec2 {
     include ::foreman::compute::ec2
   }
-
+  
   if $foreman_compute_gce {
     include ::foreman::compute::gce
   }
-
+  
   if $foreman_compute_openstack {
     include ::foreman::compute::openstack
   }
@@ -204,10 +204,11 @@ class puppetmaster::foreman
   if $foreman_plugin_cockpit {
     include ::foreman::plugin::cockpit
   }
-
+  
   if $foreman_plugin_ansible {
-
+    
     include ::foreman::plugin::ansible
+
     package { 'ansible':
       ensure  => installed,
       require => Class['::foreman::plugin::ansible'],
@@ -217,13 +218,13 @@ class puppetmaster::foreman
   if $foreman_plugin_docker {
     include ::foreman::plugin::docker
   }
-
+  
   if $foreman_plugin_bootdisk {
     include ::foreman::plugin::bootdisk
   }
-
+  
   if $foreman_plugin_default_hostgroup {
-
+    
     include ::foreman::plugin::default_hostgroup
     $default_hostgroup_template = @(END)
 ---
@@ -247,7 +248,7 @@ END
   }
 
   if $foreman_plugin_dhcp_browser {
-    include ::foreman::plugin::dhcp_browrser
+    include ::foreman::plugin::dhcp_browser
   }
 
   if $foreman_plugin_digitalocean {
@@ -279,14 +280,14 @@ END
   }
 
   class { '::foreman::plugin::puppetdb':
-    dashboard_address     => $foreman_puppetdb_dashboard_address,
-    address               => $foreman_puppetdb_address,
+    dashboard_address => $foreman_puppetdb_dashboard_address,
+    address           => $foreman_puppetdb_address,
   }
 
   class { '::foreman::cli':
-    foreman_url           => $foreman_foreman_url,
-    username              => 'admin',
-    password              => $foreman_admin_password,
-    manage_root_config    => true,
+    foreman_url        => $foreman_foreman_url,
+    username           => 'admin',
+    password           => $foreman_admin_password,
+    manage_root_config => true,
   }
 }

@@ -153,8 +153,8 @@ class puppetmaster::foreman_proxy
       environment => 'PATH=/opt/puppetlabs/bin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin',
       command     => "foreman-rake templates:sync",
       user        => 'root',
-      hour      => '0',
-      minute    => '0',
+      hour        => '0',
+      minute      => '0',
     }                       
   }
     
@@ -222,11 +222,11 @@ class puppetmaster::foreman_proxy
  #   }
 
     firewall { '8140 allow foreman proxy incoming puppet':
-      chain       => 'INPUT',
-      state       => ['NEW'],
-      dport       => '8140',
-      proto       => 'tcp',
-      action      => 'accept',
+      chain  => 'INPUT',
+      state  => ['NEW'],
+      dport  => '8140',
+      proto  => 'tcp',
+      action => 'accept',
     }
     
   }
