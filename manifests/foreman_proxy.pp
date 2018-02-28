@@ -87,12 +87,6 @@ class puppetmaster::foreman_proxy
     include epel
   }
   
-  if ($foreman_proxy_manage_memcached) {
-    class { 'memcached':
-      max_memory => "$memcached_max_memory",
-    }
-  }       
-
   if defined(Service['foreman::service']) {
     service { 'foreman::service':
       ensure => running,
