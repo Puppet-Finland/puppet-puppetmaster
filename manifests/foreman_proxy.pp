@@ -282,7 +282,6 @@ class puppetmaster::foreman_proxy
     manage_sudoersd         => $foreman_proxy_manage_sudoersd,
     use_sudoersd            => $foreman_proxy_use_sudoersd,
     use_sudoers             => $foreman_proxy_use_sudoers,
-    include_epel            => $foreman_proxy_include_epel,
     register_in_foreman     => $foreman_proxy_register_in_foreman,
   }
 }
