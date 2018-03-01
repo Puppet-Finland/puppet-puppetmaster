@@ -318,7 +318,6 @@
 # $foreman_proxy_bind_host::                  Bind address of the foreman proxy
 #
 # $foreman_proxy_repo::                       Version of the repo
-include stdlib 
 class puppetmaster
 (
   Boolean $puppetserver                                                                   = true,
@@ -331,7 +330,7 @@ class puppetmaster
   String $logs_liftime                                                                    = '90d',
   Boolean $show_diff                                                                      = false,
   Boolean $server_foreman                                                                 = false,
-  Variant[Boolean, Stdlib::Absolutepath] $autosign                                        = false,
+  Variant[Boolean, String] $autosign                                                      = false,
   Array[String] $autosign_entries                                                         = [ '*.tietoteema.vm' ],
   Array[String] $primary_names                                                            = [ 'kafo.tietoteema.vm', 'kafo' ],
   String $server_reports                                                                  = 'store',
