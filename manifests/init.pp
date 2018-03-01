@@ -318,6 +318,7 @@
 # $foreman_proxy_bind_host::                  Bind address of the foreman proxy
 #
 # $foreman_proxy_repo::                       Version of the repo
+include stdlib 
 class puppetmaster
 (
   Boolean $puppetserver                                                                   = true,
@@ -505,8 +506,6 @@ class puppetmaster
   
   if $puppetserver {
     
-    include stdlib
-
     class { '::hosts':
       primary_names => $primary_names,
     }               
