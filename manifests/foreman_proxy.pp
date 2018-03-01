@@ -79,6 +79,7 @@ class puppetmaster::foreman_proxy
   $foreman_proxy_bmc_default_provider,             
   # misc
   $foreman_proxy_log_level,
+  $foreman_proxy_autosignfile, 
 )
 { 
   if defined(Service['foreman::service']) {
@@ -283,5 +284,6 @@ class puppetmaster::foreman_proxy
     use_sudoersd            => $foreman_proxy_use_sudoersd,
     use_sudoers             => $foreman_proxy_use_sudoers,
     register_in_foreman     => $foreman_proxy_register_in_foreman,
+    autosignfile            => $foreman_proxy_autosignfile, 
   }
 }

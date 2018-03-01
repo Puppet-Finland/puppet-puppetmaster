@@ -318,6 +318,8 @@
 # $foreman_proxy_bind_host::                  Bind address of the foreman proxy
 #
 # $foreman_proxy_repo::                       Version of the repo
+#
+# $foreman_proxy_autosignfile::               Path to the puppet autosignfile
 class puppetmaster
 (
   Boolean $puppetserver                                                                   = true,
@@ -484,6 +486,7 @@ class puppetmaster
   String $foreman_proxy_repo                                                              = '1.15',
   String $foreman_proxy_foreman_base_url                                                  = 'https://kafo.tietoteema.vm',
   Array[String] $foreman_proxy_bind_host                                                  = [ '0.0.0.0' ],
+  String $foreman_proxy_autosignfile                                                      = '/etc/puppetlabs/puppet/autosign.conf',
 )
 {
 
@@ -737,6 +740,7 @@ class puppetmaster
       foreman_proxy_tftp_servername            => $foreman_proxy_tftp_servername,
       foreman_proxy_tftp_listen_on             => $foreman_proxy_tftp_listen_on,
       foreman_proxy_tftp_root                  => $foreman_proxy_tftp_root,      
+      foreman_proxy_autosignfile               => $foreman_proxy_autosignfile,  
     }
   }
 }
