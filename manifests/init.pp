@@ -486,8 +486,6 @@ class puppetmaster
   Array[String] $foreman_proxy_bind_host                                                  = [ '0.0.0.0' ],
 )
 {
-  
-  include ::stdlib
 
   if $with_puppetboard and !$with_puppetdb {
     notify { "Puppetboard needs Puppetdb. installing Puppetdb too": }
@@ -507,6 +505,8 @@ class puppetmaster
   
   if $puppetserver {
     
+    include stdlib
+
     class { '::hosts':
       primary_names => $primary_names,
     }               
