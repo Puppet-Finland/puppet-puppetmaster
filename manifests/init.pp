@@ -330,7 +330,7 @@ class puppetmaster
   String $logs_liftime                                                                    = '90d',
   Boolean $show_diff                                                                      = false,
   Boolean $server_foreman                                                                 = false,
-  Boolean $autosign                                                                       = false,
+  Variant[Boolean, Stdlib::Absolutepath] $autosign                                        = false,
   Array[String] $autosign_entries                                                         = [ '*.tietoteema.vm' ],
   Array[String] $primary_names                                                            = [ 'kafo.tietoteema.vm', 'kafo' ],
   String $server_reports                                                                  = 'store',
