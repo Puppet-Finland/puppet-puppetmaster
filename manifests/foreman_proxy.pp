@@ -285,5 +285,6 @@ class puppetmaster::foreman_proxy
     use_sudoers             => $foreman_proxy_use_sudoers,
     register_in_foreman     => $foreman_proxy_register_in_foreman,
     autosignfile            => $foreman_proxy_autosignfile, 
+    use-autosignfile        => true,
   }
 }
