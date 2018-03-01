@@ -320,6 +320,7 @@
 # $foreman_proxy_repo::                       Version of the repo
 #
 # $foreman_proxy_autosignfile::               Path to the puppet autosignfile
+#
 class puppetmaster
 (
   Boolean $puppetserver                                                                   = true,
