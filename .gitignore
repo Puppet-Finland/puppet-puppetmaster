@@ -5,3 +5,4 @@ modules/
 Puppetfile.lock
 configuration*.log
 .vagrant
+*~
