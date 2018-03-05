@@ -1,0 +1,23 @@
+---
+:name: puppetserver
+:description: install puppetserver without anything extra
+:enabled: true
+:log_dir: "/var/log/kafo"
+:store_dir: ''
+:log_name: puppetserver-scenario.log
+:log_level: info
+:no_prefix: false
+:mapping: {}
+:answer_file: "./config/installer-scenarios.d/puppetserver-answers.yaml"
+:installer_dir: "."
+:module_dirs:
+- "./modules"
+- "."
+- "/home/ubuntu/modules"
+:colors: true
+:color_of_background: :dark
+:hook_dirs: []
+:custom: {}
+:low_priority_modules: []
+:verbose_log_level: info
+:skip_puppet_version_check: false
