@@ -1,0 +1,7 @@
+.librarian/
+.tmp/
+.yardoc
+modules/
+Puppetfile.lock
+configuration*.log
+.vagrant

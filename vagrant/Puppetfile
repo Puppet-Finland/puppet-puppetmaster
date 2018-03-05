@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+#^syntax detection
+
+forge 'https://forgeapi.puppetlabs.com'
+
+mod 'puppetlabs-stdlib'
+
+mod 'puppetfinland-kafo',
+    :git => 'https://github.com/Puppet-Finland/puppet-kafo.git'
