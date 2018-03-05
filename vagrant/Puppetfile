@@ -3,7 +3,10 @@
 
 forge 'https://forgeapi.puppetlabs.com'
 
-mod 'puppetlabs-stdlib'
+# We need to use stdlib <4.20.0 due to this bug:
+#
+# <http://projects.theforeman.org/issues/20893>
+mod 'puppetlabs-stdlib', '4.19.0'
 
 mod 'puppetfinland-kafo',
     :git => 'https://github.com/Puppet-Finland/puppet-kafo.git'
