@@ -13,6 +13,7 @@ Vagrant.configure("2") do |config|
       s.path = "vagrant/prepare.sh"
       s.args = ["-n", "puppetmaster", "-f", "debian", "-o", "xenial", "-b", "/home/ubuntu"]
     end
+    box.vm.provision "shell", inline: "puppet apply --modulepath /home/ubuntu/modules /vagrant/vagrant/xenial.pp"
     box.vm.provision "shell", inline: "puppet apply --modulepath /home/ubuntu/modules /vagrant/vagrant/default.pp"
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
