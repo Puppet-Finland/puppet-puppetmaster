@@ -22,7 +22,7 @@ usage() {
 
 # We are run without parameters -> usage
 if [ "$1" == "" ]; then
-        usage
+    usage
 fi
 
 while getopts "n:f:o:b:h" options; do
@@ -79,8 +79,6 @@ setup_puppet() {
 		systemctl disable firewalld
 		systemctl mask firewalld
             fi
-            /usr/bin/sed -i 's/enforcing/disabled/g' /etc/selinux/config /etc/selinux/config
-            /sbin/setenforce 0 || (echo "selinux possibly already disabled."; exit 0)
 	else
 	    if [ $UBUNTU_VERSION ]; then
 		APT_URL="https://apt.puppetlabs.com/puppet5-release-${UBUNTU_VERSION}.deb"
@@ -104,37 +102,37 @@ PROF_FILE='/etc/profile.d/puppeteers.sh'
 FILE=$(mktemp)
 cat<<EOF>$FILE
 file { "$PROF_FILE":
-       ensure  => present,
-       content => 'export PATH=/opt/puppetlabs/bin:/opt/puppetlabs/puppet/bin:$PATH',
+  ensure  => present,
+  content => 'export PATH=/opt/puppetlabs/bin:/opt/puppetlabs/puppet/bin:$PATH',
 }
 
 package { 'librarian-puppet':
-	ensure   => latest,
-	provider => 'puppet_gem',
+  ensure   => latest,
+  provider => 'puppet_gem',
 }
 
 file { "$BASEDIR":
-     ensure => directory,
+  ensure => directory,
 }
 
 file { "${BASEDIR}/modules":
-     ensure  => directory,
-     require => File["$BASEDIR"],
+  ensure  => directory,
+  require => File["$BASEDIR"],
 }
 
 file { 'Puppetfile absent':
-     path   => "${BASEDIR}/Puppetfile",
-     ensure => absent,
+  path   => "${BASEDIR}/Puppetfile",
+  ensure => absent,
 }
 
 package { 'git':
-     ensure => 'latest',
+  ensure => 'latest',
 }
 
 file { "${THIS_MODULE} absent":
-     path    => "${BASEDIR}/modules/${THIS_MODULE}",
-     ensure  => absent,
-     require => File["${BASEDIR}/modules"],
+  path    => "${BASEDIR}/modules/${THIS_MODULE}",
+  ensure  => absent,
+  require => File["${BASEDIR}/modules"],
 }
 EOF
 cat $FILE | /opt/puppetlabs/bin/puppet apply 
@@ -145,26 +143,27 @@ run_puppet_2() {
 FILE=$(mktemp)
 cat<<EOF>$FILE
 file { 'Puppetfile link':
-     path    => "${BASEDIR}/Puppetfile",
-     ensure  => link,
-     target  => '/vagrant/vagrant/Puppetfile',
+  path    => "${BASEDIR}/Puppetfile",
+  ensure  => link,
+  target  => '/vagrant/vagrant/Puppetfile',
 }
 
 file { "${THIS_MODULE} present":
-     path    => "${BASEDIR}/modules/${THIS_MODULE}",
-     ensure  => link,
-     target  => "/vagrant/modules/${THIS_MODULE}",
+  path    => "${BASEDIR}/modules/${THIS_MODULE}",
+  ensure  => link,
+  target  => "/vagrant/modules/${THIS_MODULE}",
 }
 exec { 'Run librarian-puppet':
-     cwd     => "$BASEDIR",
-     command => 'librarian-puppet install',
-     path    => '/opt/puppetlabs/bin:/opt/puppetlabs/puppet/bin:/usr/bin'
+  cwd     => "$BASEDIR",
+  command => 'librarian-puppet install',
+  path    => '/opt/puppetlabs/bin:/opt/puppetlabs/puppet/bin:/usr/bin'
 }
 EOF
 cat $FILE | /opt/puppetlabs/bin/puppet apply 
 rm $FILE
 }
 
+# Main program
 detect_osfamily
 setup_puppet
 # We run these separately due to duplicate path management
