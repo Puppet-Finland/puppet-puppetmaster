@@ -159,79 +159,14 @@ class puppetmaster::foreman_proxy
     }                       
   }
     
-  if ($foreman_proxy_puppet) {
-    
-#    puppet_authorization::rule { 'environments':
-#      match_request_path   => '/puppet/v3/environments',
-#      match_request_type   => 'path',
-#      match_request_method => 'get',
-#      allow                => '*',
-#      sort_order           => 500,
-#      path                 => '/etc/puppetlabs/puppetserver/conf.d/auth.conf',
-#    }
-
-#    puppet_authorization::rule { 'environment_classes':
-#      match_request_path   => '/puppet/v3/environment_classes',
-#      match_request_type   => 'path',
-#      match_request_method => 'get',
-#      allow                => '*',
-#      sort_order           => 500,
-#      path                 => '/etc/puppetlabs/puppetserver/conf.d/auth.conf',
-#      notify               => Service['puppetserver']
-#    }
-
-#    puppet_authorization::rule { 'resource_types':
-#      match_request_path   => '/puppet/v3/resource_types',
-#      match_request_type   => 'path',
-#      match_request_method => [ 'get', 'post' ],
-#      allow                => '*',
-#      sort_order           => 500,
-#      path                 => '/etc/puppetlabs/puppetserver/conf.d/auth.conf',
-#    }                                                            
-
-#    ini_setting { 'puppet_conf_node_terminus':
-#      ensure  => present,
-#      path    => '/etc/puppetlabs/puppet/puppet.conf',
-#      section => 'master',
-#      setting => 'node_terminus',
-#      value   => 'exec',
-#    }
-    
-#    ini_setting { 'puppet_conf_reports':
-#      ensure  => present,
-#      path    => '/etc/puppetlabs/puppet/puppet.conf',
-#      section => 'main',
-#      setting => 'reports',
-#      value   => 'log, foreman',
-#      require => Class['::foreman_proxy'],
-#    }                                          
-
-#    ini_setting { 'Configure puppet vardir':
-#      ensure  => present,
-#      path    => '/etc/puppetlabs/puppet/puppet.conf',
-#      section => 'main',
-#      setting => 'vardir',
-#      value   => '/opt/puppetlabs/puppet/cache',
-#    }
-
- #   ini_setting { 'Configure puppet auto-signing':
- #     ensure  => present,
- #     path    => '/etc/puppetlabs/puppet/puppet.conf',
- #     section => 'master',
- #     setting => 'autosign',
- #     value   => '/etc/puppetlabs/puppet/autosign.conf { mode = 0664 }',
- #   }
-
-    firewall { '8140 allow foreman proxy incoming puppet':
-      chain  => 'INPUT',
-      state  => ['NEW'],
-      dport  => '8140',
-      proto  => 'tcp',
-      action => 'accept',
-    }
-    
+  firewall { '8140 allow foreman proxy incoming puppet':
+    chain  => 'INPUT',
+    state  => ['NEW'],
+    dport  => '8140',
+    proto  => 'tcp',
+    action => 'accept',
   }
-
+  
   class { '::foreman_proxy':
     version                 => $foreman_proxy_version,
     user                    => $foreman_proxy_user,
