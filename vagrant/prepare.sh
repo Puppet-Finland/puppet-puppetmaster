@@ -1,8 +1,7 @@
-#!/bin/bash
+#!/bin/sh
 
 # Exit on any error including pipes
 set -e
-set -o pipefail
 
 # Preparations required prior to "puppet apply".
 
