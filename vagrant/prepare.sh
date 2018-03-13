@@ -40,7 +40,7 @@ done
 CWD=`pwd`
 
 detect_osfamily() {
-    if [[ -f /etc/redhat-release ]]; then
+    if [ -f /etc/redhat-release ]; then
 	OSFAMILY='redhat'
 	RELEASE=$(cat /etc/redhat-release)
 	if [[ $RELEASE =~ 7\.[0-9]+ ]]; then
@@ -52,9 +52,9 @@ detect_osfamily() {
     elif [[ $(lsb_release -d | awk '{ print $2}') =~ ^(Ubuntu|Debian)$ ]]; then
 	OSFAMILY='debian'
 	DESCR="$(lsb_release -d | awk '{ print $2}')"
-	if [[ $DESCR =~ Ubuntu ]]; then
+	if [ $DESCR =~ Ubuntu ]; then
             UBUNTU_VERSION="$(lsb_release -c | awk '{ print $2}')"
-	elif [[ $DESCR =~ Debian ]]; then
+	elif [ $DESCR =~ Debian ]; then
             DEBIAN_VERSION="$(lsb_release -c | awk '{ print $2}')"
 	else
 	    echo "Unsupported Debian family operating system. Supported are Debian and Ubuntu"
@@ -70,7 +70,7 @@ setup_puppet() {
     if [ -x /opt/puppetlabs/bin/puppet ]; then
 	true
     else
-	if [[ $RHEL_VERSION ]]; then
+	if [ $RHEL_VERSION ]; then
 	    RELEASE_URL="https://yum.puppetlabs.com/puppet5/puppet-release-el-${RHEL_VERSION}.noarch.rpm"
 	    rpm -hiv "${RELEASE_URL}" || (c=$?; echo "Failed to install ${RELEASE_URL}"; (exit $c))
 	    yum -y install puppet-agent || (c=$?; echo "Failed to install puppet agent"; (exit $c))
@@ -82,10 +82,10 @@ setup_puppet() {
             /usr/bin/sed -i 's/enforcing/disabled/g' /etc/selinux/config /etc/selinux/config
             /sbin/setenforce 0 || (echo "selinux possibly already disabled."; exit 0)
 	else
-	    if [[ $UBUNTU_VERSION ]]; then
+	    if [ $UBUNTU_VERSION ]; then
 		APT_URL="https://apt.puppetlabs.com/puppet5-release-${UBUNTU_VERSION}.deb"
 	    fi
-	    if [[ $DEBIAN_VERSION ]]; then
+	    if [ $DEBIAN_VERSION ]; then
 		APT_URL="https://apt.puppetlabs.com/puppet5-release-${DEBIAN_VERSION}.deb" 
 	    fi
 	    # https://serverfault.com/questions/500764/dpkg-reconfigure-unable-to-re-open-stdin-no-file-or-directory
