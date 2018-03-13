@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Exit on any error including pipes
+# Exit on any error
 set -e
 
 # Preparations required prior to "puppet apply".
