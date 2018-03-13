@@ -51,7 +51,7 @@ class puppetmaster::foreman
   $foreman_plugin_memcache,
   $foreman_plugin_remote_execution,
   $foreman_plugin_tasks,
-  $foreman_plugin_templates,    
+  $foreman_plugin_templates,
 )
 {
   # See https://github.com/theforeman/puppet-foreman#foreman-version-compatibility-notes
@@ -61,7 +61,7 @@ class puppetmaster::foreman
   else {
     $dynflow_in_core = true
   }
-  
+
   firewall { '443 accept incoming foreman template and UI':
     chain  => 'INPUT',
     state  => ['NEW'],
@@ -95,25 +95,25 @@ class puppetmaster::foreman
   }
 
   if ! $foreman_db_manage {
-  
+
     ::postgresql::server::role { $foreman_db_username:
       password_hash    => postgresql_password($foreman_db_username, $foreman_db_password),
       connection_limit => $foreman_db_connection_limit,
     }
-    
+
     ::postgresql::server::database_grant { "Grant all to $foreman_db_username":
       privilege => 'ALL',
       db        => $foreman_db_database,
       role      => $foreman_db_username,
     }
-  
+
     ::postgresql::server::db { $foreman_db_database:
       user     => $foreman_db_username,
       password => postgresql_password($foreman_db_username, $foreman_db_password),
     }
 
   }
-    
+
   if ($foreman_manage_memcached) {
     class { 'memcached':
       max_memory => "$foreman_memcached_max_memory",
@@ -121,15 +121,15 @@ class puppetmaster::foreman
   }
 
   cron { 'Collect trend data':
-    environment => 'PATH=/opt/puppetlabs/bin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin', 
+    environment => 'PATH=/opt/puppetlabs/bin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin',
     command     => '/sbin/foreman-rake foreman-rake trends:counter',
     user        => 'root',
     hour        => 0,
     minute      => 0/30,
   }
-  
+
   cron { 'Expire Foreman reports':
-    environment => 'PATH=/opt/puppetlabs/bin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin', 
+    environment => 'PATH=/opt/puppetlabs/bin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin',
     command     => '/sbin/foreman-rake reports:expire days=30',
     user        => 'root',
     hour        => 2,
@@ -138,16 +138,16 @@ class puppetmaster::foreman
   }
 
   cron { 'Expire Foreman not useful=ok reports':
-    environment => 'PATH=/opt/puppetlabs/bin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin', 
+    environment => 'PATH=/opt/puppetlabs/bin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin',
     command     => '/sbin/foreman-rake reports:expire days=10 status=0',
     user        => 'root',
     hour        => 2,
     minute      => 0,
     require     => Class['::foreman'],
   }
-  
+
   class { '::foreman':
-    foreman_url           => $foreman_foreman_url, 
+    foreman_url           => $foreman_foreman_url,
     db_manage             => $foreman_db_manage,
     db_username           => $foreman_db_username,
     db_password           => $foreman_db_password,
@@ -161,7 +161,7 @@ class puppetmaster::foreman
     serveraliases         => $foreman_serveraliases,
     admin_first_name      => $foreman_admin_first_name,
     admin_last_name       => $foreman_admin_last_name,
-    admin_email           => $foreman_admin_email, 
+    admin_email           => $foreman_admin_email,
     organizations_enabled => $foreman_organizations_enabled,
     initial_organization  => $foreman_initial_organization,
     repo                  => $foreman_repo,
@@ -180,33 +180,33 @@ class puppetmaster::foreman
   if $foreman_compute_vmware {
     include ::foreman::compute::vmware
   }
-  
+
   if $foreman_compute_libvirt {
     include ::foreman::compute::libvirt
   }
-  
+
   if $foreman_compute_ec2 {
     include ::foreman::compute::ec2
   }
-  
+
   if $foreman_compute_gce {
     include ::foreman::compute::gce
   }
-  
+
   if $foreman_compute_openstack {
     include ::foreman::compute::openstack
   }
-  
+
   if $foreman_compute_ovirt {
     include ::foreman::compute::ovirt
   }
-  
+
   if $foreman_plugin_cockpit {
     include ::foreman::plugin::cockpit
   }
-  
+
   if $foreman_plugin_ansible {
-    
+
     include ::foreman::plugin::ansible
 
     package { 'ansible':
@@ -218,13 +218,13 @@ class puppetmaster::foreman
   if $foreman_plugin_docker {
     include ::foreman::plugin::docker
   }
-  
+
   if $foreman_plugin_bootdisk {
     include ::foreman::plugin::bootdisk
   }
-  
+
   if $foreman_plugin_default_hostgroup {
-    
+
     include ::foreman::plugin::default_hostgroup
     $default_hostgroup_template = @(END)
 ---
@@ -239,9 +239,9 @@ class puppetmaster::foreman
     "default_other_group":
       "kernel": ".*"
 END
-              
+
     file { '/etc/foreman/plugins/foreman_default_hostgroup.yaml':
-      ensure  => file, 
+      ensure  => file,
       content => inline_epp($default_hostgroup_template),
       require => Class['::foreman::plugin::default_hostgroup'],
     }

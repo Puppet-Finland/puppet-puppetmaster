@@ -19,9 +19,9 @@ class puppetmaster::puppetdb
   String $puppetdb_postgresql_listen_address,
 )
 {
-    
+
   if ($puppetdb_database_host == '127.0.0.1') {
-    
+
     firewall { '5432 allow incoming database':
       chain       => 'INPUT',
       state       => ['NEW'],
@@ -39,47 +39,47 @@ class puppetmaster::puppetdb
       dport       => '5432',
       proto       => 'tcp',
       action      => 'accept',
-    }                       
+    }
   }
-  
+
   firewall { '8081 allow incoming puppetdb':
     chain       => 'INPUT',
     state       => ['NEW'],
-    dport       => ['8080','8081'], 
+    dport       => ['8080','8081'],
     proto       => 'tcp',
     action      => 'accept',
-  }           
-  
+  }
+
   class { '::postgresql::globals':
     manage_package_repo => true,
     version             => '9.6',
   }
-  
+
   class { '::postgresql::server':
     listen_addresses => $puppetdb_postgresql_listen_address,
     require          => Class['::postgresql::globals']
-  }           
+  }
 
   ::postgresql::server::role { $puppetdb_database_username:
     password_hash    => postgresql_password($puppetdb_database_username, $puppetdb_database_password),
     connection_limit => $puppetdb_connection_limit,
     require          => Class['::postgresql::globals'],
   }
-  
+
   ::postgresql::server::database_grant { 'Grant access to puppetdb':
     privilege => 'ALL',
     db        => $puppetdb_database_name,
     role      => $puppetdb_database_username,
     require   => Class['::postgresql::globals'],
   }
-  
+
   ::postgresql::server::extension { 'Add trgm extension':
     database     => $puppetdb_database_name,
     package_name => $puppetdb_contrib_package_name,
     extension    => 'pg_trgm',
     require      => Class['::postgresql::globals'],
-  }    
-  
+  }
+
   class { '::puppetdb':
     listen_address      => $puppetdb_listen_address,
     listen_port         => $puppetdb_listen_port,
@@ -93,10 +93,9 @@ class puppetmaster::puppetdb
     ssl_deploy_certs    => $puppetdb_ssl_deploy_certs,
     require             => Postgresql::Server::Extension['Add trgm extension'],
   }
-  
+
   class { '::puppetdb::master::config':
     puppetdb_server     => $puppetdb_puppetdb_server,
     restart_puppet      => true,
   }
 }
-
