@@ -1,4 +1,4 @@
-# A wrapper class for setting up puppetmasters in Kafo installers. 
+# A wrapper class for setting up puppetmasters in Kafo installers.
 #
 # == Parameters:
 #
@@ -18,7 +18,7 @@
 # $reports_liftime:: How long to keep reports
 #
 # $logs_liftime:: How long to keep logs
-# 
+#
 # $show_diff:: Show diffs
 #
 # $server_foreman:: Install foreman
@@ -28,7 +28,7 @@
 # $autosign_entries:: List of autosign entries
 #
 # $primary_names:: Primary names for this machine
-# 
+#
 # $server_reports:: Reporting to where
 #
 #
@@ -36,25 +36,25 @@
 #
 # $puppetdb_listen_address:: Address to listen to
 #
-# $puppetdb_listen_port:: Port to listen to 
+# $puppetdb_listen_port:: Port to listen to
 #
 # $puppetdb_ssl_listen_port:: SSL port to listen to
 #
-# $puppetdb_database_host:: Database host 
+# $puppetdb_database_host:: Database host
 #
-# $puppetdb_database_name:: Database name 
+# $puppetdb_database_name:: Database name
 #
 # $puppetdb_database_username:: Database user name
 #
 # $puppetdb_database_password:: Datbase password
 #
-# $puppetdb_manage_dbserver:: Whether to manage DB server 
+# $puppetdb_manage_dbserver:: Whether to manage DB server
 #
 # $puppetdb_manage_package_repo:: Whether to manage package repo
 #
-# $puppetdb_puppetdb_server:: Server   
+# $puppetdb_puppetdb_server:: Server
 #
-# $puppetdb_connection_limit:: Connection limit  
+# $puppetdb_connection_limit:: Connection limit
 #
 # $puppetdb_db_connection_limit:: Database connection limit
 #
@@ -81,7 +81,7 @@
 # $foreman_db_password:: XXX
 #
 # $foreman_connection_limit:: XXX
-#  
+#
 # $foreman_authentication:: XXX
 #
 # $foreman_servername:: XXX
@@ -170,7 +170,7 @@
 #
 # $foreman_plugin_tasks:: XXX
 #
-# $foreman_plugin_templates:: XXX    
+# $foreman_plugin_templates:: XXX
 #
 #
 # Foreman Proxy spesific parameters
@@ -313,7 +313,7 @@
 #
 # $foreman_proxy_ensure_packages_version::    Ensure extra packages version
 #
-# $foreman_proxy_foreman_base_url::           Base url of Foreman for REST 
+# $foreman_proxy_foreman_base_url::           Base url of Foreman for REST
 #
 # $foreman_proxy_bind_host::                  Bind address of the foreman proxy
 #
@@ -334,8 +334,8 @@ class puppetmaster
   Boolean $show_diff                                                                      = false,
   Boolean $server_foreman                                                                 = false,
   Variant[Boolean, String] $autosign                                                      = false,
-  Array[String] $autosign_entries                                                         = [ '*.tietoteema.vm' ],
-  Array[String] $primary_names                                                            = [ 'kafo.tietoteema.vm', 'kafo' ],
+  Array[String] $autosign_entries                                                         = ['*.example.org'],
+  Array[String] $primary_names                                                            = [ 'puppet.example.org', 'puppet' ],
   String $server_reports                                                                  = 'store',
   # Puppetdb spesific parameters
   String $puppetdb_listen_address                                                         = '127.0.0.1',
@@ -347,7 +347,7 @@ class puppetmaster
   String $puppetdb_database_password                                                      = 'puppetdb',
   Boolean $puppetdb_manage_dbserver                                                       = false,
   Boolean $puppetdb_manage_package_repo                                                   = false,
-  String $puppetdb_puppetdb_server                                                        = 'kafo.tietoteema.vm',
+  String $puppetdb_puppetdb_server                                                        = 'puppet.example.org',
   String $puppetdb_connection_limit                                                       = '-1',
   String $puppetdb_db_connection_limit                                                    = '-1',
   String $puppetdb_contrib_package_name                                                   = 'postgresql96-contrib',
@@ -355,26 +355,26 @@ class puppetmaster
   String $puppetdb_postgresql_version                                                     = '9.6',
   String $puppetdb_postgresql_listen_address                                              = '127.0.0.1',
   # Foreman spesific parameters
-  String $foreman_initial_organization                                                    = 'tietoteema.com',
-  Boolean $foreman_locations_enabled                                                      = false, 
+  String $foreman_initial_organization                                                    = 'Example organization',
+  Boolean $foreman_locations_enabled                                                      = false,
   String $foreman_initial_location                                                        = 'Virtualbox',
   String $foreman_admin_username                                                          = 'admin',
   String $foreman_admin_password                                                          = 'changeme',
-  String $foreman_puppetdb_dashboard_address                                              = 'http://puppet.tietoteema.vm:8080/pdb/dashboard',
-  String $foreman_puppetdb_address                                                        = 'https://puppet.tietoteema.vm:8081/v2/commands',
-  String $foreman_foreman_url                                                             = 'https://puppet.tietoteema.vm',
+  String $foreman_puppetdb_dashboard_address                                              = 'http://puppet.example.org:8080/pdb/dashboard',
+  String $foreman_puppetdb_address                                                        = 'https://puppet.example.org:8081/v2/commands',
+  String $foreman_foreman_url                                                             = 'https://puppet.example.org',
   String $foreman_repo                                                                    = '1.15',
   String $foreman_version                                                                 = '1.15.6',
   String $foreman_manage_memcached                                                        = true,
   String $foreman_memcached_max_memory                                                    = '8%',
   Boolean $foreman_configure_epel_repo                                                    = true,
   Boolean $foreman_configure_scl_repo                                                     = true,
-  String $foreman_oauth_consumer_key                                                      = 'xEL7pzhskio8AHqWhMWCwskzvWNgvQRB',
-  String $foreman_oauth_consumer_secret                                                   = '2F5iKu5VzuRzVYRaYFQiNcPghihYn7dP',     
+  String $foreman_oauth_consumer_key                                                      = '',
+  String $foreman_oauth_consumer_secret                                                   = '',
   Boolean $foreman_selinux                                                                = false,
   Boolean $foreman_unattended                                                             = true,
   Boolean $foreman_plugin_cockpit                                                         = true,
-  String $foreman_admin_email                                                             = 'hostmaster@tietoteema.fi',
+  String $foreman_admin_email                                                             = 'hostmaster@example.org',
   String $foreman_admin_first_name                                                        = 'Admin',
   String $foreman_admin_last_name                                                         = 'User',
   Boolean $foreman_authentication                                                         = true,
@@ -387,7 +387,7 @@ class puppetmaster
   String $foreman_db_username                                                             = 'foreman',
   Boolean $foreman_organizations_enabled                                                  = false,
   Array[String] $foreman_serveraliases                                                    = [ 'foreman' ],
-  String $foreman_servername                                                              = 'kafo.tietoteema.vm',
+  String $foreman_servername                                                              = 'foreman',
   Boolean $foreman_compute_vmware                                                         = false,
   Boolean $foreman_compute_libvirt                                                        = false,
   Boolean $foreman_compute_ec2                                                            = false,
@@ -406,33 +406,33 @@ class puppetmaster
   Boolean $foreman_plugin_memcache                                                        = false,
   Boolean $foreman_plugin_remote_execution                                                = false,
   Boolean $foreman_plugin_tasks                                                           = false,
-  Boolean $foreman_plugin_templates                                                       = false,    
+  Boolean $foreman_plugin_templates                                                       = false,
   # foreman proxy spesific settings
   String $foreman_proxy_user                                                              = 'foreman-proxy',
   Array[String] $foreman_proxy_groups                                                     = ['puppet'],
-  String $foreman_proxy_oauth_consumer_key                                                = 'xEL7pzhskio8AHqWhMWCwskzvWNgvQRB',
-  String $foreman_proxy_oauth_consumer_secret                                             = '2F5iKu5VzuRzVYRaYFQiNcPghihYn7dP',
+  String $foreman_proxy_oauth_consumer_key                                                = '',
+  String $foreman_proxy_oauth_consumer_secret                                             = '',
   Boolean $foreman_proxy_templates                                                        = false,
   String $foreman_proxy_templates_listen_on                                               = 'http',
-  String $foreman_proxy_template_url                                                      = 'http://puppet.tietoteema.vm:8000',
+  String $foreman_proxy_template_url                                                      = 'http://puppet.example.org:8000',
   Boolean $foreman_proxy_http                                                             = true,
   Integer $foreman_proxy_http_port                                                        = 8000,
   Boolean $foreman_proxy_manage_sudoersd                                                  = true,
   Boolean $foreman_proxy_use_sudoersd                                                     = true,
   # puppet
-  String $foreman_proxy_puppet_url                                                        = 'https://kafo.tietoteema.vm:8140',
+  String $foreman_proxy_puppet_url                                                        = 'https://puppet:8140',
   Boolean $foreman_proxy_puppet_use_environment_api                                       = true,
   Boolean $foreman_proxy_puppet_use_cache                                                 = true,
   # puppetca settings
   Boolean $foreman_proxy_puppetca                                                         = true,
   String $foreman_proxy_puppetca_listen_on                                                = 'https',
-  String $foreman_proxy_puppetca_cmd                                                      = '/opt/puppetlabs/bin/puppet cert', 
+  String $foreman_proxy_puppetca_cmd                                                      = '/opt/puppetlabs/bin/puppet cert',
   String $foreman_proxy_puppetdir                                                         = '/etc/puppetlabs/puppet',
   # puppetrun settings
   Boolean $foreman_proxy_puppet                                                           = true,
   String $foreman_proxy_puppet_listen_on                                                  = 'https',
-  String $foreman_proxy_puppetrun_cmd                                                     = 'puppetssh', 
-  String $foreman_proxy_puppetrun_provider                                                = 'puppetssh', 
+  String $foreman_proxy_puppetrun_cmd                                                     = 'puppetssh',
+  String $foreman_proxy_puppetrun_provider                                                = 'puppetssh',
   String $foreman_proxy_customrun_cmd                                                     = '/bin/bash',
   String $foreman_proxy_customrun_args                                                    = '-ay -f -s',
   String $foreman_proxy_mcollective_user                                                  = 'root',
@@ -444,32 +444,32 @@ class puppetmaster
   Boolean $foreman_proxy_dhcp_managed                                                     = false,
   String $foreman_proxy_dhcp_listen_on                                                    = 'both',
   String $foreman_proxy_dhcp_interface                                                    = 'eth1',
-  Array[String] $foreman_proxy_dhcp_option_domain                                         = [ 'tietoteema.vm' ],
-  Array[String] $foreman_proxy_dhcp_search_domains                                        = [ 'tietoteema.vm' ],
-  String $foreman_proxy_dhcp_server                                                       = 'puppet.tietoteema.vm',
+  Array[String] $foreman_proxy_dhcp_option_domain                                         = [ 'example.org' ],
+  Array[String] $foreman_proxy_dhcp_search_domains                                        = [ 'example.org' ],
+  String $foreman_proxy_dhcp_server                                                       = 'puppet.example.org',
   String $foreman_proxy_dhcp_provider                                                     = 'isc',
   Array[String] $foreman_proxy_dhcp_subnets                                               = ['192.168.137.0/255.255.255.0'],
   String $foreman_proxy_dhcp_gateway                                                      = '192.168.137.10',
   String $foreman_proxy_dhcp_range                                                        = '192.168.137.100 192.168.137.200',
-  String $foreman_proxy_dhcp_nameservers                                                  = '192.168.137.10',    
+  String $foreman_proxy_dhcp_nameservers                                                  = '192.168.137.10',
   String $foreman_proxy_dhcp_pxeserver                                                    = '192.168.137.201',
   # dns
   Boolean $foreman_proxy_dns                                                              = false,
-  Boolean $foreman_proxy_dns_managed                                                      = false,  
+  Boolean $foreman_proxy_dns_managed                                                      = false,
   Array[String] $foreman_proxy_dns_forwarders                                             = [ '192.168.137.201', '8.8.8.8' ],
   String $foreman_proxy_dns_interface                                                     = 'eth1',
-  String $foreman_proxy_dns_listen_on                                                     = 'https',  
-  String $foreman_proxy_dns_provider                                                      = 'nsupdate',  
-  String $foreman_proxy_dns_zone                                                          = $::domain,  
-  String $foreman_proxy_dns_reverse                                                       = '137.168.192.in-addr.arpa',  
+  String $foreman_proxy_dns_listen_on                                                     = 'https',
+  String $foreman_proxy_dns_provider                                                      = 'nsupdate',
+  String $foreman_proxy_dns_zone                                                          = $::domain,
+  String $foreman_proxy_dns_reverse                                                       = '137.168.192.in-addr.arpa',
   String $foreman_proxy_dns_server                                                        = '192.168.137.10',
-  Integer $foreman_proxy_dns_ttl                                                          = 86400,  
+  Integer $foreman_proxy_dns_ttl                                                          = 86400,
   # tftp
   Boolean $foreman_proxy_tftp                                                             = false,
   Boolean $foreman_proxy_tftp_managed                                                     = false,
   String $foreman_proxy_tftp_servername                                                   = '192.168.137.10',
   Boolean $foreman_proxy_tftp_manage_wget                                                 = true,
-  String $foreman_proxy_tftp_listen_on                                                    = 'both',  
+  String $foreman_proxy_tftp_listen_on                                                    = 'both',
   String $foreman_proxy_tftp_root                                                         = '/var/lib/tftpboot',
   # BMC
   Boolean $foreman_proxy_bmc                                                              = false,
@@ -478,14 +478,14 @@ class puppetmaster
   # misc
   String $foreman_proxy_log_level                                                         = 'DEBUG',
   Boolean $foreman_proxy_register_in_foreman                                              = true,
-  String $foreman_proxy_registered_name                                                   = 'kafo.tietoteema.vm',
-  String $foreman_proxy_registered_proxy_url                                              = 'https://kafo.tietoteema.vm:8443',
-  Array[String] $foreman_proxy_trusted_hosts                                              = [ 'kafo.tietoteema.vm' ],
+  String $foreman_proxy_registered_name                                                   = 'puppet.example.org',
+  String $foreman_proxy_registered_proxy_url                                              = 'https://puppet.example.org:8443',
+  Array[String] $foreman_proxy_trusted_hosts                                              = [ 'puppet.example.org' ],
   Boolean $foreman_proxy_use_sudoers                                                      = true,
   String $foreman_proxy_version                                                           = '1.15.6',
   Enum['absent', 'installed', 'latest', 'present'] $foreman_proxy_ensure_packages_version = 'installed',
   String $foreman_proxy_repo                                                              = '1.15',
-  String $foreman_proxy_foreman_base_url                                                  = 'https://kafo.tietoteema.vm',
+  String $foreman_proxy_foreman_base_url                                                  = 'https://puppet.example.org',
   Array[String] $foreman_proxy_bind_host                                                  = [ '0.0.0.0' ],
   String $foreman_proxy_autosignfile                                                      = '/etc/puppetlabs/puppet/autosign.conf',
 )
@@ -494,10 +494,10 @@ class puppetmaster
   if $with_puppetboard and !$with_puppetdb {
     notify { "Puppetboard needs Puppetdb. installing Puppetdb too": }
     $with_puppetdb = true
-  }            
-  
+  }
+
   if $with_foreman {
-    $puppetserver_server_external_nodes = '/etc/puppetlabs/puppet/node.rb' 
+    $puppetserver_server_external_nodes = '/etc/puppetlabs/puppet/node.rb'
     $puppetserver_show_diff             = true
     $puppetserver_server_reports        = 'log, foreman'
   }
@@ -506,30 +506,30 @@ class puppetmaster
     $puppetserver_show_diff             = $show_diff
     $puppetserver_server_reports        = $server_reports
   }
-  
+
   if $puppetserver {
-    
+
     class { '::hosts':
       primary_names => $primary_names,
-    }               
-    
+    }
+
     firewall { '8140 accept incoming agent traffic to puppetserver':
       dport  => '8140',
       proto  => 'tcp',
       action => 'accept',
     }
-    
+
     file { '/var/files':
       ensure => 'directory',
       mode   => '0660',
       owner  => 'puppet',
       group  => 'puppet',
     }
-    
+
     file { '/etc/puppetlabs/puppet/fileserver.conf':
       ensure => 'present'
     }
-    
+
     ini_setting { 'files_path':
       ensure            => present,
       path              => '/etc/puppetlabs/puppet/fileserver.conf',
@@ -539,7 +539,7 @@ class puppetmaster
       key_val_separator => ' ',
       require           => File['/etc/puppetlabs/puppet/fileserver.conf'],
     }
-    
+
     ini_setting { 'files_allow':
       ensure            => present,
       path              => '/etc/puppetlabs/puppet/fileserver.conf',
@@ -549,7 +549,7 @@ class puppetmaster
       key_val_separator => ' ',
       require           => File['/etc/puppetlabs/puppet/fileserver.conf'],
     }
-    
+
     puppet_authorization::rule { 'files':
       match_request_path => '^/puppet/v3/file_(content|metadata)s?/files/',
       match_request_type => 'regex',
@@ -557,7 +557,7 @@ class puppetmaster
       sort_order         => 400,
       path               => '/etc/puppetlabs/puppetserver/conf.d/auth.conf',
     }
-    
+
     class { '::puppet':
       server                => true,
       show_diff             => $puppetserver_show_diff,
@@ -569,7 +569,7 @@ class puppetmaster
       server_reports        => $puppetserver_server_reports,
       require               => [ File['/etc/puppetlabs/puppet/fileserver.conf'], Puppet_authorization::Rule['files'] ],
     }
-    
+
     tidy { '/opt/puppetlabs/server/data/puppetserver/reports':
       age     => $reports_lifetime,
       matches => "*.yaml",
@@ -577,7 +577,7 @@ class puppetmaster
       rmdirs  => false,
       type    => ctime,
     }
-    
+
     tidy { '/var/log/puppetlabs/puppetserver':
       age     => $logs_lifetime,
       matches => "puppetserver.*",
@@ -588,8 +588,8 @@ class puppetmaster
   }
 
   if $with_puppetdb {
-    
-    class { 'puppetmaster::puppetdb': 
+
+    class { 'puppetmaster::puppetdb':
       puppetdb_listen_address            => $puppetdb_listen_address,
       puppetdb_listen_port               => $puppetdb_listen_port,
       puppetdb_ssl_listen_port           => $puppetdb_ssl_listen_port,
@@ -610,12 +610,12 @@ class puppetmaster
   }
 
   if $with_foreman {
-    
-    class { 'puppetmaster::foreman': 
-      foreman_initial_organization       => $foreman_initial_organization,    
-      foreman_locations_enabled          => $foreman_locations_enabled,      
-      foreman_initial_location           => $foreman_initial_location,      
-      foreman_admin_username             => $foreman_admin_username,     
+
+    class { 'puppetmaster::foreman':
+      foreman_initial_organization       => $foreman_initial_organization,
+      foreman_locations_enabled          => $foreman_locations_enabled,
+      foreman_initial_location           => $foreman_initial_location,
+      foreman_admin_username             => $foreman_admin_username,
       foreman_admin_password             => $foreman_admin_password,
       foreman_puppetdb_dashboard_address => $foreman_puppetdb_dashboard_address,
       foreman_puppetdb_address           => $foreman_puppetdb_address,
@@ -623,7 +623,7 @@ class puppetmaster
       foreman_repo                       => $foreman_repo,
       foreman_version                    => $foreman_version,
       foreman_manage_memcached           => $foreman_manage_memcached,
-      foreman_memcached_max_memory       => $foreman_memcached_max_memory,   
+      foreman_memcached_max_memory       => $foreman_memcached_max_memory,
       foreman_configure_epel_repo        => $foreman_configure_epel_repo,
       foreman_configure_scl_repo         => $foreman_configure_scl_repo,
       foreman_oauth_consumer_key         => $foreman_oauth_consumer_key,
@@ -680,7 +680,7 @@ class puppetmaster
       foreman_proxy_trusted_hosts              => $foreman_proxy_trusted_hosts,
       foreman_proxy_bind_host                  => $foreman_proxy_bind_host,
       foreman_proxy_puppet                     => $foreman_proxy_puppet,
-      foreman_proxy_puppet_use_cache           => $foreman_proxy_puppet_use_cache, 
+      foreman_proxy_puppet_use_cache           => $foreman_proxy_puppet_use_cache,
       foreman_proxy_puppetca                   => $foreman_proxy_puppetca,
       foreman_proxy_puppetdir                  => $foreman_proxy_puppetdir,
       foreman_proxy_puppetca_cmd               => $foreman_proxy_puppetca_cmd,
@@ -691,11 +691,11 @@ class puppetmaster
       foreman_proxy_dhcp                       => $foreman_proxy_dhcp,
       foreman_proxy_dhcp_listen_on             => $foreman_proxy_dhcp_listen_on,
       foreman_proxy_dhcp_interface             => $foreman_proxy_dhcp_interface,
-      foreman_proxy_dhcp_subnets               => $foreman_proxy_dhcp_subnets, 
+      foreman_proxy_dhcp_subnets               => $foreman_proxy_dhcp_subnets,
       foreman_proxy_dhcp_gateway               => $foreman_proxy_dhcp_gateway,
       foreman_proxy_dhcp_range                 => $foreman_proxy_dhcp_range,
       foreman_proxy_dhcp_nameservers           => $foreman_proxy_dhcp_nameservers,
-      foreman_proxy_dhcp_option_domain         => $foreman_proxy_dhcp_option_domain, 
+      foreman_proxy_dhcp_option_domain         => $foreman_proxy_dhcp_option_domain,
       foreman_proxy_dhcp_search_domains        => $foreman_proxy_dhcp_search_domains,
       foreman_proxy_dhcp_pxeserver             => $foreman_proxy_dhcp_pxeserver,
       foreman_proxy_dns                        => $foreman_proxy_dns,
@@ -704,11 +704,11 @@ class puppetmaster
       foreman_proxy_dns_zone                   => $foreman_proxy_dns_zone,
       foreman_proxy_dns_forwarders             => $foreman_proxy_dns_forwarders,
       foreman_proxy_dns_ttl                    => $foreman_proxy_dns_ttl,
-      foreman_proxy_dns_reverse                => $foreman_proxy_dns_reverse, 
+      foreman_proxy_dns_reverse                => $foreman_proxy_dns_reverse,
       foreman_proxy_bmc                        => $foreman_proxy_bmc,
       foreman_proxy_bmc_listen_on              => $foreman_proxy_bmc_listen_on,
       foreman_proxy_bmc_default_provider       => $foreman_proxy_bmc_default_provider,
-      foreman_proxy_groups                     => $foreman_proxy_groups, 
+      foreman_proxy_groups                     => $foreman_proxy_groups,
       foreman_proxy_http                       => $foreman_proxy_http,
       foreman_proxy_log_level                  => $foreman_proxy_log_level,
       foreman_proxy_register_in_foreman        => $foreman_proxy_register_in_foreman,
@@ -740,9 +740,8 @@ class puppetmaster
       foreman_proxy_dns_server                 => $foreman_proxy_dns_server,
       foreman_proxy_tftp_servername            => $foreman_proxy_tftp_servername,
       foreman_proxy_tftp_listen_on             => $foreman_proxy_tftp_listen_on,
-      foreman_proxy_tftp_root                  => $foreman_proxy_tftp_root,      
-      foreman_proxy_autosignfile               => $foreman_proxy_autosignfile,  
+      foreman_proxy_tftp_root                  => $foreman_proxy_tftp_root,
+      foreman_proxy_autosignfile               => $foreman_proxy_autosignfile,
     }
   }
 }
-
