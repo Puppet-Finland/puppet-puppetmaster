@@ -20,7 +20,7 @@ Vagrant.configure("2") do |config|
       vb.memory = 4096
     end
   end
-  config.vm.define "puppetserver-strech" do |box|
+  config.vm.define "puppetserver-stretch" do |box|
     box.vm.box = "debian/stretch64"
     box.vm.box_version = "9.3.0"
     box.vm.hostname = "puppetserver-stretch.local"
