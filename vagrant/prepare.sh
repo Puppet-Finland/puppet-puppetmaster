@@ -49,7 +49,7 @@ detect_osfamily() {
             echo "Unsupported Redhat/Centos version. Supported versions are 7.x"
             exit 1
         fi
-    elif [ `lsb_release -d | grep -E '(Ubuntu|Debian)'` ]; then
+    elif [ "`lsb_release -d | grep -E '(Ubuntu|Debian)'`" ]; then
         OSFAMILY='debian'
         DESCR="$(lsb_release -d | awk '{ print $2}')"
         if [ `echo $DESCR|grep Ubuntu` ]; then
