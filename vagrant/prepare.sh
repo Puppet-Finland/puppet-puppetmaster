@@ -42,7 +42,7 @@ detect_osfamily() {
     if [ -f /etc/redhat-release ]; then
         OSFAMILY='redhat'
         RELEASE=$(cat /etc/redhat-release)
-        if [ $RELEASE =~ 7\.[0-9]+ ]; then
+	if [ "`echo $RELEASE | grep -E 7\.[0-9]+`" ]; then
             RHEL_VERSION="7"
         else
             echo "Unsupported Redhat/Centos version. Supported versions are 7.x"
