@@ -155,6 +155,7 @@ file { "${THIS_MODULE} present":
 exec { 'Run librarian-puppet':
   cwd     => "$BASEDIR",
   command => 'librarian-puppet install',
+  timeout => 600,
   path    => '/opt/puppetlabs/bin:/opt/puppetlabs/puppet/bin:/usr/bin'
 }
 EOF
