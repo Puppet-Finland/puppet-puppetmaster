@@ -150,7 +150,7 @@ file { 'Puppetfile link':
 file { "${THIS_MODULE} present":
   path    => "${BASEDIR}/modules/${THIS_MODULE}",
   ensure  => link,
-  target  => "/vagrant/modules/${THIS_MODULE}",
+  target  => '/vagrant',
 }
 exec { 'Run librarian-puppet':
   cwd     => "$BASEDIR",
