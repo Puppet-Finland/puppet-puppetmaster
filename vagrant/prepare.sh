@@ -7,7 +7,7 @@ set -e
 
 usage() {
     echo
-    echo "Usage: prepare.sh -n module_name -f -b basedir"
+    echo "Usage: prepare.sh -n module_name -b basedir"
     echo
     echo "Options:"
     echo " -n   Name of the module that includes this script. Used to copy"
