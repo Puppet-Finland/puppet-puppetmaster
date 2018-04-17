@@ -135,7 +135,7 @@ class { '::kafo':
   require      => Exec['Run librarian-puppet'],
 }
 EOF
-cat $FILE | /opt/puppetlabs/bin/puppet apply 
+cat $FILE | /opt/puppetlabs/bin/puppet apply --modulepath=$BASEDIR/modules
 rm $FILE
 }
 
