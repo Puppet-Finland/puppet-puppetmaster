@@ -8,6 +8,7 @@ Vagrant.configure("2") do |config|
     box.vm.box_version = "20171118.0.0"
     box.vm.hostname = "puppet.local"
     box.vm.network "private_network", ip: "192.168.221.201"
+    box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
     box.vm.synced_folder ".", "/home/puppetmaster", type: "virtualbox"
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
@@ -24,6 +25,9 @@ Vagrant.configure("2") do |config|
     box.vm.box_version = "9.3.0"
     box.vm.hostname = "puppet.local"
     box.vm.network "private_network", ip: "192.168.221.202"
+    # Disable default rsync shared folder. Some boxes like debian/stretch64
+    # require this or the vboxsf mount will fail.
+    box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
     box.vm.synced_folder ".", "/home/puppetmaster", type: "virtualbox"
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
@@ -39,6 +43,7 @@ Vagrant.configure("2") do |config|
     box.vm.box_version = "1801.02"
     box.vm.hostname = "puppet.local"
     box.vm.network "private_network", ip: "192.168.221.203"
+    box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
     box.vm.synced_folder ".", "/home/puppetmaster", type: "virtualbox"
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
