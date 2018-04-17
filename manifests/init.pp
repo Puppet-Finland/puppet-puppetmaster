@@ -491,6 +491,8 @@ class puppetmaster
 )
 {
 
+  include stdlib
+
   if $with_puppetboard and !$with_puppetdb {
     notify { "Puppetboard needs Puppetdb. installing Puppetdb too": }
     $with_puppetdb = true

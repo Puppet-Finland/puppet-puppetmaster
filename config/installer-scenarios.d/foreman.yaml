@@ -1,0 +1,22 @@
+---
+:name: foreman
+:description: ''
+:enabled: true
+:log_dir: "/var/log/kafo"
+:store_dir: ''
+:log_name: configuration.log
+:log_level: info
+:no_prefix: false
+:mapping: {}
+:answer_file: "./config/installer-scenarios.d/foreman-answers.yaml"
+:installer_dir: "."
+:module_dirs:
+- "./modules"
+:colors: true
+:color_of_background: :dark
+:hook_dirs: []
+:custom: {}
+:low_priority_modules: []
+:verbose_log_level: info
+:skip_puppet_version_check: false
+:password: UzbX6nCVLRQiW_LW6SyKQAii1ArNJHp5DFdhG0Wz2to
