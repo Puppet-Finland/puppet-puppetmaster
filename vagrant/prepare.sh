@@ -132,7 +132,6 @@ exec { 'Run librarian-puppet':
 
 class { '::kafo':
   gem_provider => 'puppet_gem',
-  require      => Exec['Run librarian-puppet'],
 }
 EOF
 cat $FILE | /opt/puppetlabs/bin/puppet apply --modulepath=$BASEDIR/modules
