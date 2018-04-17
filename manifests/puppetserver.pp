@@ -21,7 +21,7 @@
 #
 # $server_external_nodes:: Path to external node classifier
 #
-class puppetmaster
+class puppetmaster::puppetserver
 (
   Array[String]            $primary_names,
   String                   $reports_lifetime = '14d',
