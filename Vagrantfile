@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
   end
   config.vm.define "puppetserver-stretch" do |box|
     box.vm.box = "debian/stretch64"
-    box.vm.box_version = "9.3.0"
+    box.vm.box_version = "9.4.0"
     box.vm.hostname = "puppet.local"
     box.vm.network "private_network", ip: "192.168.221.202"
     # Disable default rsync shared folder. Some boxes like debian/stretch64
