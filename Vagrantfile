@@ -25,7 +25,7 @@ Vagrant.configure("2") do |config|
     box.vm.box_version = "9.3.0"
     box.vm.hostname = "puppet.local"
     box.vm.network "private_network", ip: "192.168.221.202"
-    box.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+    box.vm.synced_folder ".", "/home/puppetmaster", type: "virtualbox"
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
       s.args = ["-n", "puppetmaster", "-b", "/home/puppetmaster"]
