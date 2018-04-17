@@ -103,6 +103,7 @@ cat<<EOF>$FILE
 file { "$PROF_FILE":
   ensure  => present,
   content => 'export PATH=/opt/puppetlabs/bin:/opt/puppetlabs/puppet/bin:/home/puppetmaster/bin:$PATH',
+  replace => false,
 }
 
 package { 'librarian-puppet':
