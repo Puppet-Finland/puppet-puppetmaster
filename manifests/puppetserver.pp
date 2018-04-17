@@ -5,35 +5,20 @@
 #
 # $primary_names:: Primary names for this machine
 #
-# $reports_lifetime:: How long to keep reports
+# $autosign:: Set up autosign entries. Set to true to enable naive autosigning.
 #
-# $logs_lifetime:: How long to keep logs
-#
-# $show_diff:: Show diffs
-#
-# $server_foreman:: Install foreman
-#
-# $autosign:: Set up autosign entries
-#
-# $autosign_entries:: List of autosign entries
-#
-# $server_reports:: Reporting to where
-#
-# $server_external_nodes:: Path to external node classifier
+# $autosign_entries:: List of autosign entries. Requires that autosign is pointing to the path of autosign.conf.
 #
 class puppetmaster::puppetserver
 (
   Array[String]            $primary_names,
-  String                   $reports_lifetime = '14d',
-  String                   $logs_lifetime = '90d',
-  Boolean                  $show_diff = false,
-  Variant[Boolean, String] $autosign = false,
+  Variant[Boolean, String] $autosign = '/etc/puppetlabs/puppet/autosign.conf',
   Optional[Array[String]]  $autosign_entries = undef,
-  String                   $server_reports = 'store',
-  Boolean                  $server_foreman = false,
-  Optional[String]         $server_external_nodes = undef,
 )
 {
+
+  $reports_lifetime = '14d'
+  $logs_lifetime = '90d'
 
   class { '::hosts':
     primary_names => $primary_names,
@@ -87,13 +72,13 @@ class puppetmaster::puppetserver
 
   class { '::puppet':
     server                => true,
-    show_diff             => $show_diff,
-    server_foreman        => $server_foreman,
+    show_diff             => false,
+    server_foreman        => false,
     autosign              => $autosign,
     autosign_entries      => $autosign_entries,
-    server_external_nodes => $server_external_nodes,
+    server_external_nodes => '',
     additional_settings   => $additional_settings,
-    server_reports        => $puppetserver_server_reports,
+    server_reports        => 'store',
     require               => [ File['/etc/puppetlabs/puppet/fileserver.conf'], Puppet_authorization::Rule['files'] ],
   }
 

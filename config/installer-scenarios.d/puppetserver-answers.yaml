@@ -11,11 +11,5 @@ puppetmaster::puppetserver:
   primary_names:
   - puppet.local
   - puppet
-  reports_lifetime: 14d
-  logs_lifetime: 90d
-  show_diff: false
-  autosign: false
+  autosign: "/etc/puppetlabs/puppet/autosign.conf"
   autosign_entries: 
-  server_reports: store
-  server_foreman: false
-  server_external_nodes: 
