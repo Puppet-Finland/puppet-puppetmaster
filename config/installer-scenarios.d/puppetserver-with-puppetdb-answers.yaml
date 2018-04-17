@@ -7,9 +7,10 @@
 # See params.pp in each class for what options are available
 
 ---
-puppetmaster::puppetserver:
+puppetmaster::puppetdb:
   primary_names:
   - puppet.local
   - puppet
   autosign: "/etc/puppetlabs/puppet/autosign.conf"
-  autosign_entries:
+  autosign_entries: 
+  puppetdb_database_password:

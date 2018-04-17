@@ -1,0 +1,23 @@
+---
+:name: puppetserver-with-puppetdb
+:description: install puppetserver with puppetdb
+:enabled: true
+:log_dir: "/var/log/kafo"
+:store_dir: ''
+:log_name: puppetserver-with-puppetdb-scenario.log
+:log_level: info
+:no_prefix: false
+:mapping: {}
+:answer_file: "/home/puppetmaster/config/installer-scenarios.d/puppetserver-with-puppetdb-answers.yaml"
+:installer_dir: "."
+:module_dirs:
+- "/home/puppetmaster/modules"
+- "/home"
+:colors: true
+:color_of_background: :dark
+:hook_dirs: []
+:custom: {}
+:low_priority_modules: []
+:verbose_log_level: info
+:skip_puppet_version_check: true
+:password: fCE6IPpKAOabDgxbw8s7S7qIGL6hgVliaL3JkrKr7IA
