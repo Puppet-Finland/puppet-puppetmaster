@@ -1,1 +1,21 @@
-puppetmaster::puppetserver: true
+# Format:
+# <classname>: false - don't include this class
+# <classname>: true - include and use the defaults
+# <classname>:
+#   <param>: <value> - include and override the default(s)
+#
+# See params.pp in each class for what options are available
+
+---
+puppetmaster::puppetserver:
+  primary_names:
+  - puppet.local
+  - puppet
+  reports_lifetime: 14d
+  logs_lifetime: 90d
+  show_diff: false
+  autosign: false
+  autosign_entries: 
+  server_reports: store
+  server_foreman: false
+  server_external_nodes: 
