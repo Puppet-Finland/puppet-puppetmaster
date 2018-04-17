@@ -1,0 +1,175 @@
+# Format:
+# <classname>: false - don't include this class
+# <classname>: true - include and use the defaults
+# <classname>:
+#   <param>: <value> - include and override the default(s)
+#
+# See params.pp in each class for what options are available
+
+---
+puppetmaster:
+  puppetserver: true
+  with_puppetdb: true
+  with_puppetboard: false
+  with_foreman: true
+  with_foreman_proxy: true
+  reports_liftime: 14d
+  logs_liftime: 90d
+  show_diff: false
+  server_foreman: true
+  autosign: "/etc/puppetlabs/puppet/autosign.conf"
+  autosign_entries:
+  - "*.local"
+  primary_names:
+  - puppet.local
+  server_reports: log, foreman
+  puppetdb_listen_address: 127.0.0.1
+  puppetdb_listen_port: '8082'
+  puppetdb_ssl_listen_port: '8081'
+  puppetdb_database_host: 127.0.0.1
+  puppetdb_database_name: puppetdb
+  puppetdb_database_username: puppetdb
+  puppetdb_database_password: puppetdb
+  puppetdb_manage_dbserver: false
+  puppetdb_manage_package_repo: false
+  puppetdb_puppetdb_server: puppet.local
+  puppetdb_connection_limit: "-1"
+  puppetdb_db_connection_limit: "-1"
+  puppetdb_contrib_package_name: postgresql96-contrib
+  puppetdb_ssl_deploy_certs: true
+  puppetdb_postgresql_version: '9.6'
+  puppetdb_postgresql_listen_address: 127.0.0.1
+  foreman_initial_organization: puppeteers.com
+  foreman_locations_enabled: false
+  foreman_initial_location: Virtualbox
+  foreman_admin_username: admin
+  foreman_admin_password: changeme
+  foreman_puppetdb_dashboard_address: http://puppet.local:8080/pdb/dashboard
+  foreman_puppetdb_address: https://puppet.local:8081/v2/commands
+  foreman_foreman_url: https://puppet.local
+  foreman_repo: '1.15'
+  foreman_version: 1.15.6
+  foreman_manage_memcached: 'true'
+  foreman_memcached_max_memory: 8%
+  foreman_configure_epel_repo: true
+  foreman_configure_scl_repo: true
+  foreman_oauth_consumer_key: xEL7pzhskio8AHqWhMWCwskzvWNgvQRB
+  foreman_oauth_consumer_secret: 2F5iKu5VzuRzVYRaYFQiNcPghihYn7dP
+  foreman_selinux: false
+  foreman_unattended: true
+  foreman_plugin_cockpit: true
+  foreman_admin_email: hostmaster@puppeteers.fi
+  foreman_admin_first_name: Admin
+  foreman_admin_last_name: User
+  foreman_authentication: true
+  foreman_connection_limit: "-1"
+  foreman_db_database: foreman
+  foreman_db_host: 127.0.0.1
+  foreman_db_manage: true
+  foreman_db_password: changeme
+  foreman_db_type: postgresql
+  foreman_db_username: foreman
+  foreman_organizations_enabled: false
+  foreman_serveraliases:
+  - puppet
+  - foreman
+  foreman_servername: puppet.local
+  foreman_compute_vmware: false
+  foreman_compute_libvirt: false
+  foreman_compute_ec2: false
+  foreman_compute_gce: false
+  foreman_compute_openstack: false
+  foreman_compute_ovirt: false
+  foreman_compute_rackspace: false
+  foreman_plugin_ansible: false
+  foreman_plugin_docker: false
+  foreman_plugin_bootdisk: false
+  foreman_plugin_default_hostgroup: true
+  foreman_plugin_dhcp_browser: false
+  foreman_plugin_digitalocean: false
+  foreman_plugin_discovery: false
+  foreman_plugin_hooks: false
+  foreman_plugin_memcache: false
+  foreman_plugin_remote_execution: false
+  foreman_plugin_tasks: false
+  foreman_plugin_templates: false
+  foreman_proxy_user: foreman-proxy
+  foreman_proxy_groups:
+  - puppet
+  foreman_proxy_oauth_consumer_key: xEL7pzhskio8AHqWhMWCwskzvWNgvQRB
+  foreman_proxy_oauth_consumer_secret: 2F5iKu5VzuRzVYRaYFQiNcPghihYn7dP
+  foreman_proxy_templates: false
+  foreman_proxy_templates_listen_on: http
+  foreman_proxy_template_url: http://puppet.local:8000
+  foreman_proxy_http: true
+  foreman_proxy_http_port: 8000
+  foreman_proxy_manage_sudoersd: true
+  foreman_proxy_use_sudoersd: true
+  foreman_proxy_puppet_url: https://puppet.local:8140
+  foreman_proxy_puppet_use_environment_api: true
+  foreman_proxy_puppet_use_cache: true
+  foreman_proxy_puppetca: true
+  foreman_proxy_puppetca_listen_on: https
+  foreman_proxy_puppetca_cmd: "/opt/puppetlabs/bin/puppet cert"
+  foreman_proxy_puppetdir: "/etc/puppetlabs/puppet"
+  foreman_proxy_puppet: true
+  foreman_proxy_puppet_listen_on: https
+  foreman_proxy_puppetrun_cmd: puppetssh
+  foreman_proxy_puppetrun_provider: puppetssh
+  foreman_proxy_customrun_cmd: "/bin/bash"
+  foreman_proxy_customrun_args: "-ay -f -s"
+  foreman_proxy_mcollective_user: root
+  foreman_proxy_puppetssh_sudo: false
+  foreman_proxy_puppetssh_user: vagrant
+  foreman_proxy_puppetssh_keyfile: "/etc/foreman-proxy/id_rsa"
+  foreman_proxy_dhcp: false
+  foreman_proxy_dhcp_managed: false
+  foreman_proxy_dhcp_listen_on: both
+  foreman_proxy_dhcp_interface: eth1
+  foreman_proxy_dhcp_option_domain:
+  - local
+  foreman_proxy_dhcp_search_domains:
+  - local
+  foreman_proxy_dhcp_server: puppet.local
+  foreman_proxy_dhcp_provider: isc
+  foreman_proxy_dhcp_subnets:
+  - 192.168.137.0/255.255.255.0
+  foreman_proxy_dhcp_gateway: 192.168.137.10
+  foreman_proxy_dhcp_range: 192.168.137.100 192.168.137.200
+  foreman_proxy_dhcp_nameservers: 192.168.137.10
+  foreman_proxy_dhcp_pxeserver: 192.168.137.201
+  foreman_proxy_dns: false
+  foreman_proxy_dns_managed: false
+  foreman_proxy_dns_forwarders:
+  - 192.168.137.201
+  - 8.8.8.8
+  foreman_proxy_dns_interface: eth1
+  foreman_proxy_dns_listen_on: https
+  foreman_proxy_dns_provider: nsupdate
+  foreman_proxy_dns_zone: puppet.local
+  foreman_proxy_dns_reverse: 137.168.192.in-addr.arpa
+  foreman_proxy_dns_server: 192.168.137.10
+  foreman_proxy_dns_ttl: 86400
+  foreman_proxy_tftp: false
+  foreman_proxy_tftp_managed: false
+  foreman_proxy_tftp_servername: 192.168.137.10
+  foreman_proxy_tftp_manage_wget: true
+  foreman_proxy_tftp_listen_on: both
+  foreman_proxy_tftp_root: "/var/lib/tftpboot"
+  foreman_proxy_bmc: false
+  foreman_proxy_bmc_listen_on: https
+  foreman_proxy_bmc_default_provider: ipmitool
+  foreman_proxy_log_level: DEBUG
+  foreman_proxy_register_in_foreman: true
+  foreman_proxy_registered_name: puppet.local
+  foreman_proxy_registered_proxy_url: https://puppet.local:8443
+  foreman_proxy_trusted_hosts:
+  - puppet.local
+  foreman_proxy_use_sudoers: true
+  foreman_proxy_version: 1.16.0
+  foreman_proxy_ensure_packages_version: installed
+  foreman_proxy_repo: '1.16'
+  foreman_proxy_foreman_base_url: https://puppet.local
+  foreman_proxy_bind_host:
+  - 0.0.0.0
+  foreman_proxy_autosignfile: "/etc/puppetlabs/puppet/autosign.conf"

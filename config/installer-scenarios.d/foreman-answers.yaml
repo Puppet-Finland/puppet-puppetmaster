@@ -8,7 +8,7 @@
 
 ---
 foreman:
-  foreman_url: https://puppetserver-xenial.local
+  foreman_url: https://puppet.local
   puppetrun: false
   unattended: true
   unattended_url: 
@@ -18,7 +18,7 @@ foreman:
   passenger_ruby_package: 
   plugin_prefix: ruby-foreman-
   use_vhost: true
-  servername: puppetserver-xenial.local
+  servername: puppet.local
   serveraliases:
   - foreman
   ssl: true
@@ -59,14 +59,14 @@ foreman:
   server_ssl_port: 443
   server_ssl_ca: "/etc/puppetlabs/puppet/ssl/certs/ca.pem"
   server_ssl_chain: "/etc/puppetlabs/puppet/ssl/certs/ca.pem"
-  server_ssl_cert: "/etc/puppetlabs/puppet/ssl/certs/puppetserver-xenial.local.pem"
+  server_ssl_cert: "/etc/puppetlabs/puppet/ssl/certs/puppet.local.pem"
   server_ssl_certs_dir: ''
-  server_ssl_key: "/etc/puppetlabs/puppet/ssl/private_keys/puppetserver-xenial.local.pem"
+  server_ssl_key: "/etc/puppetlabs/puppet/ssl/private_keys/puppet.local.pem"
   server_ssl_crl: "/etc/puppetlabs/puppet/ssl/crl.pem"
   server_ssl_protocol: 
   client_ssl_ca: "/etc/puppetlabs/puppet/ssl/certs/ca.pem"
-  client_ssl_cert: "/etc/puppetlabs/puppet/ssl/certs/puppetserver-xenial.local.pem"
-  client_ssl_key: "/etc/puppetlabs/puppet/ssl/private_keys/puppetserver-xenial.local.pem"
+  client_ssl_cert: "/etc/puppetlabs/puppet/ssl/certs/puppet.local.pem"
+  client_ssl_key: "/etc/puppetlabs/puppet/ssl/private_keys/puppet.local.pem"
   keepalive: true
   max_keepalive_requests: 100
   keepalive_timeout: 5
@@ -89,8 +89,8 @@ foreman:
   pam_service: foreman
   ipa_manage_sssd: true
   websockets_encrypt: true
-  websockets_ssl_key: "/etc/puppetlabs/puppet/ssl/private_keys/puppetserver-xenial.local.pem"
-  websockets_ssl_cert: "/etc/puppetlabs/puppet/ssl/certs/puppetserver-xenial.local.pem"
+  websockets_ssl_key: "/etc/puppetlabs/puppet/ssl/private_keys/puppet.local.pem"
+  websockets_ssl_cert: "/etc/puppetlabs/puppet/ssl/certs/puppet.local.pem"
   logging_level: info
   loggers: {}
   email_config_method: file
