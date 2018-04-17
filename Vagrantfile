@@ -14,7 +14,6 @@ Vagrant.configure("2") do |config|
       s.args = ["-n", "puppetmaster", "-b", "/home/puppetmaster"]
     end
     box.vm.provision "shell", inline: "puppet apply --modulepath /home/puppetmaster/modules /home/puppetmaster/vagrant/xenial.pp"
-    box.vm.provision "shell", inline: "puppet apply --modulepath /home/puppetmaster/modules /home/puppetmaster/vagrant/default.pp"
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 4096
@@ -30,7 +29,6 @@ Vagrant.configure("2") do |config|
       s.path = "vagrant/prepare.sh"
       s.args = ["-n", "puppetmaster", "-b", "/home/puppetmaster"]
     end
-    box.vm.provision "shell", inline: "puppet apply --modulepath /home/puppetmaster/modules /home/puppetmaster/vagrant/default.pp"
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 4096
@@ -46,7 +44,6 @@ Vagrant.configure("2") do |config|
       s.path = "vagrant/prepare.sh"
       s.args = ["-n", "puppetmaster", "-b", "/home/puppetmaster"]
     end
-    box.vm.provision "shell", inline: "puppet apply --modulepath /home/puppetmaster/modules /home/puppetmaster/vagrant/default.pp"
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 4096

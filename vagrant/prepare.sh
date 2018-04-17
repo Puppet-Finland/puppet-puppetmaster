@@ -128,6 +128,11 @@ exec { 'Run librarian-puppet':
   timeout => 600,
   path    => '/opt/puppetlabs/bin:/opt/puppetlabs/puppet/bin:/usr/bin'
 }
+
+class { '::kafo':
+  gem_provider => 'puppet_gem',
+  require      => Exec['Run librarian-puppet'],
+}
 EOF
 cat $FILE | /opt/puppetlabs/bin/puppet apply 
 rm $FILE
