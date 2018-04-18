@@ -9,7 +9,7 @@ mod 'puppetfinland-kafo',
 
 mod 'puppetlabs-stdlib'
 
-# This is a workaround. At the momen  this is a forked version, with only change being including the puppet-inifile v. 2.2.0 in metadata.json, to prevent clashes.
+# This is a workaround. At the moment this is a forked version, with only change being including the puppet-inifile v. 2.2.0 in metadata.json, to prevent clashes.
 mod 'puppet-hiera',
     :git => 'https://github.com/kibahop/puppet-hiera.git',
     :branch => 'master'
@@ -27,6 +27,7 @@ mod 'puppetlabs-puppetserver_gem', '>= 1.0.0'
 mod 'puppetlabs-vcsrepo', '>= 2.3.0'
 mod 'puppetlabs-firewall', '>= 1.12.0'
 mod 'saz-memcached', '>= 3.1.0'
+mod 'puppet-selinux', '>=1.5.2'
 
 # Foreman deps
 mod 'puppetlabs/mysql',         '>= 4.0.0'

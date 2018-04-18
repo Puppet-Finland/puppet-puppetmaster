@@ -45,6 +45,7 @@ Vagrant.configure("2") do |config|
     box.vm.network "private_network", ip: "192.168.221.203"
     box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
     box.vm.synced_folder ".", "/home/puppetmaster", type: "virtualbox"
+    box.vm.network "forwarded_port", guest: 443, host: 8443
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
       s.args = ["-n", "puppetmaster", "-b", "/home/puppetmaster"]

@@ -10,9 +10,15 @@ class puppetmaster::common
 (
   Array[String] $primary_names,
   String        $reports_lifetime = '14d',
-  String        $logs_lifetime = '90d'
+  String        $logs_lifetime = '90d',
+  String        $timezone,
 )
 {
+
+  class { '::timezone':
+    timezone => $timezone,
+  }
+
 
   class { '::hosts':
     primary_names => $primary_names,

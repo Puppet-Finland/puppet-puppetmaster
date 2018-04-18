@@ -1,17 +1,18 @@
 ---
 :name: foreman
-:description: ''
+:description: install puppetserver with puppetdb and foreman
 :enabled: true
 :log_dir: "/var/log/kafo"
 :store_dir: ''
-:log_name: configuration.log
+:log_name: foreman-scenario.log
 :log_level: info
 :no_prefix: false
 :mapping: {}
-:answer_file: "./config/installer-scenarios.d/foreman-answers.yaml"
+:answer_file: "/home/puppetmaster/config/installer-scenarios.d/foreman-answers.yaml"
 :installer_dir: "."
 :module_dirs:
-- "./modules"
+- "/home/puppetmaster/modules"
+- "/home"
 :colors: true
 :color_of_background: :dark
 :hook_dirs: []

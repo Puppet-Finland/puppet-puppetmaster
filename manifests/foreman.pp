@@ -1,37 +1,70 @@
+# 
+# Class to setup Foreman 
+#
+# == Parameters:
+#
+# $foreman_db_password:: XXX
+#
+# $foreman_admin_firstname:: XXX
+#
+# $foreman_admin_lastname:: XXX
+# 
+# $foreman_admin_email:: XXX
+#
+# $foreman_admin_password:: XXX
+#
+# $puppetdb_database_password:: XXX
+#
+# $timezone:: Example: 'Europe/Helsinki'
+#
+# == Advanced parameters:
+#
+# $foreman_plugin_cockpit:: XXX
+#
+# $foreman_compute_vmware:: XXX
+#
+# $foreman_compute_libvirt:: XXX
+#
+# $foreman_compute_ec2:: XXX
+#
+# $foreman_compute_gce:: XXX
+#
+# $foreman_compute_openstack:: XXX
+#
+# $foreman_compute_ovirt:: XXX
+#
+# $foreman_compute_rackspace:: XXX
+#
+# $foreman_plugin_ansible:: XXX
+#
+# $foreman_plugin_docker:: XXX
+#
+# $foreman_plugin_bootdisk:: XXX
+# 
+# $foreman_plugin_default_hostgroup:: XXX
+#
+# $foreman_plugin_dhcp_browser:: XXX
+#
+# $foreman_plugin_digitalocean:: XXX
+#
+# $foreman_plugin_discovery:: XXX
+#
+# $foreman_plugin_hooks:: XXX
+#
+# $foreman_plugin_memcache:: XXX
+#
+# $foreman_plugin_remote_execution:: XXX
+#
+# $foreman_plugin_tasks:: XXX
+#
+# $foreman_plugin_templates:: XXX
 class puppetmaster::foreman
 (
-  $foreman_db_manage,
-  $foreman_db_type,
-  $foreman_db_host,
-  $foreman_db_database,
-  $foreman_db_username,
   $foreman_db_password,
-  $foreman_connection_limit,
-  $foreman_authentication,
-  $foreman_servername,
-  $foreman_serveraliases,
-  $foreman_admin_first_name,
-  $foreman_admin_last_name,
+  $foreman_admin_firstname,
+  $foreman_admin_lastname,
   $foreman_admin_email,
-  $foreman_organizations_enabled,
-  $foreman_initial_organization,
-  $foreman_locations_enabled,
-  $foreman_initial_location,
-  $foreman_admin_username,
   $foreman_admin_password,
-  $foreman_puppetdb_dashboard_address,
-  $foreman_puppetdb_address,
-  $foreman_foreman_url,
-  $foreman_repo,
-  $foreman_version,
-  $foreman_manage_memcached,
-  $foreman_memcached_max_memory,
-  $foreman_configure_epel_repo,
-  $foreman_configure_scl_repo,
-  $foreman_oauth_consumer_key,
-  $foreman_oauth_consumer_secret,
-  $foreman_selinux,
-  $foreman_unattended,
   $foreman_plugin_cockpit,
   $foreman_compute_vmware,
   $foreman_compute_libvirt,
@@ -52,8 +85,25 @@ class puppetmaster::foreman
   $foreman_plugin_remote_execution,
   $foreman_plugin_tasks,
   $foreman_plugin_templates,
+  $puppetdb_database_password,
+  $timezone,
 )
 {
+
+  $foreman_version = '1.16.0'
+  $foreman_repo = '1.16'
+  $foreman_manage_memcached = true
+  $foreman_memcached_max_memory = '8%'
+  $foreman_url = "https://${facts['fqdn']}"
+  $primary_names = [ "$facts['fqdn']", "$facts['hostname']" ]
+  $foreman_puppetdb_dashboard_address = "http://${facts['fqdn']}:8080/pdb/dashboard"
+  $foreman_puppetdb_address = "https://${facts['fqdn']}:8081/v2/commands"
+  $puppetdb_server = $facts['fqdn']
+  
+  unless ($facts['osfamily'] == 'RedHat' and $facts['os']['release']['major'] == '7') {
+    fail("$facts['os']['name'] $facts['os']['release']['full'] not supported yet")
+  }
+    
   # See https://github.com/theforeman/puppet-foreman#foreman-version-compatibility-notes
   if versioncmp($foreman_version, '1.16') <= 0 {
     $dynflow_in_core = false
@@ -62,7 +112,7 @@ class puppetmaster::foreman
     $dynflow_in_core = true
   }
 
-  firewall { '443 accept incoming foreman template and UI':
+  @firewall { '443 accept template and UI':
     chain  => 'INPUT',
     state  => ['NEW'],
     dport  => ['80','443'],
@@ -70,7 +120,7 @@ class puppetmaster::foreman
     action => 'accept',
   }
 
-  firewall { '8443 accept incoming foreman proxy':
+  @firewall { '8443 accept foreman proxies':
     chain  => 'INPUT',
     state  => ['NEW'],
     dport  => '8443',
@@ -78,7 +128,7 @@ class puppetmaster::foreman
     action => 'accept',
   }
 
-  firewall { '8140 allow incoming puppet':
+  @firewall { '8140 allow puppet':
     chain  => 'INPUT',
     state  => ['NEW'],
     dport  => '8140',
@@ -86,7 +136,7 @@ class puppetmaster::foreman
     action => 'accept',
   }
 
-  firewall { '8443 allow outgoing traffic to smart proxies':
+  @firewall { '8443 allow traffic to smart proxies':
     chain  => 'OUTPUT',
     state  => ['NEW'],
     dport  => '8443',
@@ -94,29 +144,9 @@ class puppetmaster::foreman
     action => 'accept',
   }
 
-  if ! $foreman_db_manage {
-
-    ::postgresql::server::role { $foreman_db_username:
-      password_hash    => postgresql_password($foreman_db_username, $foreman_db_password),
-      connection_limit => $foreman_db_connection_limit,
-    }
-
-    ::postgresql::server::database_grant { "Grant all to $foreman_db_username":
-      privilege => 'ALL',
-      db        => $foreman_db_database,
-      role      => $foreman_db_username,
-    }
-
-    ::postgresql::server::db { $foreman_db_database:
-      user     => $foreman_db_username,
-      password => postgresql_password($foreman_db_username, $foreman_db_password),
-    }
-
-  }
-
   if ($foreman_manage_memcached) {
     class { 'memcached':
-      max_memory => "$foreman_memcached_max_memory",
+      max_memory => $foreman_memcached_max_memory,
     }
   }
 
@@ -126,6 +156,7 @@ class puppetmaster::foreman
     user        => 'root',
     hour        => 0,
     minute      => 0/30,
+    require     => Class['::foreman'],
   }
 
   cron { 'Expire Foreman reports':
@@ -146,86 +177,159 @@ class puppetmaster::foreman
     require     => Class['::foreman'],
   }
 
+  class { '::epel':
+    before => Class['::foreman'],
+  }
+  
+  class { '::puppetmaster::common':
+    primary_names => $primary_names,
+    timezone      => $timezone, 
+    before        => Class['::foreman'],
+  }
+
+  class { '::puppet':
+    server         => true,
+    show_diff      => true,
+    server_foreman => true,
+    autosign       => '/etc/puppetlabs/puppet/autosign.conf',
+    server_reports => 'store, foreman',
+    require        => [ File['/etc/puppetlabs/puppet/fileserver.conf'], Puppet_authorization::Rule['files'] ],
+    before         => Class['::foreman'],
+  }
+
+  class { '::puppetmaster::databaseserver':
+  }
+  
+  class { '::puppetdb':
+    database_password     => $puppetdb_database_password,
+    ssl_deploy_certs      => true,
+    manage_dbserver       => false, 
+    require               => [
+      Class['::puppet'],
+      Class['::puppetmaster::databaseserver'],
+    ]
+  }
+  
+  class { '::puppetdb::master::config':
+    puppetdb_server => $puppetdb_server,
+    restart_puppet  => true,
+  }
+
+  ::puppetmaster::database { 'foreman':
+    dbname   => foreman,
+    username => foreman,
+    password => $foreman_db_password,
+    require  => Class['::puppetmaster::databaseserver'],
+    before   => Class['::foreman'],
+  }
+  
+  selinux::fcontext { 'set-httpd-file-context':
+    seltype  => 'httpd_sys_content_t',
+    pathspec => '/etc/puppetlabs/puppet/ssl(/.*)?',
+    before   => Class['::foreman'],
+  }
+
   class { '::foreman':
-    foreman_url           => $foreman_foreman_url,
-    db_manage             => $foreman_db_manage,
-    db_username           => $foreman_db_username,
+    foreman_url           => $foreman_url,
+    db_manage             => false,
+    db_username           => 'foreman',
     db_password           => $foreman_db_password,
-    db_type               => $foreman_db_type,
-    db_host               => $foreman_db_host,
-    db_database           => $foreman_db_database,
-    authentication        => $foreman_authentication,
-    admin_username        => $foreman_admin_username,
+    db_type               => 'postgresql',
+    db_host               => 'localhost',
+    db_database           => 'foreman',
+    authentication        => true,
+    admin_username        => 'admin',
     admin_password        => $foreman_admin_password,
-    servername            => $foreman_servername,
-    serveraliases         => $foreman_serveraliases,
-    admin_first_name      => $foreman_admin_first_name,
-    admin_last_name       => $foreman_admin_last_name,
+    servername            => 'foreman',
+    serveraliases         => [ 'puppet', 'foreman' ],
+    admin_first_name      => $foreman_admin_firstname,
+    admin_last_name       => $foreman_admin_lastname,
     admin_email           => $foreman_admin_email,
-    organizations_enabled => $foreman_organizations_enabled,
-    initial_organization  => $foreman_initial_organization,
+    organizations_enabled => false,
+    initial_organization  => '',
     repo                  => $foreman_repo,
     version               => $foreman_version,
-    configure_epel_repo   => $foreman_configure_epel_repo,
-    configure_scl_repo    => $foreman_configure_scl_repo,
-    oauth_consumer_key    => $foreman_oauth_consumer_key,
-    oauth_consumer_secret => $foreman_oauth_consumer_secret,
-    locations_enabled     => $foreman_locations_enabled,
-    initial_location      => $foreman_initial_location,
-    selinux               => $foreman_selinux,
-    unattended            => $foreman_unattended,
-    dynflow_in_core       => $dynflow_in_core,
+    configure_epel_repo   => false,
+    configure_scl_repo    => true,
+    locations_enabled     => true,
+    initial_location      => 'Foreman Cloud',
+    selinux               => undef,
+    unattended            => true,
+    dynflow_in_core       => false,
   }
 
   if $foreman_compute_vmware {
-    include ::foreman::compute::vmware
+    class { '::foreman::compute::vmware':
+    require               => Class['::foreman'],
+    }
   }
 
   if $foreman_compute_libvirt {
-    include ::foreman::compute::libvirt
+    class { '::foreman::compute::libvirt':
+      require             => Class['::foreman'],
+    }
   }
-
+    
   if $foreman_compute_ec2 {
-    include ::foreman::compute::ec2
+    class { '::foreman::compute::ec2':
+      require             => Class['::foreman'],
+    }
   }
 
   if $foreman_compute_gce {
-    include ::foreman::compute::gce
+    class { '::foreman::compute::gce':
+      require             => Class['::foreman'],
+    }
   }
-
+  
   if $foreman_compute_openstack {
-    include ::foreman::compute::openstack
+    class { '::foreman::compute::openstack':
+      require             => Class['::foreman'],
+    }
   }
-
+  
   if $foreman_compute_ovirt {
-    include ::foreman::compute::ovirt
+    class { '::foreman::compute::ovirt':
+      require             => Class['::foreman'],
+    }
   }
-
+  
   if $foreman_plugin_cockpit {
-    include ::foreman::plugin::cockpit
+    class { '::foreman::plugin::cockpit':
+      require             => Class['::foreman'],
+    }
   }
-
+  
   if $foreman_plugin_ansible {
-
-    include ::foreman::plugin::ansible
+    
+    class { '::foreman::plugin::ansible':
+      require             => Class['::foreman::plugin::ansible'],
+    }
 
     package { 'ansible':
-      ensure  => installed,
-      require => Class['::foreman::plugin::ansible'],
+      ensure              => installed,
+      require             => Class['::foreman::plugin::ansible'],
     }
   }
 
   if $foreman_plugin_docker {
-    include ::foreman::plugin::docker
+    class { '::foreman::plugin::docker':
+      require             => Class['::foreman'],
+    }
   }
 
   if $foreman_plugin_bootdisk {
-    include ::foreman::plugin::bootdisk
+    class { '::foreman::plugin::bootdisk':
+    require               => Class['::foreman'],
+    }
   }
 
   if $foreman_plugin_default_hostgroup {
 
-    include ::foreman::plugin::default_hostgroup
+    class { '::foreman::plugin::default_hostgroup':
+      require             => Class['::foreman'],
+    }
+    
     $default_hostgroup_template = @(END)
 ---
 :default_hostgroup:
@@ -241,53 +345,69 @@ class puppetmaster::foreman
 END
 
     file { '/etc/foreman/plugins/foreman_default_hostgroup.yaml':
-      ensure  => file,
-      content => inline_epp($default_hostgroup_template),
-      require => Class['::foreman::plugin::default_hostgroup'],
+      ensure              => file,
+      content             => inline_epp($default_hostgroup_template),
+      require             => Class['::foreman::plugin::default_hostgroup'],
     }
   }
 
   if $foreman_plugin_dhcp_browser {
-    include ::foreman::plugin::dhcp_browser
+    class { '::foreman::plugin::dhcp_browser':
+      require             => Class['::foreman'],
+    }
   }
 
   if $foreman_plugin_digitalocean {
-    include ::foreman::plugin::digitalocean
+    class { '::foreman::plugin::digitalocean':
+      require             => Class['::foreman'],
+    }
   }
 
   if $foreman_plugin_discovery {
-    include ::foreman::plugin::discovery
+    class { '::foreman::plugin::discovery':
+      require             => Class['::foreman'],
+    }
   }
+  
 
   if $foreman_plugin_hooks {
-    include ::foreman::plugin::hooks
+    class { '::foreman::plugin::hooks':
+      require             => Class['::foreman'],
+    }
   }
 
   if $foreman_plugin_memcache {
-    include ::foreman::plugin::memcache
+    class { '::foreman::plugin::memcache':
+      require             => Class['::foreman'],
+    }
   }
 
   if $foreman_plugin_remote_execution {
-    include ::foreman::plugin::remote_execution
+    class { '::foreman::plugin::remote_execution':
+      require             => Class['::foreman'],
+    }
   }
 
   if $foreman_plugin_tasks {
-    include ::foreman::plugin::tasks
+    class { '::foreman::plugin::tasks':
+    require               => Class['::foreman'],
+    }
   }
 
   if $foreman_plugin_templates {
-    include ::foreman::plugin::templates
+    class { '::foreman::plugin::templates':
+    }
   }
 
   class { '::foreman::plugin::puppetdb':
-    dashboard_address => $foreman_puppetdb_dashboard_address,
-    address           => $foreman_puppetdb_address,
+    dashboard_address     => $foreman_puppetdb_dashboard_address,
+    address               => $foreman_puppetdb_address,
   }
-
+  
   class { '::foreman::cli':
-    foreman_url        => $foreman_foreman_url,
-    username           => 'admin',
-    password           => $foreman_admin_password,
-    manage_root_config => true,
+    foreman_url           => $foreman_url,
+    username              => 'admin',
+    password              => $foreman_admin_password,
+    manage_root_config    => true,
   }
 }
