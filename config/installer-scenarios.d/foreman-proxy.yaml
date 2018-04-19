@@ -1,6 +1,6 @@
 ---
-:name: foreman-proxy
-:description: ''
+:name: Smart Proxy
+:description: install foreman-proxy and connect to foreman instance
 :enabled: true
 :log_dir: "/var/log/kafo"
 :store_dir: ''
@@ -11,7 +11,8 @@
 :answer_file: "./config/installer-scenarios.d/foreman-proxy-answers.yaml"
 :installer_dir: "."
 :module_dirs:
-- "./modules"
+- "/home/puppetmaster/modules"
+- "/home"
 :colors: true
 :color_of_background: :dark
 :hook_dirs: []

@@ -1,5 +1,5 @@
 ---
-:name: puppetserver-with-puppetdb
+:name: Configuration Manager with Puppetdb
 :description: install puppetserver with puppetdb
 :enabled: true
 :log_dir: "/var/log/kafo"

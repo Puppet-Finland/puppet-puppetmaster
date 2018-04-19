@@ -1,5 +1,5 @@
 ---
-:name: puppetserver
+:name: Configuration manager
 :description: install puppetserver without anything extra
 :enabled: true
 :log_dir: "/var/log/kafo"

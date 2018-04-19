@@ -1,18 +1,18 @@
 ---
-:name: default
-:description: ''
+:name: Lifecycle Manager
+:description: install foreman and foreman-proxy all-in-one
 :enabled: true
 :log_dir: "/var/log/kafo"
 :store_dir: ''
-:log_name: configuration.log
+:log_name: lcm.log
 :log_level: info
 :no_prefix: false
 :mapping: {}
-:answer_file: "/home/puppetmaster/config/installer-scenarios.d/default-answers.yaml"
-:installer_dir: "/home/puppetmaster"
+:answer_file: "./config/installer-scenarios.d/lcm-answers.yaml"
+:installer_dir: "."
 :module_dirs:
-- "/home"
 - "/home/puppetmaster/modules"
+- "/home"
 :colors: true
 :color_of_background: :dark
 :hook_dirs: []
@@ -20,4 +20,4 @@
 :low_priority_modules: []
 :verbose_log_level: info
 :skip_puppet_version_check: true
-:password: UzbX6nCVLRQiW_LW6SyKQAii1ArNJHp5DFdhG0Wz2to
+:password: UGi1m8QKCX-0jRjHBF2B189MaVtPfwJ83mAURXjkp68

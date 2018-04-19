@@ -1,5 +1,5 @@
 ---
-:name: foreman
+:name: Foreman
 :description: install puppetserver with puppetdb and foreman
 :enabled: true
 :log_dir: "/var/log/kafo"
