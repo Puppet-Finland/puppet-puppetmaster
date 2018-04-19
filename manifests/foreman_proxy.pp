@@ -70,6 +70,10 @@
 #
 # $foreman_proxy_bmc_listen_on:: XXX
 #
+# $primary_names:: Primary names for this machine. Example: ['puppet.local', 'puppet' ]
+#
+# $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki'
+#
 # == Advanced parameters:
 #
 class puppetmaster::foreman_proxy
@@ -109,6 +113,7 @@ class puppetmaster::foreman_proxy
   String $foreman_proxy_tftp_listen_on,
   Boolean $foreman_proxy_bmc,
   String $foreman_proxy_bmc_listen_on,
+  
 )
 {
   if defined(Service['foreman::service']) {
@@ -117,6 +122,7 @@ class puppetmaster::foreman_proxy
     }
   }
 
+  $primary_names = [ "$facts['fqdn']", "$facts['hostname']", 'puppet', "puppet.$facts['domainname']" ]  
   $foreman_proxy_registered_name = 'puppet.local'
   $foreman_proxy_repo = 'stable'
   $foreman_proxy_version = '1.16.0'
@@ -223,6 +229,16 @@ class puppetmaster::foreman_proxy
     proto  => 'tcp',
     action => 'accept',
   }
+
+  unless defined(Class['::puppetmaster::common']) {
+    
+    class { '::puppetmaster::common':
+      primary_names => $primary_names,
+      timezone      => $timezone, 
+      before        => Class['::foreman'],
+    }
+  }
+
 
   class { '::foreman_proxy':
     version                 => $foreman_proxy_version,

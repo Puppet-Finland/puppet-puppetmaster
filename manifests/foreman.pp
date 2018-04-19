@@ -95,10 +95,11 @@ String $foreman_db_password,
   $foreman_manage_memcached = true
   $foreman_memcached_max_memory = '8%'
   $foreman_url = "https://${facts['fqdn']}"
-  $primary_names = [ "$facts['fqdn']", "$facts['hostname']" ]
+  $primary_names = [ "$facts['fqdn']", "$facts['hostname']", 'puppet', "puppet.$facts['domain']" ]  
   $foreman_puppetdb_dashboard_address = "http://${facts['fqdn']}:8080/pdb/dashboard"
   $foreman_puppetdb_address = "https://${facts['fqdn']}:8081/v2/commands"
   $puppetdb_server = $facts['fqdn']
+
   
   unless ($facts['osfamily'] == 'RedHat' and $facts['os']['release']['major'] == '7') {
     fail("$facts['os']['name'] $facts['os']['release']['full'] not supported yet")
@@ -181,12 +182,16 @@ String $foreman_db_password,
     before => Class['::foreman'],
   }
   
-  class { '::puppetmaster::common':
-    primary_names => $primary_names,
-    timezone      => $timezone, 
-    before        => Class['::foreman'],
-  }
 
+  unless defined(Class['::puppetmaster::common']) {
+    
+    class { '::puppetmaster::common':
+      primary_names => $primary_names,
+      timezone      => $timezone, 
+      before        => Class['::foreman'],
+    }
+  }
+  
   class { '::puppet':
     server         => true,
     show_diff      => true,

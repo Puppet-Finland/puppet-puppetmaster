@@ -35,7 +35,7 @@
 ## Useful for development, e.g. when you want to move log files to local directory
 # :log_dir: /var/log/kafo
 # :log_name: configure.log
-# :log_level: :info
+:log_level: :info
 
 ## Advanced configuration - if not set it's ignored
 # :log_owner: root
