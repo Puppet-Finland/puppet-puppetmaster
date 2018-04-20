@@ -122,7 +122,7 @@ class puppetmaster::foreman_proxy
     }
   }
 
-  $primary_names = [ "$facts['fqdn']", "$facts['hostname']", 'puppet', "puppet.$facts['domainname']" ]  
+  $primary_names = [ "${facts['fqdn']}", "${facts['hostname']}", 'puppet', "puppet.${facts['domain']}" ]
   $foreman_proxy_registered_name = 'puppet.local'
   $foreman_proxy_repo = 'stable'
   $foreman_proxy_version = '1.16.0'

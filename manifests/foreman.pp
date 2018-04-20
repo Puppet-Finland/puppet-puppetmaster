@@ -35,6 +35,8 @@
 #
 # $foreman_compute_rackspace:: XXX
 #
+# $foreman_plugin_azure:: Install support for Microsoft Azure
+#
 # $foreman_plugin_ansible:: XXX
 #
 # $foreman_plugin_docker:: XXX
@@ -75,6 +77,7 @@ String $foreman_db_password,
   Boolean $foreman_compute_openstack,
   Boolean $foreman_compute_ovirt,
   Boolean $foreman_compute_rackspace,
+  Boolean $foreman_plugin_azure,
   Boolean $foreman_plugin_ansible,
   Boolean $foreman_plugin_docker,
   Boolean $foreman_plugin_bootdisk,
@@ -90,16 +93,17 @@ String $foreman_db_password,
 )
 {
 
-  $foreman_version = '1.16.0'
-  $foreman_repo = '1.16'
-  $foreman_manage_memcached = true
-  $foreman_memcached_max_memory = '8%'
-  $foreman_url = "https://${facts['fqdn']}"
-  $primary_names = [ "$facts['fqdn']", "$facts['hostname']", 'puppet', "puppet.$facts['domain']" ]  
+  $foreman_version                    = '1.16.0'
+  $foreman_repo                       = '1.16'
+  $foreman_manage_memcached           = true
+  $foreman_memcached_max_memory       = '8%'
+  $foreman_url                        = "https://${facts['fqdn']}"
+  $primary_names                      = unique([ "${facts['fqdn']}", "${facts['hostname']}", 'puppet', "puppet.${facts['domain']}" ])
+  $foreman_serveraliases              = $primary_names
   $foreman_puppetdb_dashboard_address = "http://${facts['fqdn']}:8080/pdb/dashboard"
-  $foreman_puppetdb_address = "https://${facts['fqdn']}:8081/v2/commands"
-  $puppetdb_server = $facts['fqdn']
-
+  $foreman_puppetdb_address           = "https://${facts['fqdn']}:8081/v2/commands"
+  $puppetdb_server                    = $facts['fqdn']
+  
   
   unless ($facts['osfamily'] == 'RedHat' and $facts['os']['release']['major'] == '7') {
     fail("$facts['os']['name'] $facts['os']['release']['full'] not supported yet")
@@ -234,6 +238,10 @@ String $foreman_db_password,
     before   => Class['::foreman'],
   }
 
+  selinux::exec_restorecon { '/etc/puppetlabs/puppet/ssl':
+    require => Selinux::Fcontext['set-httpd-file-context'],
+  }
+
   class { '::foreman':
     foreman_url           => $foreman_url,
     db_manage             => false,
@@ -246,7 +254,7 @@ String $foreman_db_password,
     admin_username        => 'admin',
     admin_password        => $foreman_admin_password,
     servername            => 'foreman',
-    serveraliases         => [ 'puppet', 'foreman' ],
+    serveraliases         => $foreman_serveraliases,
     admin_first_name      => $foreman_admin_firstname,
     admin_last_name       => $foreman_admin_lastname,
     admin_email           => $foreman_admin_email,
@@ -265,74 +273,68 @@ String $foreman_db_password,
 
   if $foreman_compute_vmware {
     class { '::foreman::compute::vmware':
-    require               => Class['::foreman'],
     }
   }
 
   if $foreman_compute_libvirt {
     class { '::foreman::compute::libvirt':
-      require             => Class['::foreman'],
     }
   }
     
   if $foreman_compute_ec2 {
     class { '::foreman::compute::ec2':
-      require             => Class['::foreman'],
     }
   }
 
   if $foreman_compute_gce {
     class { '::foreman::compute::gce':
-      require             => Class['::foreman'],
     }
   }
   
   if $foreman_compute_openstack {
     class { '::foreman::compute::openstack':
-      require             => Class['::foreman'],
     }
   }
   
   if $foreman_compute_ovirt {
     class { '::foreman::compute::ovirt':
-      require             => Class['::foreman'],
+    }
+  }
+
+  if $foreman_plugin_azure {
+    class { '::foreman::plugin::azure':
     }
   }
   
   if $foreman_plugin_cockpit {
     class { '::foreman::plugin::cockpit':
-      require             => Class['::foreman'],
     }
   }
   
   if $foreman_plugin_ansible {
     
     class { '::foreman::plugin::ansible':
-      require             => Class['::foreman::plugin::ansible'],
     }
 
     package { 'ansible':
-      ensure              => installed,
-      require             => Class['::foreman::plugin::ansible'],
+      ensure  => installed,
+      require => Class['::foreman::plugin::ansible'],
     }
   }
 
   if $foreman_plugin_docker {
     class { '::foreman::plugin::docker':
-      require             => Class['::foreman'],
     }
   }
 
   if $foreman_plugin_bootdisk {
     class { '::foreman::plugin::bootdisk':
-    require               => Class['::foreman'],
     }
   }
 
   if $foreman_plugin_default_hostgroup {
 
     class { '::foreman::plugin::default_hostgroup':
-      require             => Class['::foreman'],
     }
     
     $default_hostgroup_template = @(END)
@@ -350,52 +352,45 @@ String $foreman_db_password,
 END
 
     file { '/etc/foreman/plugins/foreman_default_hostgroup.yaml':
-      ensure              => file,
-      content             => inline_epp($default_hostgroup_template),
-      require             => Class['::foreman::plugin::default_hostgroup'],
+      ensure  => file,
+      content => inline_epp($default_hostgroup_template),
+      require => Class['::foreman::plugin::default_hostgroup'],
     }
   }
 
   if $foreman_plugin_dhcp_browser {
     class { '::foreman::plugin::dhcp_browser':
-      require             => Class['::foreman'],
     }
   }
 
   if $foreman_plugin_digitalocean {
     class { '::foreman::plugin::digitalocean':
-      require             => Class['::foreman'],
     }
   }
 
   if $foreman_plugin_discovery {
     class { '::foreman::plugin::discovery':
-      require             => Class['::foreman'],
     }
   }
   
 
   if $foreman_plugin_hooks {
     class { '::foreman::plugin::hooks':
-      require             => Class['::foreman'],
     }
   }
 
   if $foreman_plugin_memcache {
     class { '::foreman::plugin::memcache':
-      require             => Class['::foreman'],
     }
   }
 
   if $foreman_plugin_remote_execution {
     class { '::foreman::plugin::remote_execution':
-      require             => Class['::foreman'],
     }
   }
 
   if $foreman_plugin_tasks {
     class { '::foreman::plugin::tasks':
-    require               => Class['::foreman'],
     }
   }
 

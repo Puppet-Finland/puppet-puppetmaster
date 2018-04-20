@@ -33,6 +33,8 @@
 #
 # $foreman_compute_rackspace:: XXX
 #
+# $foreman_plugin_azure:: Enable support for Microsoft Azure computing
+#
 # $foreman_plugin_ansible:: XXX
 #
 # $foreman_plugin_docker:: XXX
@@ -144,6 +146,7 @@ class puppetmaster::lcm
   Boolean $foreman_compute_openstack,
   Boolean $foreman_compute_ovirt,
   Boolean $foreman_compute_rackspace,
+  Boolean $foreman_plugin_azure,
   Boolean $foreman_plugin_ansible,
   Boolean $foreman_plugin_docker,
   Boolean $foreman_plugin_bootdisk,
@@ -193,6 +196,16 @@ class puppetmaster::lcm
 )
 {
 
+  $foreman_version                    = '1.16.0'
+  $foreman_repo                       = '1.16'
+  $foreman_manage_memcached           = true
+  $foreman_memcached_max_memory       = '8%'
+  $foreman_url                        = "https://${facts['fqdn']}"
+  $primary_names                      = unique([ "${facts['fqdn']}", "${facts['hostname']}", 'puppet', "puppet.${facts['domain']}" ])
+  $foreman_puppetdb_dashboard_address = "http://${facts['fqdn']}:8080/pdb/dashboard"
+  $foreman_puppetdb_address           = "https://${facts['fqdn']}:8081/v2/commands"
+  $puppetdb_server                    = $facts['fqdn']
+
   unless defined(Class['::puppetmaster::common']) {
     
     class { '::puppetmaster::common':
@@ -202,7 +215,7 @@ class puppetmaster::lcm
     }
   }
   
-  class { puppetmaster::foreman:
+  class { '::puppetmaster::foreman':
     foreman_db_password              => $foreman_db_password, 
     foreman_admin_firstname          => $foreman_admin_firstname,
     foreman_admin_lastname           => $foreman_admin_lastname,
@@ -218,6 +231,7 @@ class puppetmaster::lcm
     foreman_compute_openstack        => $foreman_compute_openstack,
     foreman_compute_ovirt            => $foreman_compute_ovirt,
     foreman_compute_rackspace        => $foreman_compute_rackspace,
+    foreman_plugin_azure             => $foreman_plugin_azure,
     foreman_plugin_ansible           => $foreman_plugin_ansible,
     foreman_plugin_docker            => $foreman_plugin_docker,
     foreman_plugin_bootdisk          => $foreman_plugin_bootdisk,
@@ -232,7 +246,7 @@ class puppetmaster::lcm
     foreman_plugin_templates         => $foreman_plugin_templates,
   }
 
-  class { puppetmaster::foreman_proxy:
+  class { '::puppetmaster::foreman_proxy':
     foreman_proxy_foreman_base_url    => $foreman_proxy_foreman_base_url, 
     foreman_proxy_templates           => $foreman_proxy_templates,
     foreman_proxy_templates_listen_on => $foreman_proxy_templates_listen_on,
@@ -267,6 +281,6 @@ class puppetmaster::lcm
     foreman_proxy_tftp_listen_on      => $foreman_proxy_tftp_listen_on,
     foreman_proxy_bmc                 => $foreman_proxy_bmc,
     foreman_proxy_bmc_listen_on       => $foreman_proxy_bmc_listen_on,
-    require                           => Class['::puppetmaster::foreman:'],
+    require                           => Class['::puppetmaster::foreman'],
   }
 }

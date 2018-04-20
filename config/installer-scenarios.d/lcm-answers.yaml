@@ -23,6 +23,7 @@ puppetmaster::lcm:
   foreman_compute_openstack: false
   foreman_compute_ovirt: false
   foreman_compute_rackspace: false
+  foreman_plugin_azure: true
   foreman_plugin_ansible: false
   foreman_plugin_docker: false
   foreman_plugin_bootdisk: false
@@ -35,7 +36,7 @@ puppetmaster::lcm:
   foreman_plugin_remote_execution: false
   foreman_plugin_tasks: false
   foreman_plugin_templates: false
-  foreman_proxy_foreman_base_url: http://puppet.local
+  foreman_proxy_foreman_base_url: https://puppet.local
   foreman_proxy_templates: false
   foreman_proxy_templates_listen_on: both
   foreman_proxy_trusted_hosts:

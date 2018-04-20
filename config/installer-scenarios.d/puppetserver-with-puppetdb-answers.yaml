@@ -8,9 +8,7 @@
 
 ---
 puppetmaster::puppetdb:
-  primary_names:
-  - puppet.local
-  - puppet
   autosign: "/etc/puppetlabs/puppet/autosign.conf"
   autosign_entries: 
-  puppetdb_database_password:
+  puppetdb_database_password: changeme
+  timezone: Europe/Helsinki

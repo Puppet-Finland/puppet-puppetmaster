@@ -18,20 +18,21 @@ puppetmaster::foreman:
   foreman_plugin_cockpit: false
   foreman_compute_vmware: false
   foreman_compute_libvirt: false
-  foreman_compute_ec2: false
+  foreman_compute_ec2: true
   foreman_compute_gce: false
   foreman_compute_openstack: false
   foreman_compute_ovirt: false
   foreman_compute_rackspace: false
+  foreman_plugin_azure: false
   foreman_plugin_ansible: false
   foreman_plugin_docker: false
   foreman_plugin_bootdisk: false
-  foreman_plugin_default_hostgroup: false
+  foreman_plugin_default_hostgroup: true
   foreman_plugin_dhcp_browser: false
   foreman_plugin_digitalocean: false
   foreman_plugin_discovery: false
   foreman_plugin_hooks: false
-  foreman_plugin_memcache: false
+  foreman_plugin_memcache: true
   foreman_plugin_remote_execution: false
   foreman_plugin_tasks: false
   foreman_plugin_templates: false

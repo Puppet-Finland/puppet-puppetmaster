@@ -8,8 +8,6 @@
 
 ---
 puppetmaster::puppetserver:
-  primary_names:
-  - puppet.local
-  - puppet
   autosign: "/etc/puppetlabs/puppet/autosign.conf"
-  autosign_entries:
+  autosign_entries: 
+  timezone: Europe/Helsinki

@@ -8,7 +8,7 @@
 
 ---
 puppetmaster::foreman_proxy:
-  foreman_proxy_foreman_base_url: http://puppet.local
+  foreman_proxy_foreman_base_url: https://puppet.local
   foreman_proxy_templates: false
   foreman_proxy_templates_listen_on: both
   foreman_proxy_trusted_hosts:
