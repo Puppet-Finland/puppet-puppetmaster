@@ -117,6 +117,17 @@ String $foreman_db_password,
     $dynflow_in_core = true
   }
 
+  class { selinux:
+    mode => 'enforcing',
+    type => 'targeted',
+  }
+  
+  selinux::module { 'httpd_t':
+    ensure    => 'present',
+    source_te => '/home/puppetmaster/files/httpd_t.te',
+    builder   => 'simple',
+  }
+
   @firewall { '443 accept template and UI':
     chain  => 'INPUT',
     state  => ['NEW'],
@@ -235,7 +246,6 @@ String $foreman_db_password,
   selinux::fcontext { 'set-httpd-file-context':
     seltype  => 'httpd_sys_content_t',
     pathspec => '/etc/puppetlabs/puppet/ssl(/.*)?',
-    before   => Class['::foreman'],
   }
 
   selinux::exec_restorecon { '/etc/puppetlabs/puppet/ssl':
@@ -266,7 +276,7 @@ String $foreman_db_password,
     configure_scl_repo    => true,
     locations_enabled     => true,
     initial_location      => 'Foreman Cloud',
-    selinux               => undef,
+    selinux               => true,
     unattended            => true,
     dynflow_in_core       => false,
   }

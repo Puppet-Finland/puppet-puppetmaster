@@ -10,9 +10,10 @@ Vagrant.configure("2") do |config|
     box.vm.network "private_network", ip: "192.168.221.201"
     box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
     box.vm.synced_folder ".", "/home/puppetmaster", type: "virtualbox"
+    box.vm.network "forwarded_port", guest: 443, host: 8443
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
-      s.args = ["-n", "puppetmaster", "-b", "/home/puppetmaster"]
+      s.args = ["-b", "/home/puppetmaster"]
     end
     box.vm.provision "shell", inline: "puppet apply --modulepath /home/puppetmaster/modules /home/puppetmaster/vagrant/xenial.pp"
     box.vm.provider "virtualbox" do |vb|
@@ -29,9 +30,10 @@ Vagrant.configure("2") do |config|
     # require this or the vboxsf mount will fail.
     box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
     box.vm.synced_folder ".", "/home/puppetmaster", type: "virtualbox"
+    box.vm.network "forwarded_port", guest: 443, host: 8443
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
-      s.args = ["-n", "puppetmaster", "-b", "/home/puppetmaster"]
+      s.args = ["-b", "/home/puppetmaster"]
     end
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
@@ -48,7 +50,7 @@ Vagrant.configure("2") do |config|
     box.vm.network "forwarded_port", guest: 443, host: 8443
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
-      s.args = ["-n", "puppetmaster", "-b", "/home/puppetmaster"]
+      s.args = ["-b", "/home/puppetmaster"]
     end
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false

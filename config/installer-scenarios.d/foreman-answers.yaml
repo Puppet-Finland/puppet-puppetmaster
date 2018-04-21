@@ -16,7 +16,7 @@ puppetmaster::foreman:
   timezone: Europe/Helsinki
   puppetdb_database_password: changeme
   foreman_plugin_cockpit: false
-  foreman_compute_vmware: false
+  foreman_compute_vmware: true
   foreman_compute_libvirt: false
   foreman_compute_ec2: true
   foreman_compute_gce: false

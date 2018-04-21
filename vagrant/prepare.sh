@@ -10,8 +10,6 @@ usage() {
     echo "Usage: prepare.sh -n module_name -b basedir"
     echo
     echo "Options:"
-    echo " -n   Name of the module that includes this script. Used to copy"
-    echo "      the module code to the modulepath."
     echo " -b   Base directory for dependency Puppet modules installed by"
     echo "      librarian-puppet."
     exit 1
@@ -26,9 +24,6 @@ fi
 
 while getopts "n:f:o:b:h" options; do
     case $options in
-        n ) THIS_MODULE=$OPTARG;;
-        f ) OSFAMILY=$OPTARG;;
-        o ) OS=$OPTARG;;
         b ) BASEDIR=$OPTARG;;
         h ) usage;;
         \? ) usage;;
