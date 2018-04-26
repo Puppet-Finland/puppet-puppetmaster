@@ -11,4 +11,3 @@ puppetmaster::puppetboard:
   autosign: "/etc/puppetlabs/puppet/autosign.conf"
   autosign_entries: 
   timezone: Europe/Helsinki
-  puppetdb_database_password: puppetdb

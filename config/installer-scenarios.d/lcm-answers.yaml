@@ -8,13 +8,10 @@
 
 ---
 puppetmaster::lcm:
-  foreman_db_password: changeme
   foreman_admin_firstname: Admin
   foreman_admin_lastname: User
   foreman_admin_email: admin@example.com
-  foreman_admin_password: changeme
   timezone: Europe/Helsinki
-  puppetdb_database_password: changeme
   foreman_plugin_cockpit: false
   foreman_compute_vmware: false
   foreman_compute_libvirt: false

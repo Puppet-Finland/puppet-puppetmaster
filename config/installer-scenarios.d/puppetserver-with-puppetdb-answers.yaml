@@ -8,7 +8,7 @@
 
 ---
 puppetmaster::puppetdb:
+  server_reports: store,puppetdb
   autosign: "/etc/puppetlabs/puppet/autosign.conf"
   autosign_entries: 
-  puppetdb_database_password: changeme
   timezone: Europe/Helsinki
