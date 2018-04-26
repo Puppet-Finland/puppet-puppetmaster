@@ -12,7 +12,6 @@ Vagrant.configure("2") do |config|
     box.vm.synced_folder ".", "/home/puppetmaster", type: "virtualbox"
     box.vm.network "forwarded_port", guest: 443, host: 8443
     box.vm.network "forwarded_port", guest: 80, host: 8080
-    box.vm.network "forwarded_port", guest: 8080, host: 18080
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
       s.args = ["-b", "/home/puppetmaster"]
@@ -35,7 +34,6 @@ Vagrant.configure("2") do |config|
     box.vm.synced_folder ".", "/home/puppetmaster", type: "virtualbox"
     box.vm.network "forwarded_port", guest: 443, host: 8443
     box.vm.network "forwarded_port", guest: 80, host: 8000
-    box.vm.network "forwarded_port", guest: 8080, host: 18080
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
       s.args = ["-b", "/home/puppetmaster"]
@@ -55,7 +53,6 @@ Vagrant.configure("2") do |config|
     box.vm.synced_folder ".", "/home/puppetmaster", type: "virtualbox"
     box.vm.network "forwarded_port", guest: 443, host: 8443
     box.vm.network "forwarded_port", guest: 80, host: 8080
-    box.vm.network "forwarded_port", guest: 8080, host: 18080
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
       s.args = ["-b", "/home/puppetmaster"]
@@ -75,7 +72,6 @@ Vagrant.configure("2") do |config|
     box.vm.synced_folder ".", "/home/puppetmaster", type: "virtualbox"
     box.vm.network "forwarded_port", guest: 443, host: 8443
     box.vm.network "forwarded_port", guest: 80, host: 8080
-    box.vm.network "forwarded_port", guest: 8080, host: 18080
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
       s.args = ["-b", "/home/puppetmaster"]
