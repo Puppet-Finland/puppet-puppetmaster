@@ -30,7 +30,9 @@ mod 'saz-memcached', '>= 3.1.0'
 mod 'puppet-selinux', '>=1.5.2'
 mod 'puppetlabs-reboot', '>=2.0.0'
 mod 'puppet-puppetboard', '>=4.0.0'
-mod 'stankevich-python', '>=1.18.2'
+mod 'stankevich-python',
+    :git => 'https://github.com/Puppet-Finland/puppet-python.git',
+    :ref => 'dedbc1cfa115314ec8ccb9a04629a4a6781f71d7'
 
 # Foreman deps
 mod 'puppetlabs/mysql',         '>= 4.0.0'
