@@ -17,6 +17,8 @@
 #
 # $timezone:: Example: 'Europe/Helsinki'
 #
+# == Advanced parameters:
+#
 # $foreman_plugin_cockpit:: XXX
 #
 # $foreman_compute_vmware:: XXX
@@ -31,9 +33,9 @@
 #
 # $foreman_compute_ovirt:: XXX
 #
-# $foreman_compute_rackspace:: XXX
+# $foreman_compute_rackspace:: Enable support for Rackspace computing resource
 #
-# $foreman_plugin_azure:: Enable support for Microsoft Azure computing
+# $foreman_plugin_azure:: Enable support for Microsoft Azure computing resource
 #
 # $foreman_plugin_ansible:: XXX
 #
@@ -41,7 +43,7 @@
 #
 # $foreman_plugin_bootdisk:: XXX
 # 
-# $foreman_plugin_default_hostgroup:: XXX
+# $foreman_plugin_default_hostgroup:: Enable support for for automatically grouping new host based on kernel
 #
 # $foreman_plugin_dhcp_browser:: XXX
 #
@@ -126,9 +128,6 @@
 # $foreman_proxy_bmc:: XXX
 #
 # $foreman_proxy_bmc_listen_on:: XXX
-#
-# == Advanced parameters:
-#
 class puppetmaster::lcm
 (
   String $foreman_db_password,

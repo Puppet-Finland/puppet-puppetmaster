@@ -105,10 +105,10 @@ String $foreman_db_password,
   $puppetdb_server                    = $facts['fqdn']
   
   
-#  unless ("${facts['osfamily']}" == 'RedHat' and "${facts['os']['release']['major']}" == '7') {
-#    fail("${facts['os']['name']} ${facts['os']['release']['full']} not supported yet")
-#  }
-    
+  unless ("${facts['osfamily']}" == 'RedHat' and "${facts['os']['release']['major']}" == '7') {
+    fail("${facts['os']['name']} ${facts['os']['release']['full']} not supported yet")
+  }
+  
   # See https://github.com/theforeman/puppet-foreman#foreman-version-compatibility-notes
   if versioncmp($foreman_version, '1.16') <= 0 {
     $dynflow_in_core = false
@@ -246,14 +246,14 @@ String $foreman_db_password,
     before   => Class['::foreman'],
   }  
 
-  #selinux::fcontext { 'set-httpd-file-context':
-  #  seltype  => 'httpd_sys_content_t',
-  #  pathspec => '/etc/puppetlabs/puppet/ssl(/.*)?',
-  #}
-
-  #selinux::exec_restorecon { '/etc/puppetlabs/puppet/ssl':
-  #  require => Selinux::Fcontext['set-httpd-file-context'],
-  #}
+  selinux::fcontext { 'set-httpd-file-context':
+    seltype  => 'httpd_sys_content_t',
+    pathspec => '/etc/puppetlabs/puppet/ssl(/.*)?',
+  }
+  
+  selinux::exec_restorecon { '/etc/puppetlabs/puppet/ssl':
+    require => Selinux::Fcontext['set-httpd-file-context'],
+  }
 
   class { '::foreman':
     foreman_url           => $foreman_url,

@@ -1,4 +1,4 @@
-# Reboot host
+# Relabel and Reboot host
 #
 # == Parameters:
 #
@@ -9,13 +9,31 @@ class puppetmaster::reboot
 )
 {
 
-  exec { 'About to reboot':
-    command => '/bin/true',
+  $message = 'Puppetmaster-installer is rebooting this system'
+  
+  unless ("${facts['osfamily']}" == 'RedHat' and "${facts['os']['release']['major']}" == '7') {
+    fail("${facts['os']['name']} ${facts['os']['release']['full']} not supported yet")
   }
 
-  reboot { 'reboot after':
-    subscribe => Exec['About to reboot'],
+  class { '::selinux':
+    mode => 'enforcing',
+    type => 'targeted',
+  }
+  
+  selinux::module { 'httpd_t':
+    ensure    => 'present',
+    source_te => '/home/puppetmaster/files/httpd_t.te',
+    builder   => 'simple',
+  }
+  
+  exec { 'Relabel':
+    command => '/bin/touch /.autorelabel',
+    require => Selinux::Module['httpd_t'],
+  }
+  
+  reboot { 'Reboot after relabel':
+    subscribe => Exec['Relabel'],
     apply     => $apply,
-    message   => 'Host rebooted by puppetmaster-installer',
+    message   => $message,
   }
 }
