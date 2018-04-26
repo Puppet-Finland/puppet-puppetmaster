@@ -27,7 +27,7 @@ puppetmaster::lcm:
   foreman_plugin_ansible: false
   foreman_plugin_docker: false
   foreman_plugin_bootdisk: false
-  foreman_plugin_default_hostgroup: false
+  foreman_plugin_default_hostgroup: true
   foreman_plugin_dhcp_browser: false
   foreman_plugin_digitalocean: false
   foreman_plugin_discovery: false
@@ -37,7 +37,7 @@ puppetmaster::lcm:
   foreman_plugin_tasks: false
   foreman_plugin_templates: false
   foreman_proxy_foreman_base_url: https://puppet.local
-  foreman_proxy_templates: false
+  foreman_proxy_templates: true
   foreman_proxy_templates_listen_on: both
   foreman_proxy_trusted_hosts:
   - puppet.local
