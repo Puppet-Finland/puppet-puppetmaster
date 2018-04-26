@@ -21,6 +21,7 @@ class puppetmaster::puppetdb
   $primary_names = [ "${facts['fqdn']}", "${facts['hostname']}", 'puppet', "puppet.${facts['domain']}" ]
 
   class { '::puppetmaster::puppetserver':
+    server_reports   => 'store,puppetdb',
     autosign         => $autosign,
     autosign_entries => $autosign_entries,
     timezone         => $timezone, 

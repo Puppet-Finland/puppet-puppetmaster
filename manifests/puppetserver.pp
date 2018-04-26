@@ -10,6 +10,7 @@
 # $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki'
 class puppetmaster::puppetserver
 (
+  String                   $server_reports = 'store',
   Variant[Boolean, String] $autosign = '/etc/puppetlabs/puppet/autosign.conf',
   Optional[Array[String]]  $autosign_entries = undef,
   String                   $timezone,
@@ -34,7 +35,7 @@ class puppetmaster::puppetserver
     autosign              => $autosign,
     autosign_entries      => $autosign_entries,
     server_external_nodes => '',
-    server_reports        => 'store',
+    server_reports        => $server_reports,
     require               => [ File['/etc/puppetlabs/puppet/fileserver.conf'], Puppet_authorization::Rule['files'] ],
   }
 }
