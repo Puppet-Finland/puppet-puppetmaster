@@ -1,0 +1,23 @@
+---
+:name: Control Repository
+:description: 'install and update from control repository'
+:enabled: true
+:log_dir: "/var/log/kafo"
+:store_dir: ''
+:log_name: control-scenario.log
+:log_level: info
+:no_prefix: false
+:mapping: {}
+:answer_file: "/home/puppetmaster/config/installer-scenarios.d/control--answers.yaml"
+:installer_dir: "."
+:module_dirs:
+- "/home/puppetmaster/modules"
+- "/home"
+:colors: true
+:color_of_background: :dark
+:hook_dirs: []
+:custom: {}
+:low_priority_modules: []
+:verbose_log_level: info
+:skip_puppet_version_check: true
+:password: fCE6IPpKAOabDgxbw8s7S7qIGL6hgVliaL3JkrKr7IA

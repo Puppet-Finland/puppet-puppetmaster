@@ -105,9 +105,9 @@ String $foreman_db_password,
   $puppetdb_server                    = $facts['fqdn']
   
   
-  unless ($facts['osfamily'] == 'RedHat' and $facts['os']['release']['major'] == '7') {
-    fail("$facts['os']['name'] $facts['os']['release']['full'] not supported yet")
-  }
+#  unless ("${facts['osfamily']}" == 'RedHat' and "${facts['os']['release']['major']}" == '7') {
+#    fail("${facts['os']['name']} ${facts['os']['release']['full']} not supported yet")
+#  }
     
   # See https://github.com/theforeman/puppet-foreman#foreman-version-compatibility-notes
   if versioncmp($foreman_version, '1.16') <= 0 {
@@ -117,15 +117,18 @@ String $foreman_db_password,
     $dynflow_in_core = true
   }
 
-  class { selinux:
-    mode => 'enforcing',
-    type => 'targeted',
-  }
-  
-  selinux::module { 'httpd_t':
-    ensure    => 'present',
-    source_te => '/home/puppetmaster/files/httpd_t.te',
-    builder   => 'simple',
+  unless "${facts['osfamily']}" != 'RedHat' {
+    
+    class { selinux:
+      mode => 'enforcing',
+      type => 'targeted',
+    }
+    
+    selinux::module { 'httpd_t':
+      ensure    => 'present',
+      source_te => '/home/puppetmaster/files/httpd_t.te',
+      builder   => 'simple',
+    }
   }
 
   @firewall { '443 accept template and UI':
@@ -241,16 +244,16 @@ String $foreman_db_password,
     password => $foreman_db_password,
     require  => Class['::puppetmaster::databaseserver'],
     before   => Class['::foreman'],
-  }
-  
-  selinux::fcontext { 'set-httpd-file-context':
-    seltype  => 'httpd_sys_content_t',
-    pathspec => '/etc/puppetlabs/puppet/ssl(/.*)?',
-  }
+  }  
 
-  selinux::exec_restorecon { '/etc/puppetlabs/puppet/ssl':
-    require => Selinux::Fcontext['set-httpd-file-context'],
-  }
+  #selinux::fcontext { 'set-httpd-file-context':
+  #  seltype  => 'httpd_sys_content_t',
+  #  pathspec => '/etc/puppetlabs/puppet/ssl(/.*)?',
+  #}
+
+  #selinux::exec_restorecon { '/etc/puppetlabs/puppet/ssl':
+  #  require => Selinux::Fcontext['set-httpd-file-context'],
+  #}
 
   class { '::foreman':
     foreman_url           => $foreman_url,

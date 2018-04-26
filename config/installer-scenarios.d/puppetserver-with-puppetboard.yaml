@@ -1,0 +1,23 @@
+---
+:name: Configuration Manager with puppetboard
+:description: install puppetserver with puppetdb and puppetboard
+:enabled: true
+:log_dir: "/var/log/kafo"
+:store_dir: ''
+:log_name: puppetboard.log
+:log_level: info
+:no_prefix: false
+:mapping: {}
+:answer_file: "/home/puppetmaster/config/installer-scenarios.d/puppetserver-with-puppetboard-answers.yaml"
+:installer_dir: "."
+:module_dirs:
+- "/home/puppetmaster/modules"
+- "/home"
+:colors: true
+:color_of_background: :dark
+:hook_dirs: []
+:custom: {}
+:low_priority_modules: []
+:verbose_log_level: info
+:skip_puppet_version_check: true
+:password: SViXZKG2VPl82e9tzpraJl5kKgm4JYuS1wg2UgZM5rE

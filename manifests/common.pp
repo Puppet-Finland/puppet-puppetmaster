@@ -15,6 +15,14 @@ class puppetmaster::common
 )
 {
 
+  $packages = $facts['os']['name'] ? {
+    'CentOS' => [],
+    'Debian' => ['apt-transport-https'],
+    'Ubuntu' => [],
+  }
+  
+  ensure_packages($packages)
+
   class { '::timezone':
     timezone => $timezone,
   }
