@@ -3,6 +3,8 @@
 #
 # == Parameters:
 #
+# $server_reports:: Where to store reports. Defaults to 'store'.
+#
 # $autosign:: Set up autosign entries. Set to true to enable naive autosigning.
 #
 # $autosign_entries:: List of autosign entries. Requires that autosign is pointing to the path of autosign.conf.
