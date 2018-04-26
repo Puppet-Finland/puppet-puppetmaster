@@ -107,7 +107,7 @@ class puppetmaster::puppetboard
     manage_git          => $puppetboard_manage_git,
     manage_virtualenv   => $puppetboard_manage_virtualenv, 
     reports_count       => $puppetboard_reports_count,
-    puppetdb_key        => $puppetdb_cert,
+    puppetdb_key        => $puppetdb_key,
     puppetdb_ssl_verify => $puppetdb_ca_cert,
     puppetdb_cert       => $puppetdb_cert,
   }
