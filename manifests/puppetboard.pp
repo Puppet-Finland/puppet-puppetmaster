@@ -1,5 +1,8 @@
-# A class to setup puppetserver with puppetdb and puppetboard
+# Setup Puppetserver, PuppetDB and Puppetboard
+#
 # == Parameters:
+#
+# $server_reports:: Where to store reports. Defaults to 'store,puppetdb'.
 #
 # $autosign:: Set up autosign entries. Set to true to enable naive autosigning.
 #
@@ -8,8 +11,10 @@
 # $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki'
 # 
 # $puppetdb_database_password:: Database password for puppetdb
+#
 class puppetmaster::puppetboard
 (
+  String                   $server_reports = 'store,puppetdb',
   Variant[Boolean, String] $autosign = '/etc/puppetlabs/puppet/autosign.conf',
   Optional[Array[String]]  $autosign_entries = undef,
   String                   $timezone,
@@ -38,21 +43,18 @@ class puppetmaster::puppetboard
   $puppetdb_key                           = "${puppetboard_ssl_dir}/${::fqdn}.key"
   $puppetdb_ca_cert                       = "${puppetboard_ssl_dir}/ca.pem"
 
-
-  unless defined(Class['::puppetmaster::common']) {
-    
-    class { '::puppetmaster::common':
-      primary_names => $primary_names,
-      timezone      => $timezone, 
-      before        => Class['::puppetboard'],
-    }
+  class { '::puppetmaster::common':
+    primary_names => $primary_names,
+    timezone      => $timezone,
+    before        => Class['::puppetboard'],
   }
 
   class { '::puppetmaster::puppetdb':
-    autosign                   => false,
-    autosign_entries           => undef,
+    server_reports             => $server_reports,
+    autosign                   => $autosign,
+    autosign_entries           => $autosign_entries,
     puppetdb_database_password => $puppetdb_database_password,
-    timezone                   => $timezone, 
+    timezone                   => $timezone,
   }  
   
   file { [ $puppetboard_config_dir, $puppetboard_ssl_dir ]:
@@ -94,7 +96,6 @@ class puppetmaster::puppetboard
     class { 'apache::mod::wsgi': }
   }
   else {
-
     class { 'apache::mod::wsgi':
       wsgi_socket_prefix => "/var/run/wsgi"
     }

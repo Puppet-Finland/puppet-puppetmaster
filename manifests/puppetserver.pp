@@ -1,5 +1,4 @@
-# A wrapper class for setting up puppetserver. Usable on Puppet servers as
-# well as in Kafo installers.
+# Setup standalone Puppetserver without anything else extra
 #
 # == Parameters:
 #
