@@ -62,7 +62,7 @@ class puppetmaster::puppetboard
     owner   => 'root',
     group   => 'puppetboard',
     mode    => '0750',
-    require => Class['::puppetmaster::puppetdb'],
+    require => Class['::puppetboard'],
   }
 
   $keys = { "${puppet_ssldir}/certs/${::fqdn}.pem" => $puppetdb_cert,
@@ -74,7 +74,7 @@ class puppetmaster::puppetboard
       command => "cp -f ${key[0]} ${key[1]}",
       unless  => "cmp ${key[0]} ${key[1]}",
       path    => ['/bin', '/usr/bin/' ],
-      require => File[$puppetboard_ssl_dir],
+      require => [ Class['::puppetmaster::puppetserver'], File[$puppetboard_ssl_dir] ],
     }
 
     file { $key[1]:
