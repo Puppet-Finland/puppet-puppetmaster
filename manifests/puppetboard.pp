@@ -91,14 +91,13 @@ class puppetmaster::puppetboard
     default_mods  => false,
   }
 
-  unless "${facts['osfamily']}" == 'RedHat' {
-
-    class { 'apache::mod::wsgi': }
-  }
-  else {
+  if "${facts['osfamily']}" == 'RedHat' {
     class { 'apache::mod::wsgi':
       wsgi_socket_prefix => "/var/run/wsgi"
     }
+  }
+  else {
+    class { 'apache::mod::wsgi': }
   }
 
   class { '::puppetboard':
