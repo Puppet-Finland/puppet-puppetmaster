@@ -7,11 +7,9 @@ set -e
 
 usage() {
     echo
-    echo "Usage: prepare.sh -n module_name -f -b basedir"
+    echo "Usage: prepare.sh -n module_name -b basedir"
     echo
     echo "Options:"
-    echo " -n   Name of the module that includes this script. Used to copy"
-    echo "      the module code to the modulepath."
     echo " -b   Base directory for dependency Puppet modules installed by"
     echo "      librarian-puppet."
     exit 1
@@ -26,9 +24,6 @@ fi
 
 while getopts "n:f:o:b:h" options; do
     case $options in
-        n ) THIS_MODULE=$OPTARG;;
-        f ) OSFAMILY=$OPTARG;;
-        o ) OS=$OPTARG;;
         b ) BASEDIR=$OPTARG;;
         h ) usage;;
         \? ) usage;;
@@ -102,7 +97,8 @@ FILE=$(mktemp)
 cat<<EOF>$FILE
 file { "$PROF_FILE":
   ensure  => present,
-  content => 'export PATH=/opt/puppetlabs/bin:/opt/puppetlabs/puppet/bin:$PATH',
+  content => 'export PATH=/opt/puppetlabs/bin:/opt/puppetlabs/puppet/bin:/home/puppetmaster/bin:$PATH',
+  replace => false,
 }
 
 package { 'librarian-puppet':
@@ -110,28 +106,8 @@ package { 'librarian-puppet':
   provider => 'puppet_gem',
 }
 
-file { "$BASEDIR":
-  ensure => directory,
-}
-
-file { "${BASEDIR}/modules":
-  ensure  => directory,
-  require => File["$BASEDIR"],
-}
-
-file { 'Puppetfile absent':
-  path   => "${BASEDIR}/Puppetfile",
-  ensure => absent,
-}
-
 package { 'git':
   ensure => 'latest',
-}
-
-file { "${THIS_MODULE} absent":
-  path    => "${BASEDIR}/modules/${THIS_MODULE}",
-  ensure  => absent,
-  require => File["${BASEDIR}/modules"],
 }
 EOF
 cat $FILE | /opt/puppetlabs/bin/puppet apply 
@@ -141,25 +117,19 @@ rm $FILE
 run_puppet_2() {
 FILE=$(mktemp)
 cat<<EOF>$FILE
-file { 'Puppetfile link':
-  path    => "${BASEDIR}/Puppetfile",
-  ensure  => link,
-  target  => '/vagrant/vagrant/Puppetfile',
-}
 
-file { "${THIS_MODULE} present":
-  path    => "${BASEDIR}/modules/${THIS_MODULE}",
-  ensure  => link,
-  target  => '/vagrant',
-}
 exec { 'Run librarian-puppet':
   cwd     => "$BASEDIR",
   command => 'librarian-puppet install',
   timeout => 600,
   path    => '/opt/puppetlabs/bin:/opt/puppetlabs/puppet/bin:/usr/bin'
 }
+
+class { '::kafo':
+  gem_provider => 'puppet_gem',
+}
 EOF
-cat $FILE | /opt/puppetlabs/bin/puppet apply 
+cat $FILE | /opt/puppetlabs/bin/puppet apply --modulepath=$BASEDIR/modules
 rm $FILE
 }
 

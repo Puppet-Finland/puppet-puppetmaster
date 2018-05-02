@@ -1,14 +1,14 @@
 ---
-:name: Configuration manager
-:description: install vanilla puppetserver
+:name: Lifecycle Manager
+:description: install foreman and foreman-proxy all-in-one
 :enabled: true
 :log_dir: "/var/log/kafo"
 :store_dir: ''
-:log_name: puppetserver-scenario.log
+:log_name: lcm.log
 :log_level: info
 :no_prefix: false
 :mapping: {}
-:answer_file: "/home/puppetmaster/config/installer-scenarios.d/puppetserver-answers.yaml"
+:answer_file: "./config/installer-scenarios.d/lcm-answers.yaml"
 :installer_dir: "."
 :module_dirs:
 - "/home/puppetmaster/modules"
@@ -20,4 +20,4 @@
 :low_priority_modules: []
 :verbose_log_level: info
 :skip_puppet_version_check: true
-:password: fCE6IPpKAOabDgxbw8s7S7qIGL6hgVliaL3JkrKr7IA
+:password: UGi1m8QKCX-0jRjHBF2B189MaVtPfwJ83mAURXjkp68

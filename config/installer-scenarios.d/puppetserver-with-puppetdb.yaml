@@ -1,14 +1,14 @@
 ---
-:name: Configuration manager
-:description: install vanilla puppetserver
+:name: Configuration Manager with Puppetdb
+:description: install puppetserver with puppetdb
 :enabled: true
 :log_dir: "/var/log/kafo"
 :store_dir: ''
-:log_name: puppetserver-scenario.log
+:log_name: puppetserver-with-puppetdb-scenario.log
 :log_level: info
 :no_prefix: false
 :mapping: {}
-:answer_file: "/home/puppetmaster/config/installer-scenarios.d/puppetserver-answers.yaml"
+:answer_file: "/home/puppetmaster/config/installer-scenarios.d/puppetserver-with-puppetdb-answers.yaml"
 :installer_dir: "."
 :module_dirs:
 - "/home/puppetmaster/modules"

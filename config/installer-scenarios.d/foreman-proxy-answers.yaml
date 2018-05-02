@@ -1,0 +1,49 @@
+# Format:
+# <classname>: false - don't include this class
+# <classname>: true - include and use the defaults
+# <classname>:
+#   <param>: <value> - include and override the default(s)
+#
+# See params.pp in each class for what options are available
+
+---
+puppetmaster::foreman_proxy:
+  foreman_proxy_foreman_base_url: https://puppet.local
+  foreman_proxy_templates: false
+  foreman_proxy_templates_listen_on: both
+  foreman_proxy_trusted_hosts:
+  - puppet.local
+  foreman_proxy_dhcp: false
+  foreman_proxy_dhcp_listen_on: both
+  foreman_proxy_dns: false
+  foreman_proxy_dhcp_managed: false
+  foreman_proxy_dhcp_interface: eth0
+  foreman_proxy_dhcp_option_domain:
+  - local
+  foreman_proxy_dhcp_search_domains:
+  - local
+  foreman_proxy_dhcp_server: puppet.local
+  foreman_proxy_dhcp_provider: isc
+  foreman_proxy_dhcp_subnets:
+  - 172.16.3.0/255.255.255.0
+  foreman_proxy_dhcp_gateway: 172.16.3.254
+  foreman_proxy_dhcp_range: 172.16.3.100 172.16.3.200
+  foreman_proxy_dhcp_nameservers: 172.16.3.1
+  foreman_proxy_dhcp_pxeserver: 172.16.3.106
+  foreman_proxy_dns_managed: false
+  foreman_proxy_dns_forwarders:
+  - 8.8.8.8
+  foreman_proxy_dns_interface: eth0
+  foreman_proxy_dns_listen_on: both
+  foreman_proxy_dns_provider: nsupdate
+  foreman_proxy_dns_zone: local
+  foreman_proxy_dns_reverse: 3.16.172.in-addr.arpa
+  foreman_proxy_dns_server: 172.16.3.1
+  foreman_proxy_dns_ttl: 86400
+  foreman_proxy_tftp: false
+  foreman_proxy_tftp_managed: true
+  foreman_proxy_tftp_servername: 172.16.3.1
+  foreman_proxy_tftp_manage_wget: true
+  foreman_proxy_tftp_listen_on: both
+  foreman_proxy_bmc: false
+  foreman_proxy_bmc_listen_on: both

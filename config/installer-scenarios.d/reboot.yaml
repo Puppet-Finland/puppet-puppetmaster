@@ -1,14 +1,14 @@
 ---
-:name: Configuration manager
-:description: install vanilla puppetserver
+:name: Reboot
+:description: reboot host
 :enabled: true
 :log_dir: "/var/log/kafo"
 :store_dir: ''
-:log_name: puppetserver-scenario.log
+:log_name: reboot.log
 :log_level: info
 :no_prefix: false
 :mapping: {}
-:answer_file: "/home/puppetmaster/config/installer-scenarios.d/puppetserver-answers.yaml"
+:answer_file: "/home/puppetmaster/config/installer-scenarios.d/reboot-answers.yaml"
 :installer_dir: "."
 :module_dirs:
 - "/home/puppetmaster/modules"

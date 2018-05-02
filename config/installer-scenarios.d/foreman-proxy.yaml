@@ -1,14 +1,14 @@
 ---
-:name: Configuration manager
-:description: install vanilla puppetserver
+:name: Smart Proxy
+:description: install foreman-proxy and connect to foreman instance
 :enabled: true
 :log_dir: "/var/log/kafo"
 :store_dir: ''
-:log_name: puppetserver-scenario.log
+:log_name: configuration.log
 :log_level: info
 :no_prefix: false
 :mapping: {}
-:answer_file: "/home/puppetmaster/config/installer-scenarios.d/puppetserver-answers.yaml"
+:answer_file: "./config/installer-scenarios.d/foreman-proxy-answers.yaml"
 :installer_dir: "."
 :module_dirs:
 - "/home/puppetmaster/modules"
@@ -19,5 +19,5 @@
 :custom: {}
 :low_priority_modules: []
 :verbose_log_level: info
-:skip_puppet_version_check: true
-:password: fCE6IPpKAOabDgxbw8s7S7qIGL6hgVliaL3JkrKr7IA
+:skip_puppet_version_check: false
+:password: UGi1m8QKCX-0jRjHBF2B189MaVtPfwJ83mAURXjkp68

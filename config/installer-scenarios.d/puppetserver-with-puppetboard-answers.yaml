@@ -7,7 +7,7 @@
 # See params.pp in each class for what options are available
 
 ---
-puppetmaster::puppetserver:
+puppetmaster::puppetboard:
   autosign: "/etc/puppetlabs/puppet/autosign.conf"
   autosign_entries: 
   timezone: Europe/Helsinki

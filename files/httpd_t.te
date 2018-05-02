@@ -1,0 +1,13 @@
+module httpd_t 1.0;
+
+require {
+	type httpd_t;
+	type puppet_etc_t;
+	type modules_conf_t;
+	class file { getattr read };
+}
+
+#============= httpd_t ==============
+allow httpd_t puppet_etc_t:file { getattr read };
+
+

@@ -1,14 +1,14 @@
 ---
-:name: Configuration manager
-:description: install vanilla puppetserver
+:name: Control Repository
+:description: 'install and update from control repository'
 :enabled: true
 :log_dir: "/var/log/kafo"
 :store_dir: ''
-:log_name: puppetserver-scenario.log
+:log_name: control-scenario.log
 :log_level: info
 :no_prefix: false
 :mapping: {}
-:answer_file: "/home/puppetmaster/config/installer-scenarios.d/puppetserver-answers.yaml"
+:answer_file: "/home/puppetmaster/config/installer-scenarios.d/control--answers.yaml"
 :installer_dir: "."
 :module_dirs:
 - "/home/puppetmaster/modules"
