@@ -7,7 +7,7 @@ set -e
 
 usage() {
     echo
-    echo "Usage: prepare.sh -n module_name -b basedir"
+    echo "Usage: prepare.sh -b basedir"
     echo
     echo "Options:"
     echo " -b   Base directory for dependency Puppet modules installed by"
