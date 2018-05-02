@@ -85,10 +85,11 @@ class puppetmaster::puppetboard
   }
 
   class { '::apache':
-    purge_configs => true,
-    mpm_module    => 'prefork',
-    default_vhost => true,
-    default_mods  => false,
+    purge_configs     => true,
+    mpm_module        => 'prefork',
+    default_vhost     => true,
+    default_ssl_vhost => true,
+    default_mods      => false,
   }
 
   if "${facts['osfamily']}" == 'RedHat' {
