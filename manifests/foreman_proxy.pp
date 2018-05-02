@@ -124,12 +124,12 @@ class puppetmaster::foreman_proxy
 
   $primary_names = [ "${facts['fqdn']}", "${facts['hostname']}", 'puppet', "puppet.${facts['domain']}" ]
   $foreman_proxy_registered_name = 'puppet.local'
-  $foreman_proxy_repo = 'stable'
+  $foreman_proxy_repo = '1.16'
   $foreman_proxy_version = '1.16.0'
   $foreman_proxy_bind_host = '0.0.0.0'
   $foreman_proxy_register_in_foreman = true
   $foreman_proxy_registered_proxy_url = 'https://puppet.local:8443'
-  $foreman_proxy_ensure_packages_version = 'present'
+  $foreman_proxy_ensure_packages_version = 'installed'
   $foreman_proxy_template_url = 'http://puppet.local:8000'
   $foreman_proxy_manage_sudoersd = true
   $foreman_proxy_use_sudoers = true

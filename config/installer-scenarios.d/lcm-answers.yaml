@@ -15,10 +15,13 @@ puppetmaster::lcm:
   foreman_admin_password: changeme
   timezone: Europe/Helsinki
   puppetdb_database_password: changeme
+  primary_names:
+  - puppet
+  - puppet.local
   foreman_plugin_cockpit: false
   foreman_compute_vmware: true
   foreman_compute_libvirt: false
-  foreman_compute_ec2: false
+  foreman_compute_ec2: true
   foreman_compute_gce: true
   foreman_compute_openstack: false
   foreman_compute_ovirt: false
@@ -27,9 +30,9 @@ puppetmaster::lcm:
   foreman_plugin_ansible: false
   foreman_plugin_docker: false
   foreman_plugin_bootdisk: false
-  foreman_plugin_default_hostgroup: false
+  foreman_plugin_default_hostgroup: true
   foreman_plugin_dhcp_browser: false
-  foreman_plugin_digitalocean: false
+  foreman_plugin_digitalocean: true
   foreman_plugin_discovery: false
   foreman_plugin_hooks: false
   foreman_plugin_memcache: false
@@ -69,7 +72,7 @@ puppetmaster::lcm:
   foreman_proxy_dns_server: 172.16.3.1
   foreman_proxy_dns_ttl: 86400
   foreman_proxy_tftp: false
-  foreman_proxy_tftp_managed: true
+  foreman_proxy_tftp_managed: false
   foreman_proxy_tftp_servername: 172.16.3.1
   foreman_proxy_tftp_manage_wget: true
   foreman_proxy_tftp_listen_on: both

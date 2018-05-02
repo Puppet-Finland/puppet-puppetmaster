@@ -110,7 +110,7 @@ String $foreman_db_password,
   }
   
   # See https://github.com/theforeman/puppet-foreman#foreman-version-compatibility-notes
-  if versioncmp($foreman_version, '1.16') <= 0 {
+  if versioncmp($foreman_version, '1.17') < 0 {
     $dynflow_in_core = false
   }
   else {
@@ -129,7 +129,17 @@ String $foreman_db_password,
       source_te => '/home/puppetmaster/files/httpd_t.te',
       builder   => 'simple',
     }
+
+    selinux::fcontext { 'set-httpd-file-context':
+      seltype  => 'httpd_sys_content_t',
+      pathspec => '/etc/puppetlabs/puppet/ssl(/.*)?',
+    }
+    
+    selinux::exec_restorecon { '/etc/puppetlabs/puppet/ssl':
+      require => Selinux::Fcontext['set-httpd-file-context'],
+    }
   }
+
 
   @firewall { '443 accept template and UI':
     chain  => 'INPUT',
@@ -137,6 +147,7 @@ String $foreman_db_password,
     dport  => ['80','443'],
     proto  => 'tcp',
     action => 'accept',
+    tag    => foreman,
   }
 
   @firewall { '8443 accept foreman proxies':
@@ -246,15 +257,6 @@ String $foreman_db_password,
     before   => Class['::foreman'],
   }  
 
-  selinux::fcontext { 'set-httpd-file-context':
-    seltype  => 'httpd_sys_content_t',
-    pathspec => '/etc/puppetlabs/puppet/ssl(/.*)?',
-  }
-  
-  selinux::exec_restorecon { '/etc/puppetlabs/puppet/ssl':
-    require => Selinux::Fcontext['set-httpd-file-context'],
-  }
-
   class { '::foreman':
     foreman_url           => $foreman_url,
     db_manage             => false,
@@ -281,7 +283,7 @@ String $foreman_db_password,
     initial_location      => 'Foreman Cloud',
     selinux               => true,
     unattended            => true,
-    dynflow_in_core       => false,
+    dynflow_in_core       => $dynflow_in_core,
   }
 
   if $foreman_compute_vmware {
@@ -413,14 +415,15 @@ END
   }
 
   class { '::foreman::plugin::puppetdb':
-    dashboard_address     => $foreman_puppetdb_dashboard_address,
-    address               => $foreman_puppetdb_address,
+    dashboard_address => $foreman_puppetdb_dashboard_address,
+    address           => $foreman_puppetdb_address,
   }
   
   class { '::foreman::cli':
-    foreman_url           => $foreman_url,
-    username              => 'admin',
-    password              => $foreman_admin_password,
-    manage_root_config    => true,
+    version            => $foreman_version,
+    foreman_url        => $foreman_url,
+    username           => 'admin',
+    password           => $foreman_admin_password,
+    manage_root_config => true,
   }
 }
