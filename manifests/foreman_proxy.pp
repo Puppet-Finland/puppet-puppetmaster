@@ -72,7 +72,7 @@
 #
 # $primary_names:: Primary names for this machine. Example: ['puppet.local', 'puppet' ]
 #
-# $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki'
+# $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki' or 'Etc/UTC'.
 #
 # == Advanced parameters:
 #

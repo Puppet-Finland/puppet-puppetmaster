@@ -10,7 +10,7 @@
 #
 # $puppetdb_database_password:: Password for the puppetdb database in postgresql
 #
-# $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki'
+# $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki' or 'Etc/UTC'.
 class puppetmaster::puppetdb
 (
   String                   $server_reports = 'store,puppetdb',
