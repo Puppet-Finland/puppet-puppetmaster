@@ -97,7 +97,7 @@ class puppetmaster::puppetboard
     }
   }
   else {
-    class { 'apache::mod::wsgi': }
+    class { '::apache::mod::wsgi': }
   }
 
   class { '::puppetboard':
@@ -112,5 +112,5 @@ class puppetmaster::puppetboard
     puppetdb_cert       => $puppetdb_cert,
   }
   
-  class { 'puppetboard::apache::conf': }
+  class { '::puppetboard::apache::conf': }
 }
