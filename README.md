@@ -22,9 +22,12 @@ For now you can check what Vagrant does in its bootstrapping script, [prepare.sh
 
 # Usage
 
-To run the installer use
+To run the installer:
 
-    $ bin/puppetmaster-install -i --skip-puppet-version-check
+    $ sudo -i
+    $ bin/puppetmaster-installer -i --skip-puppet-version-check
+
+The "-i" switch to ensures that the environment is root's environment, which is particularly important on Ubuntu and Debian.
 
 # Supported platforms
 

@@ -8,7 +8,7 @@
 #
 # $autosign_entries:: List of autosign entries. Requires that autosign is pointing to the path of autosign.conf.
 #
-# $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki'
+# $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki' or 'Etc/UTC'.
 # 
 # $puppetdb_database_password:: Database password for puppetdb
 #
@@ -85,10 +85,11 @@ class puppetmaster::puppetboard
   }
 
   class { '::apache':
-    purge_configs => true,
-    mpm_module    => 'prefork',
-    default_vhost => true,
-    default_mods  => false,
+    purge_configs     => true,
+    mpm_module        => 'prefork',
+    default_vhost     => true,
+    default_ssl_vhost => true,
+    default_mods      => false,
   }
 
   if "${facts['osfamily']}" == 'RedHat' {
@@ -97,7 +98,7 @@ class puppetmaster::puppetboard
     }
   }
   else {
-    class { 'apache::mod::wsgi': }
+    class { '::apache::mod::wsgi': }
   }
 
   class { '::puppetboard':
@@ -112,5 +113,5 @@ class puppetmaster::puppetboard
     puppetdb_cert       => $puppetdb_cert,
   }
   
-  class { 'puppetboard::apache::conf': }
+  class { '::puppetboard::apache::conf': }
 }

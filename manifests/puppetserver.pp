@@ -8,7 +8,7 @@
 #
 # $autosign_entries:: List of autosign entries. Requires that autosign is pointing to the path of autosign.conf.
 #
-# $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki'
+# $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki' or 'Etc/UTC'.
 class puppetmaster::puppetserver
 (
   String                   $server_reports = 'store',

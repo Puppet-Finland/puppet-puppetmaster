@@ -15,7 +15,7 @@
 #
 # $puppetdb_database_password:: XXX
 #
-# $timezone:: Example: 'Europe/Helsinki'
+# $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki' or 'Etc/UTC'.
 #
 # == Advanced parameters:
 #
