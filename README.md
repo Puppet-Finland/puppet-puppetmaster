@@ -1,3 +1,40 @@
-# puppetmaster
+# puppet-puppetmaster
 
-A simple wrapper class for setting up puppetmasters. Primarily aimed for use in Kafo installers.
+This is a Puppet module and [Kafo](https://github.com/theforeman/kafo) installer for setting up:
+
+* Puppetserver
+* Puppetserver with PuppetDB
+* Puppetserver with PuppetDB and [Puppetboard](https://github.com/voxpupuli/puppetboard)
+* Puppetserver with [Foreman Smart Proxy](https://github.com/theforeman/smart-proxy)
+* Puppetserver with [Foreman Smart Proxy](https://github.com/theforeman/smart-proxy) and [Foreman](https://github.com/theforeman/foreman)
+
+Each of the above is a separate Kafo installer scenario.
+
+# Setup
+
+To run the installer you need to do some setup steps. 
+
+* Install Puppet 5 from Puppetlabs
+* Install git, kafo and librarian-puppet
+* Run librarian-puppet to fetch dependency modules
+
+For now you can check what Vagrant does in its bootstrapping script, [prepare.sh](vagrant/prepare.sh).
+
+# Usage
+
+To run the installer use
+
+    $ bin/puppetmaster-install -i --skip-puppet-version-check
+
+# Supported platforms
+
+This module supports CentOS 7, Debian 9 and Ubuntu 16.04.
+
+The base scenarios have been tested on all platforms. Puppetboard has been tested on Ubuntu 16.04 and Debian 9. Foreman scenarios
+have been tested on CentOS 7.
+
+Ubuntu 18.04 can't be easily supported quite yet as Puppetlabs does not provide Puppet 5 packages for it. Additionally Ubuntu's official Vagrant box [does not have](https://github.com/cilium/cilium/issues/1918#issuecomment-344527888) the ifupdown package which Vagrant depends on.
+
+# LICENSE
+
+This project uses the two-clause BSD license. See [LICENSE](LICENSE) for details.
