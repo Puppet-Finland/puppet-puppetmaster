@@ -97,7 +97,7 @@ FILE=$(mktemp)
 cat<<EOF>$FILE
 file { "$PROF_FILE":
   ensure  => present,
-  content => 'export PATH=/opt/puppetlabs/bin:/opt/puppetlabs/puppet/bin:/home/puppetmaster/bin:$PATH',
+  content => 'export PATH=/opt/puppetlabs/bin:/opt/puppetlabs/puppet/bin:/usr/share/puppetmaster-installer/bin:$PATH',
   replace => false,
 }
 

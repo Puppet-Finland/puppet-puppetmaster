@@ -262,7 +262,7 @@ class puppetmaster::lcm
     
     selinux::module { 'httpd_t':
       ensure    => 'present',
-      source_te => '/home/puppetmaster/files/httpd_t.te',
+      source_te => '/usr/share/puppetmaster-installer/files/httpd_t.te',
       builder   => 'simple',
     }
 

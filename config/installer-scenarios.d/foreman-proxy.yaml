@@ -11,7 +11,7 @@
 :answer_file: "./config/installer-scenarios.d/foreman-proxy-answers.yaml"
 :installer_dir: "."
 :module_dirs:
-- "/home/puppetmaster/modules"
+- "/usr/share/puppetmaster-installer/modules"
 - "/home"
 :colors: true
 :color_of_background: :dark

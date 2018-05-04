@@ -8,10 +8,10 @@
 :log_level: info
 :no_prefix: false
 :mapping: {}
-:answer_file: "/home/puppetmaster/config/installer-scenarios.d/control--answers.yaml"
+:answer_file: "/usr/share/puppetmaster-installer/config/installer-scenarios.d/control-answers.yaml"
 :installer_dir: "."
 :module_dirs:
-- "/home/puppetmaster/modules"
+- "/usr/share/puppetmaster-installer/modules"
 - "/home"
 :colors: true
 :color_of_background: :dark
