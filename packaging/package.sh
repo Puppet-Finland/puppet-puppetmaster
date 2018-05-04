@@ -6,6 +6,10 @@
 #
 BUILD_DIR="./build"
 PUPPETMASTER_MODULE_DIR="${BUILD_DIR}/modules/puppetmaster"
+LICENSE="BSD-2-Clause"
+VENDOR="Puppeteers"
+MAINTAINER="info@puppeteers.fi"
+URL="https://www.puppeteers.fi"
 
 # Do minimal sanity checking
 test -r package.sh || (echo "ERROR: you must run from the directory where package.sh is located!" ; exit 1)
@@ -29,3 +33,12 @@ cp -r ../config $BUILD_DIR/
 cp -r ../modules $BUILD_DIR/
 mkdir $PUPPETMASTER_MODULE_DIR
 cp -r ../manifests ../files ../metadata.json ../LICENSE ../README.md $PUPPETMASTER_MODULE_DIR
+
+echo "Producing packages with fpm"
+FPM_COMMON_OPTS="-C ./build -x modules/*/.git --force --prefix /usr/share/puppetmaster-installer --name puppetmaster-installer --version ${VERSION} --iteration ${ITERATION} --license ${LICENSE} --vendor ${VENDOR} --maintainer \"<${MAINTAINER}>\" --url \"${URL}\" -s dir ."
+
+echo "  Producing Debian package"
+fpm -t deb $FPM_COMMON_OPTS
+
+echo "  Producing RPM package"
+fpm -t rpm $FPM_COMMON_OPTS
