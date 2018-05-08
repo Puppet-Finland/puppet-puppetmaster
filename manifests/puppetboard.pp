@@ -2,6 +2,12 @@
 #
 # == Parameters:
 #
+# $manage_packetfilter:: Manage IPv4 and IPv6 rules. Defaults to true.
+#
+# $puppetserver_allow_ipv4:: Allow connections to puppetserver from this IPv4 address or subnet. Example: '10.0.0.0/8'. Defaults to '127.0.0.1.
+#
+# $puppetserver_allow_ipv6:: Allow connections to puppetserver from this IPv6 address or subnet. Defaults to '::1'.
+#
 # $server_reports:: Where to store reports. Defaults to 'store,puppetdb'.
 #
 # $autosign:: Set up autosign entries. Set to true to enable naive autosigning.
@@ -14,6 +20,9 @@
 #
 class puppetmaster::puppetboard
 (
+  Boolean                  $manage_packetfilter = true,
+  String                   $puppetserver_allow_ipv4 = '127.0.0.1',
+  String                   $puppetserver_allow_ipv6 = '::1',
   String                   $server_reports = 'store,puppetdb',
   Variant[Boolean, String] $autosign = '/etc/puppetlabs/puppet/autosign.conf',
   Optional[Array[String]]  $autosign_entries = undef,
@@ -24,7 +33,6 @@ class puppetmaster::puppetboard
 
   $puppetboard_puppetdb_host              = "${facts['fqdn']}"
   $puppetboard_puppetdb_port              = 8081
-  $primary_names                          = unique([ "${facts['fqdn']}", "${facts['hostname']}", 'puppet', "puppet.${facts['domain']}" ])
   $puppetboard_puppetdb_dashboard_address = "http://${facts['fqdn']}:8080/pdb/dashboard"
   $puppetboard_puppetdb_address           = "https://${facts['fqdn']}:8081/v2/commands"
   $puppetdb_server                        = $facts['fqdn']
@@ -43,19 +51,17 @@ class puppetmaster::puppetboard
   $puppetdb_key                           = "${puppetboard_ssl_dir}/${::fqdn}.key"
   $puppetdb_ca_cert                       = "${puppetboard_ssl_dir}/ca.pem"
 
-  class { '::puppetmaster::common':
-    primary_names => $primary_names,
-    timezone      => $timezone,
-    before        => Class['::puppetboard'],
-  }
-
   class { '::puppetmaster::puppetdb':
+    manage_packetfilter        => $manage_packetfilter,
+    puppetserver_allow_ipv4    => $puppetserver_allow_ipv4,
+    puppetserver_allow_ipv6    => $puppetserver_allow_ipv6,
     server_reports             => $server_reports,
     autosign                   => $autosign,
     autosign_entries           => $autosign_entries,
     puppetdb_database_password => $puppetdb_database_password,
     timezone                   => $timezone,
-  }  
+    before                     => Class['::puppetboard'],
+  }
   
   file { [ $puppetboard_config_dir, $puppetboard_ssl_dir ]:
     ensure  => directory,
@@ -125,4 +131,13 @@ class puppetmaster::puppetboard
   }
   
   class { '::puppetboard::apache::conf': }
+
+  if $manage_packetfilter {
+    @firewall { '00443 accept tls traffic to puppetserver':
+      dport  => '443',
+      proto  => 'tcp',
+      action => 'accept',
+      tag    => 'default',
+    }
+  }
 }

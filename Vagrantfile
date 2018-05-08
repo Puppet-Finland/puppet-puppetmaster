@@ -28,8 +28,6 @@ Vagrant.configure("2") do |config|
     box.vm.network "private_network", ip: "192.168.221.201"
     box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
     box.vm.synced_folder ".", "/usr/share/puppetmaster-installer", type: "virtualbox"
-    box.vm.network "forwarded_port", guest: 443, host: 8443
-    box.vm.network "forwarded_port", guest: 80, host: 8080
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
       s.args = ["-b", "/usr/share/puppetmaster-installer"]
@@ -50,8 +48,6 @@ Vagrant.configure("2") do |config|
     # require this or the vboxsf mount will fail.
     box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
     box.vm.synced_folder ".", "/usr/share/puppetmaster-installer", type: "virtualbox"
-    box.vm.network "forwarded_port", guest: 443, host: 8443
-    box.vm.network "forwarded_port", guest: 80, host: 8000
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
       s.args = ["-b", "/usr/share/puppetmaster-installer"]
@@ -69,8 +65,6 @@ Vagrant.configure("2") do |config|
     box.vm.network "private_network", ip: "192.168.221.203"
     box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
     box.vm.synced_folder ".", "/usr/share/puppetmaster-installer", type: "virtualbox"
-    box.vm.network "forwarded_port", guest: 443, host: 8443
-    box.vm.network "forwarded_port", guest: 80, host: 8080
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
       s.args = ["-b", "/usr/share/puppetmaster-installer"]
@@ -88,8 +82,6 @@ Vagrant.configure("2") do |config|
     box.vm.network "private_network", ip: "192.168.221.204"
     box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
     box.vm.synced_folder ".", "/usr/share/puppetmaster-installer", type: "virtualbox"
-    box.vm.network "forwarded_port", guest: 443, host: 8443
-    box.vm.network "forwarded_port", guest: 80, host: 8080
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
       s.args = ["-b", "/usr/share/puppetmaster-installer"]
