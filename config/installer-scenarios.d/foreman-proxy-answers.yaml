@@ -8,11 +8,16 @@
 
 ---
 puppetmaster::foreman_proxy:
+  timezone: Europe/Helsinki
+  primary_names:
+  - proxy.local
+  - proxy
   foreman_proxy_foreman_base_url: https://puppet.local
   foreman_proxy_templates: false
   foreman_proxy_templates_listen_on: both
   foreman_proxy_trusted_hosts:
   - puppet.local
+  - proxy.local
   foreman_proxy_dhcp: false
   foreman_proxy_dhcp_listen_on: both
   foreman_proxy_dns: false
@@ -47,3 +52,9 @@ puppetmaster::foreman_proxy:
   foreman_proxy_tftp_listen_on: both
   foreman_proxy_bmc: false
   foreman_proxy_bmc_listen_on: both
+  foreman_hostnames:
+  - puppet.local
+  - puppet
+  foreman_ipaddress: 192.168.221.203
+  foreman_proxy_oauth_consumer_key: AGqLYyYHzqZm9jktGpUoeud55CGMgaXj
+  foreman_proxy_oauth_consumer_secret: vpcpFsp5y2DAocz7HNYG5hSwzdsuBU3h

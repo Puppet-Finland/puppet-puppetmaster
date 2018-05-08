@@ -82,4 +82,20 @@ Vagrant.configure("2") do |config|
       vb.memory = 4096
     end
   end
+    config.vm.define "puppetserver-proxy" do |box|
+    box.vm.box = "centos/7"
+    box.vm.box_version = "1801.02"
+    box.vm.hostname = "proxy.local"
+    box.vm.network "private_network", ip: "192.168.221.205"
+    box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
+    box.vm.synced_folder ".", "/home/puppetmaster", type: "virtualbox"
+    box.vm.provision "shell" do |s|
+      s.path = "vagrant/prepare.sh"
+      s.args = ["-b", "/home/puppetmaster"]
+    end
+    box.vm.provider "virtualbox" do |vb|
+      vb.gui = false
+      vb.memory = 2048
+    end
+  end
 end

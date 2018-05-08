@@ -6,12 +6,14 @@
 #
 # $logs_lifetime:: How long logs are stored. For example '90d'.
 #
+# $hosts_entries:: Hash of additional host entries. Example: 
 class puppetmaster::common
 (
   Array[String] $primary_names,
   String        $reports_lifetime = '14d',
   String        $logs_lifetime = '90d',
   String        $timezone,
+  Hash          $hosts_entries = {},
 )
 {
 
@@ -30,6 +32,7 @@ class puppetmaster::common
 
   class { '::hosts':
     primary_names => $primary_names,
+    entries       => $hosts_entries,
   }
 
   @firewall { '8140 accept incoming agent traffic to puppetserver':

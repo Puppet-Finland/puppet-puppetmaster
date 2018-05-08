@@ -74,11 +74,21 @@
 #
 # $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki' or 'Etc/UTC'.
 #
+# $foreman_hostnames:: List of your foremans' hostnames. Example: [ 'foreman.example.com', 'foreman' ]
+#
+# $foreman_ipaddress:: IP addres of your foreman instannce. Will populate /etc/hosts. Example: '1.2.3.4'
+#
+# $foreman_proxy_oauth_consumer_key:: OAuth key from/to you foreman. Example: 'sdfasdxx'
+#
+# $foreman_proxy_oauth_consumer_secret:: OAuth secret from/to you foreman. Example: 'wqerqwerqwer''
+#
 # == Advanced parameters:
 #
 class puppetmaster::foreman_proxy
 (
   
+  String $timezone,
+  Array[String] $primary_names,
   String $foreman_proxy_foreman_base_url,
   Boolean $foreman_proxy_templates,
   String $foreman_proxy_templates_listen_on,
@@ -113,7 +123,10 @@ class puppetmaster::foreman_proxy
   String $foreman_proxy_tftp_listen_on,
   Boolean $foreman_proxy_bmc,
   String $foreman_proxy_bmc_listen_on,
-  
+  Array[String] $foreman_hostnames,
+  String $foreman_ipaddress,
+  String $foreman_proxy_oauth_consumer_key,
+  String $foreman_proxy_oauth_consumer_secret,
 )
 {
   if defined(Service['foreman::service']) {
@@ -122,13 +135,13 @@ class puppetmaster::foreman_proxy
     }
   }
 
-  $primary_names = [ "${facts['fqdn']}", "${facts['hostname']}", 'puppet', "puppet.${facts['domain']}" ]
-  $foreman_proxy_registered_name = 'puppet.local'
-  $foreman_proxy_repo = '1.16'
-  $foreman_proxy_version = '1.16.0'
+  # $primary_names = [ "${facts['fqdn']}", "${facts['hostname']}", 'puppet', "puppet.${facts['domain']}" ]
+  $foreman_proxy_registered_name = "${facts['fqdn']}"
+  $foreman_proxy_repo = '1.15'
+  $foreman_proxy_version = '1.15.6'
   $foreman_proxy_bind_host = '0.0.0.0'
   $foreman_proxy_register_in_foreman = true
-  $foreman_proxy_registered_proxy_url = 'https://puppet.local:8443'
+  $foreman_proxy_registered_proxy_url = "https://${facts['fqdn']}:8443"
   $foreman_proxy_ensure_packages_version = 'installed'
   $foreman_proxy_template_url = 'http://puppet.local:8000'
   $foreman_proxy_manage_sudoersd = true
@@ -150,7 +163,8 @@ class puppetmaster::foreman_proxy
   $foreman_proxy_puppetrun_provider = puppetssh
   $foreman_proxy_mcollective_user = root
   $foreman_proxy_puppetssh_sudo = true
-
+  $hosts_entries = { $foreman_ipaddress => $foreman_hostnames }
+  
   @firewall { '22 accept outgoing foreman-proxy remote ssh execution':
     chain  => 'OUTPUT',
     state  => ['NEW'],
@@ -169,7 +183,7 @@ class puppetmaster::foreman_proxy
       action => 'accept',
     }
 
-    firewall { '53 allow incoming dns udp':
+    @firewall { '53 allow incoming dns udp':
       chain  => 'INPUT',
       state  => ['NEW'],
       dport  => '53',
@@ -222,7 +236,7 @@ class puppetmaster::foreman_proxy
     }
   }
 
-  firewall { '8140 allow foreman proxy incoming puppet':
+  @firewall { '8140 allow foreman proxy incoming puppet':
     chain  => 'INPUT',
     state  => ['NEW'],
     dport  => '8140',
@@ -235,10 +249,24 @@ class puppetmaster::foreman_proxy
     class { '::puppetmaster::common':
       primary_names => $primary_names,
       timezone      => $timezone, 
-      before        => Class['::foreman'],
+      hosts_entries => $hosts_entries,
+      before        => Class['::foreman_proxy'],
     }
   }
 
+  class { '::epel':
+    before => Class['::foreman_proxy'],
+  }
+  
+class { '::puppet':
+    server         => true,
+    show_diff      => true,
+    server_foreman => false,
+    autosign       => '/etc/puppetlabs/puppet/autosign.conf',
+    server_reports => 'store, foreman',
+    require        => [ File['/etc/puppetlabs/puppet/fileserver.conf'], Puppet_authorization::Rule['files'] ],
+    before         => Class['::foreman_proxy'],
+  }
 
   class { '::foreman_proxy':
     version                 => $foreman_proxy_version,
@@ -284,5 +312,7 @@ class puppetmaster::foreman_proxy
     use_sudoers             => $foreman_proxy_use_sudoers,
     register_in_foreman     => $foreman_proxy_register_in_foreman,
     autosignfile            => $foreman_proxy_autosignfile,
+    oauth_consumer_key      => $foreman_proxy_oauth_consumer_key,
+    oauth_consumer_secret   => $foreman_proxy_oauth_consumer_secret,
   }
 }
