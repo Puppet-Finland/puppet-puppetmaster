@@ -133,7 +133,17 @@
 #
 # $foreman_proxy_bmc_listen_on:: XXX
 #
-# == Advanced parameters:
+# $foreman_proxy2_hostnames:: List of hostnames for additional smart proxy 2. Example [ 'foo2.example.com', 'foo2' ]
+#
+# $foreman_proxy2_ipaddress:: IP address of additional smart proxy 2. Example: '1.2.3.4'
+#
+# $foreman_proxy3_hostnames:: List of hostnames for additional smart proxy 3. Example [ 'foo3.example.com', 'foo3' ]
+#
+# $foreman_proxy3_ipaddress:: IP address of additional smart proxy 3. Example: '1.2.3.5'
+#
+# $foreman_proxy4_hostnames:: List of hostnames for additional smart proxy 4. Example [ 'foo4.example.com', 'foo4' ]
+#
+# $foreman_proxy4_ipaddress:: IP address of additional smart proxy 3. Example: '1.2.3.6'
 #
 class puppetmaster::lcm
 (
@@ -200,11 +210,17 @@ class puppetmaster::lcm
   String $foreman_proxy_tftp_listen_on,
   Boolean $foreman_proxy_bmc,
   String $foreman_proxy_bmc_listen_on,
+  Array[String] $foreman_proxy2_hostnames,
+  String $foreman_proxy2_ipaddress,
+  Array[String] $foreman_proxy3_hostnames,
+  String $foreman_proxy3_ipaddress,
+  Array[String] $foreman_proxy4_hostnames,
+  String $foreman_proxy4_ipaddress,
 )
 {
 
-  $foreman_version                          = '1.16.1'
-  $foreman_repo                             = '1.16'
+  $foreman_version                          = '1.15.6'
+  $foreman_repo                             = '1.15'
   $foreman_manage_memcached                 = true
   $foreman_memcached_max_memory             = '8%'
   $foreman_url                              = "https://${facts['fqdn']}"
@@ -214,8 +230,8 @@ class puppetmaster::lcm
   $foreman_puppetdb_address                 = "https://${facts['fqdn']}:8081/v2/commands"
   $puppetdb_server                          = $facts['fqdn']
   $foreman_proxy_registered_name            = 'puppet.local'
-  $foreman_proxy_repo                       = '1.16'
-  $foreman_proxy_version                    = '1.16.1'
+  $foreman_proxy_repo                       = '1.15'
+  $foreman_proxy_version                    = '1.15.6'
   $foreman_proxy_bind_host                  = '0.0.0.0'
   $foreman_proxy_register_in_foreman        = true
   $foreman_proxy_registered_proxy_url       = 'https://puppet.local:8443'
@@ -241,6 +257,11 @@ class puppetmaster::lcm
   $foreman_proxy_mcollective_user           = root
   $foreman_proxy_puppetssh_sudo             = true
 
+  $hosts_entries                            = deep_merge(
+    { $foreman_proxy2_ipaddress => $foreman_proxy2_hostnames },
+    { $foreman_proxy3_ipaddress => $foreman_proxy3_hostnames },
+    { $foreman_proxy4_ipaddress => $foreman_proxy4_hostnames })
+  
   unless ("${facts['osfamily']}" == 'RedHat' and "${facts['os']['release']['major']}" == '7') {
     fail("${facts['os']['name']} ${facts['os']['release']['full']} not supported yet")
   }
@@ -310,7 +331,10 @@ class puppetmaster::lcm
   }
 
   class { '::epel':
-    before => Class['::foreman'],
+    before => [
+      Class['::foreman'],
+      Class['::foreman_proxy'],
+    ],
   }
   
 
@@ -318,7 +342,8 @@ class puppetmaster::lcm
     
     class { '::puppetmaster::common':
       primary_names => $primary_names,
-      timezone      => $timezone, 
+      timezone      => $timezone,
+      hosts_entries => $hosts_entries,
       before        => Class['::foreman'],
     }
   }

@@ -17,7 +17,7 @@ mod 'puppet-hiera',
 # Modules used in profiles
 mod 'puppet-r10k', '>= 6.3.2'
 mod 'puppetlabs-ntp', '>= 7.1.1'
-mod 'chrekh-hosts', '>= 2.3.1'
+mod 'chrekh-hosts', '>= 2.3.0'
 mod 'saz-timezone', '>= 4.1.1'
 mod 'puppetlabs-puppet_authorization', '>= 0.4.0'
 mod 'stahnma-epel', '>= 1.3.0'

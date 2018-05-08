@@ -78,3 +78,15 @@ puppetmaster::lcm:
   foreman_proxy_tftp_listen_on: both
   foreman_proxy_bmc: false
   foreman_proxy_bmc_listen_on: both
+  foreman_proxy2_hostnames:
+  - proxy2.local
+  - proxy2
+  foreman_proxy2_ipaddress: 192.168.221.206
+  foreman_proxy3_hostnames:
+  - proxy3.local
+  - proxy3
+  foreman_proxy3_ipaddress: 192.168.221.207
+  foreman_proxy4_hostnames:
+  - proxy4.local
+  - proxy4
+  foreman_proxy4_ipaddress: 192.168.221.208
