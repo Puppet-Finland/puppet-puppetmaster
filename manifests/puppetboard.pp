@@ -53,7 +53,6 @@ class puppetmaster::puppetboard
 
   class { '::puppetmaster::puppetdb':
     manage_packetfilter        => $manage_packetfilter,
-    timezone                   => $timezone,
     puppetserver_allow_ipv4    => $puppetserver_allow_ipv4,
     puppetserver_allow_ipv6    => $puppetserver_allow_ipv6,
     server_reports             => $server_reports,
