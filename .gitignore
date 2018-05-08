@@ -2,6 +2,7 @@
 .tmp/
 .yardoc
 modules/
+packaging/build
 Puppetfile.lock
 configuration*.log
 .vagrant
