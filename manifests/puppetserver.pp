@@ -28,7 +28,7 @@ class puppetmaster::puppetserver
   Hash                     $host_entries = {}
 )
 {
-  $primary_names = [ "${facts['fqdn']}", "${facts['hostname']}", 'puppet', "puppet.${facts['domain']}" ]  
+  $primary_names = unique([ "${facts['fqdn']}", "${facts['hostname']}", 'puppet', "puppet.${facts['domain']}" ])
 
   class { '::puppetmaster::common':
     primary_names       => $primary_names,

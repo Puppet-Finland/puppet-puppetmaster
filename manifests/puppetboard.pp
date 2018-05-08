@@ -33,7 +33,6 @@ class puppetmaster::puppetboard
 
   $puppetboard_puppetdb_host              = "${facts['fqdn']}"
   $puppetboard_puppetdb_port              = 8081
-  $primary_names                          = unique([ "${facts['fqdn']}", "${facts['hostname']}", 'puppet', "puppet.${facts['domain']}" ])
   $puppetboard_puppetdb_dashboard_address = "http://${facts['fqdn']}:8080/pdb/dashboard"
   $puppetboard_puppetdb_address           = "https://${facts['fqdn']}:8081/v2/commands"
   $puppetdb_server                        = $facts['fqdn']
@@ -52,14 +51,9 @@ class puppetmaster::puppetboard
   $puppetdb_key                           = "${puppetboard_ssl_dir}/${::fqdn}.key"
   $puppetdb_ca_cert                       = "${puppetboard_ssl_dir}/ca.pem"
 
-  class { '::puppetmaster::common':
-    primary_names       => $primary_names,
-    timezone            => $timezone,
-    before              => Class['::puppetboard'],
-  }
-
   class { '::puppetmaster::puppetdb':
     manage_packetfilter        => $manage_packetfilter,
+    timezone                   => $timezone,
     puppetserver_allow_ipv4    => $puppetserver_allow_ipv4,
     puppetserver_allow_ipv6    => $puppetserver_allow_ipv6,
     server_reports             => $server_reports,
@@ -67,6 +61,7 @@ class puppetmaster::puppetboard
     autosign_entries           => $autosign_entries,
     puppetdb_database_password => $puppetdb_database_password,
     timezone                   => $timezone,
+    before                     => Class['::puppetboard'],
   }
   
   file { [ $puppetboard_config_dir, $puppetboard_ssl_dir ]:

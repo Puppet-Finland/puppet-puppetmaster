@@ -17,6 +17,7 @@
 # $puppetdb_database_password:: Password for the puppetdb database in postgresql
 #
 # $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki' or 'Etc/UTC'.
+#
 class puppetmaster::puppetdb
 (
   Boolean                  $manage_packetfilter = true,
@@ -29,9 +30,6 @@ class puppetmaster::puppetdb
   String                   $timezone
 )
 {
-
-  $primary_names = [ "${facts['fqdn']}", "${facts['hostname']}", 'puppet', "puppet.${facts['domain']}" ]
-
   class { '::puppetmaster::puppetserver':
     manage_packetfilter     => $manage_packetfilter,
     puppetserver_allow_ipv4 => $puppetserver_allow_ipv4,
