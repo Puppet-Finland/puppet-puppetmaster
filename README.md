@@ -33,8 +33,8 @@ The "-i" switch to ensures that the environment is root's environment, which is 
 
 This module supports CentOS 7, Debian 9 and Ubuntu 16.04.
 
-The base scenarios have been tested on all platforms. Puppetboard has been tested on Ubuntu 16.04 and Debian 9. Foreman scenarios
-have been tested on CentOS 7.
+Puppetserver, PuppetDB and Puppetboard scenarios work across all supported platforms. Currently Foreman scenarios
+only work on CentOS 7.
 
 Ubuntu 18.04 can't be easily supported quite yet as Puppetlabs does not provide Puppet 5 packages for it. Additionally Ubuntu's official Vagrant box [does not have](https://github.com/cilium/cilium/issues/1918#issuecomment-344527888) the ifupdown package which Vagrant depends on.
 
