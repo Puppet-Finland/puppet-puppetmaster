@@ -164,7 +164,10 @@ class puppetmaster::foreman_proxy
   $foreman_proxy_mcollective_user = root
   $foreman_proxy_puppetssh_sudo = true
   $hosts_entries = { $foreman_ipaddress => $foreman_hostnames }
-  
+  $foreman_ssl_ca = '/etc/foreman-proxy/certs/ca.pem'
+  $foreman_ssl_cert = "/etc/foreman-proxy/certs/${foreman_proxy_registered_name}.pem"
+  $foreman_ssl_key =  "/etc/foreman-proxy/private_keys/${foreman_proxy_registered_name}.pem"
+
   @firewall { '22 accept outgoing foreman-proxy remote ssh execution':
     chain  => 'OUTPUT',
     state  => ['NEW'],
@@ -266,6 +269,18 @@ class { '::puppet':
     server_reports => 'store, foreman',
     require        => [ File['/etc/puppetlabs/puppet/fileserver.conf'], Puppet_authorization::Rule['files'] ],
     before         => Class['::foreman_proxy'],
+  }
+
+  package { 'libkadm5':
+    ensure   => installed,
+  }
+  
+  package { 'rubygem-rkerberos':
+    provider => 'rpm',
+    ensure   => installed,
+    source   => 'https://kojipkgs.fedoraproject.org//packages/rubygem-rkerberos/0.1.3/5.el7/x86_64/rubygem-rkerberos-0.1.3-5.el7.x86_64.rpm',
+    before   => Class['::foreman_proxy'],
+    require  => Package['libkadm5'],
   }
 
   class { '::foreman_proxy':
