@@ -2,6 +2,8 @@
 #
 # == Parameters:
 #
+# $manage_packetfilter:: Manage IPv4 and IPv6 rules. Defaults to true.
+#
 # $server_reports:: Where to store reports. Defaults to 'store,puppetdb'.
 #
 # $autosign:: Set up autosign entries. Set to true to enable naive autosigning.
@@ -14,6 +16,7 @@
 #
 class puppetmaster::puppetboard
 (
+  Boolean                  $manage_packetfilter = true,
   String                   $server_reports = 'store,puppetdb',
   Variant[Boolean, String] $autosign = '/etc/puppetlabs/puppet/autosign.conf',
   Optional[Array[String]]  $autosign_entries = undef,
@@ -44,18 +47,20 @@ class puppetmaster::puppetboard
   $puppetdb_ca_cert                       = "${puppetboard_ssl_dir}/ca.pem"
 
   class { '::puppetmaster::common':
-    primary_names => $primary_names,
-    timezone      => $timezone,
-    before        => Class['::puppetboard'],
+    manage_packetfilter => $manage_packetfilter,
+    primary_names       => $primary_names,
+    timezone            => $timezone,
+    before              => Class['::puppetboard'],
   }
 
   class { '::puppetmaster::puppetdb':
+    manage_packetfilter        => $manage_packetfilter,
     server_reports             => $server_reports,
     autosign                   => $autosign,
     autosign_entries           => $autosign_entries,
     puppetdb_database_password => $puppetdb_database_password,
     timezone                   => $timezone,
-  }  
+  }
   
   file { [ $puppetboard_config_dir, $puppetboard_ssl_dir ]:
     ensure  => directory,
@@ -125,4 +130,13 @@ class puppetmaster::puppetboard
   }
   
   class { '::puppetboard::apache::conf': }
+
+  if $manage_packetfilter {
+    @firewall { '00443 accept tls traffic to puppetserver':
+      dport  => '443',
+      proto  => 'tcp',
+      action => 'accept',
+      tag    => 'default',
+    }
+  }
 }

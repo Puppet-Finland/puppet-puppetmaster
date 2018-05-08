@@ -3,6 +3,8 @@
 
 forge 'https://forgeapi.puppetlabs.com'
 
+mod 'puppetfinland-packetfilter'
+
 mod 'puppetfinland-kafo',
     :git => 'https://github.com/Puppet-Finland/puppet-kafo.git',
     :tag => '1.0.2'
