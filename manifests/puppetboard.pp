@@ -95,7 +95,7 @@ class puppetmaster::puppetboard
   if "${facts['osfamily']}" == 'RedHat' {
     include ::apache::mod::version
 
-    class { 'apache::mod::wsgi':
+    class { '::apache::mod::wsgi':
       wsgi_socket_prefix => "/var/run/wsgi"
     }
 
