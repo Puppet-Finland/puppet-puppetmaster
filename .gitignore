@@ -3,6 +3,8 @@
 .yardoc
 modules/
 packaging/build
+*.deb
+*.rpm
 Puppetfile.lock
 configuration*.log
 .vagrant
