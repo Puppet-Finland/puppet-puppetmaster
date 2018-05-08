@@ -135,15 +135,15 @@
 #
 # $foreman_proxy2_hostnames:: List of hostnames for additional smart proxy 2. Example [ 'foo2.example.com', 'foo2' ]
 #
-# $foreman_proxy2_ipaddress:: IP address of addtiional smart proxy 2. Example: '1.2.3.4'
+# $foreman_proxy2_ipaddress:: IP address of additional smart proxy 2. Example: '1.2.3.4'
 #
 # $foreman_proxy3_hostnames:: List of hostnames for additional smart proxy 3. Example [ 'foo3.example.com', 'foo3' ]
 #
-# $foreman_proxy3_ipaddress:: IP address of addtiional smart proxy 3. Example: '1.2.3.5'
+# $foreman_proxy3_ipaddress:: IP address of additional smart proxy 3. Example: '1.2.3.5'
 #
 # $foreman_proxy4_hostnames:: List of hostnames for additional smart proxy 4. Example [ 'foo4.example.com', 'foo4' ]
 #
-# $foreman_proxy4_ipaddress:: IP address of addtiional smart proxy 3. Example: '1.2.3.6'
+# $foreman_proxy4_ipaddress:: IP address of additional smart proxy 3. Example: '1.2.3.6'
 #
 class puppetmaster::lcm
 (
@@ -273,15 +273,6 @@ class puppetmaster::lcm
   else {
     $dynflow_in_core = true
   }
-
-  # See https://community.theforeman.org/t/rubygem-rkerberos-currently-not-installable-on-el7-5/8829/2
-  #$evilpackages = [ 'krb5-libs.x86_64', 'krb5-workstation.x86_64', 'libkadm5.x86_64' ]
-  #package { $evilpackages:
-  #  ensure => absent,
-  #  before => [
-  #    Class['::epel'],
-  #  ],
-  #}
 
   unless "${facts['osfamily']}" != 'RedHat' {
     

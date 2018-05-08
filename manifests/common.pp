@@ -6,7 +6,7 @@
 #
 # $logs_lifetime:: How long logs are stored. For example '90d'.
 #
-# $hosts_entries:: Hash of additional host entries. Example: 
+# $hosts_entries:: Hash of additional host entries. 
 class puppetmaster::common
 (
   Array[String] $primary_names,
