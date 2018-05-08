@@ -69,6 +69,13 @@ class puppetmaster::puppetboard
   "${puppet_ssldir}/private_keys/${::fqdn}.pem"    => $puppetdb_key,
   "${puppet_ssldir}/certs/ca.pem"                  => $puppetdb_ca_cert, }
 
+  # Allow httpd to read Puppetboard's SSL keys
+  if $::osfamily == 'RedHat' {
+    $seltype = 'httpd_sys_content_t'
+  } else {
+    $seltype = undef
+  }
+
   $keys.each |$key| {
     exec { $key[1]:
       command => "cp -f ${key[0]} ${key[1]}",
@@ -80,6 +87,7 @@ class puppetmaster::puppetboard
     file { $key[1]:
       group   => 'puppetboard',
       mode    => '0640',
+      seltype => $seltype,
       require => Exec[$key[1]],
     }
   }
