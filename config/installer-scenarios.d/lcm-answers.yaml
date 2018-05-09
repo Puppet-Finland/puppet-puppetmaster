@@ -83,8 +83,10 @@ puppetmaster::lcm:
   - proxy2
   foreman_proxy2_ipaddress: 192.168.221.205
   foreman_proxy3_hostnames:
-  - 192.168.221.206
-  foreman_proxy3_ipaddress: 192.168.221.207
+  - proxy3.local
+  - proxy3
+  foreman_proxy3_ipaddress: 192.168.221.206
   foreman_proxy4_hostnames:
-  - 192.168.221.207
-  foreman_proxy4_ipaddress: 192.168.221.208
+  - proxy4.local
+  - proxy4
+  foreman_proxy4_ipaddress: 192.168.221.207
