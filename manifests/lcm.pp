@@ -681,6 +681,18 @@ END
     tag    => foreman_proxy_tftp,
   }
 
+  package { 'libkadm5':
+    ensure   => installed,
+  }
+  
+  package { 'rubygem-rkerberos':
+    provider => 'rpm',
+    ensure   => installed,
+    source   => 'https://kojipkgs.fedoraproject.org//packages/rubygem-rkerberos/0.1.3/5.el7/x86_64/rubygem-rkerberos-0.1.3-5.el7.x86_64.rpm',
+    before   => Class['::foreman_proxy'],
+    require  => Package['libkadm5'],
+  }
+  
   class { '::foreman_proxy':
     version                 => $foreman_proxy_version,
     ensure_packages_version => $foreman_proxy_ensure_packages_version,

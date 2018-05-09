@@ -164,9 +164,9 @@ class puppetmaster::foreman_proxy
   $foreman_proxy_mcollective_user = root
   $foreman_proxy_puppetssh_sudo = true
   $hosts_entries = { $foreman_ipaddress => $foreman_hostnames }
-  $foreman_ssl_ca = '/etc/foreman-proxy/certs/ca.pem'
-  $foreman_ssl_cert = "/etc/foreman-proxy/certs/${foreman_proxy_registered_name}.pem"
-  $foreman_ssl_key =  "/etc/foreman-proxy/private_keys/${foreman_proxy_registered_name}.pem"
+  $foreman_proxy_foreman_ssl_ca = '/etc/puppetlabs/puppet/ssl/certs/ca_foreman.pem'
+  $foreman_proxy_foreman_ssl_cert = "/etc/puppetlabs/puppet/ssl/certs/${foreman_proxy_registered_name}.pem"
+  $foreman_proxy_foreman_ssl_key =  "/etc/puppetlabs/puppet/ssl/private_keys/${foreman_proxy_registered_name}.pem"
 
   @firewall { '22 accept outgoing foreman-proxy remote ssh execution':
     chain  => 'OUTPUT',
@@ -283,6 +283,24 @@ class { '::puppet':
     require  => Package['libkadm5'],
   }
 
+  exec { 'check_ca_cert':
+    command => '/bin/true',
+    onlyif  => "/usr/bin/test -e ${foreman_proxy_foreman_ssl_ca}",
+    before  => Class['::foreman_proxy'],
+  }
+
+  exec { 'check_cert':
+    command => '/bin/true',
+    onlyif  => "/usr/bin/test -e ${foreman_proxy_foreman_ssl_cert}",
+    before  => Class['::foreman_proxy'],
+  }
+
+  exec { 'check_key':
+    command => '/bin/true',
+    onlyif  => "/usr/bin/test -e ${foreman_proxy_foreman_ssl_key}",
+    before  => Class['::foreman_proxy'],
+  }
+
   class { '::foreman_proxy':
     version                 => $foreman_proxy_version,
     ensure_packages_version => $foreman_proxy_ensure_packages_version,
@@ -329,5 +347,8 @@ class { '::puppet':
     autosignfile            => $foreman_proxy_autosignfile,
     oauth_consumer_key      => $foreman_proxy_oauth_consumer_key,
     oauth_consumer_secret   => $foreman_proxy_oauth_consumer_secret,
+    ssl_ca                  => $foreman_proxy_foreman_ssl_ca,
+    ssl_cert                => $foreman_proxy_foreman_ssl_cert,
+    ssl_key                 => $foreman_proxy_foreman_ssl_key,
   }
 }
