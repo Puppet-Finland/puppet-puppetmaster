@@ -109,6 +109,14 @@ package { 'librarian-puppet':
 package { 'git':
   ensure => 'latest',
 }
+
+exec { 'Run librarian-puppet':
+  cwd       => "$BASEDIR",
+  logoutput => true,
+  command   => 'librarian-puppet install --verbose',
+  timeout   => 600,
+  path      => ['/bin','/usr/bin','/opt/puppetlabs/bin','/opt/puppetlabs/puppet/bin'],
+}
 EOF
 cat $FILE | /opt/puppetlabs/bin/puppet apply 
 rm $FILE
@@ -117,14 +125,6 @@ rm $FILE
 run_puppet_2() {
 FILE=$(mktemp)
 cat<<EOF>$FILE
-
-exec { 'Run librarian-puppet':
-  cwd     => "$BASEDIR",
-  command => 'librarian-puppet install',
-  timeout => 600,
-  path    => '/opt/puppetlabs/bin:/opt/puppetlabs/puppet/bin:/usr/bin'
-}
-
 class { '::kafo':
   gem_provider => 'puppet_gem',
 }
