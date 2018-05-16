@@ -143,7 +143,6 @@ class puppetmaster::foreman_proxy
   $foreman_proxy_register_in_foreman = true
   $foreman_proxy_registered_proxy_url = "https://${facts['fqdn']}:8443"
   $foreman_proxy_ensure_packages_version = 'installed'
-  $foreman_proxy_template_url = 'http://puppet.local:8000'
   $foreman_proxy_manage_sudoersd = true
   $foreman_proxy_use_sudoers = true
   $foreman_proxy_use_sudoersd = true
@@ -165,9 +164,10 @@ class puppetmaster::foreman_proxy
   $foreman_proxy_puppetssh_sudo = true
   $hosts_entries = { $foreman_ipaddress => $foreman_hostnames }
   $foreman_proxy_foreman_ssl_ca = '/etc/puppetlabs/puppet/ssl/certs/ca_foreman.pem'
-  $foreman_proxy_foreman_ssl_cert = "/etc/puppetlabs/puppet/ssl/certs/${foreman_proxy_registered_name}.pem"
-  $foreman_proxy_foreman_ssl_key =  "/etc/puppetlabs/puppet/ssl/private_keys/${foreman_proxy_registered_name}.pem"
-
+  $foreman_proxy_foreman_ssl_cert = "/etc/puppetlabs/puppet/ssl/certs/${foreman_proxy_registered_name}_foreman.pem"
+  $foreman_proxy_foreman_ssl_key =  "/etc/puppetlabs/puppet/ssl/private_keys/${foreman_proxy_registered_name}_foreman.pem"
+  $foreman_proxy_template_url = "http://${facts['networking']['interfaces'][$foreman_proxy_dhcp_interface]['ip']}:8000"
+  
   @firewall { '22 accept outgoing foreman-proxy remote ssh execution':
     chain  => 'OUTPUT',
     state  => ['NEW'],

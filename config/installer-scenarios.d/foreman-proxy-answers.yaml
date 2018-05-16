@@ -14,7 +14,7 @@ puppetmaster::foreman_proxy:
   - proxy2
   foreman_proxy_foreman_base_url: https://puppet.local
   foreman_proxy_templates: true
-  foreman_proxy_templates_listen_on: both
+  foreman_proxy_templates_listen_on: http
   foreman_proxy_trusted_hosts:
   - puppet.local
   - proxy2.local
@@ -33,7 +33,7 @@ puppetmaster::foreman_proxy:
   - 192.168.221.0/255.255.255.0
   foreman_proxy_dhcp_gateway: 192.168.221.203
   foreman_proxy_dhcp_range: 192.168.221.100 192.168.221.200
-  foreman_proxy_dhcp_nameservers: 192.168.221.203
+  foreman_proxy_dhcp_nameservers: 192.168.221.205
   foreman_proxy_dhcp_pxeserver: 192.168.221.205
   foreman_proxy_dns_managed: true
   foreman_proxy_dns_forwarders:
