@@ -16,6 +16,13 @@
 #
 # $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki' or 'Etc/UTC'.
 #
+# $server_foreman:: Is this a foreman server. Defaults to false.
+#
+# $show_diff:: Show diff in the foreman user interface. Defaults to false.
+#
+# $hosts_entries:: A hash of host entries to put in /etc/hosts.
+#
+# $server_external_nodes:: The path to the ENC executable. Defaults to empty string.
 class puppetmaster::puppetserver
 (
   String                   $timezone,
@@ -25,7 +32,10 @@ class puppetmaster::puppetserver
   String                   $server_reports = 'store',
   Variant[Boolean, String] $autosign = '/etc/puppetlabs/puppet/autosign.conf',
   Optional[Array[String]]  $autosign_entries = undef,
-  Hash                     $host_entries = {}
+  Hash                     $hosts_entries = {},
+  Boolean                  $show_diff = false,
+  Boolean                  $server_foreman = false,
+  String                   $server_external_nodes = '',
 )
 {
   $primary_names = unique([ "${facts['fqdn']}", "${facts['hostname']}", 'puppet', "puppet.${facts['domain']}" ])
@@ -33,6 +43,7 @@ class puppetmaster::puppetserver
   class { '::puppetmaster::common':
     primary_names       => $primary_names,
     timezone            => $timezone,
+    hosts_entries       => $hosts_entries,
   }
 
   file { '/var/files':
@@ -92,12 +103,12 @@ class puppetmaster::puppetserver
 
   class { '::puppet':
     server                => true,
-    show_diff             => false,
-    server_foreman        => false,
+    show_diff             => $show_diff,
+    server_foreman        => $server_foreman,
     autosign              => $autosign,
     autosign_entries      => $autosign_entries,
-    server_external_nodes => '',
     server_reports        => $server_reports,
+    server_external_nodes => $server_external_nodes,
     require               => [ File['/etc/puppetlabs/puppet/fileserver.conf'], Puppet_authorization::Rule['files'] ],
   }
 

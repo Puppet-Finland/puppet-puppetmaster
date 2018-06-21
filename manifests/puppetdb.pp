@@ -18,6 +18,13 @@
 #
 # $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki' or 'Etc/UTC'.
 #
+# $server_foreman:: Is this a foreman server. Defaults to false
+#
+# $show_diff:: Show diff in the foreman user interface. Defaults to false.
+#
+# $hosts_entries:: A hash of host entries to put in /etc/hosts
+#
+# $server_external_nodes. A string to an ENC executable. Default to empty string.
 class puppetmaster::puppetdb
 (
   Boolean                  $manage_packetfilter = true,
@@ -27,7 +34,11 @@ class puppetmaster::puppetdb
   Variant[Boolean, String] $autosign = '/etc/puppetlabs/puppet/autosign.conf',
   Optional[Array[String]]  $autosign_entries = undef,
   String                   $puppetdb_database_password,
-  String                   $timezone
+  String                   $timezone,
+  Boolean                  $show_diff = false,
+  Boolean                  $server_foreman = false,
+  Hash                     $hosts_entries = {},
+  String                   $server_external_nodes = '',
 )
 {
   class { '::puppetmaster::puppetserver':
@@ -38,6 +49,10 @@ class puppetmaster::puppetdb
     autosign                => $autosign,
     autosign_entries        => $autosign_entries,
     timezone                => $timezone, 
+    show_diff               => $show_diff,
+    server_foreman          => $server_foreman,
+    hosts_entries           => $host_entries,
+    server_external_nodes   => $server_external_nodes,
   }
 
   class { '::puppetdb':
