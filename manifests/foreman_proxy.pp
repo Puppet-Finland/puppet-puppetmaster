@@ -143,7 +143,6 @@ class puppetmaster::foreman_proxy
   $foreman_proxy_register_in_foreman = true
   $foreman_proxy_registered_proxy_url = "https://${facts['fqdn']}:8443"
   $foreman_proxy_ensure_packages_version = 'installed'
-  $foreman_proxy_template_url = 'http://puppet.local:8000'
   $foreman_proxy_manage_sudoersd = true
   $foreman_proxy_use_sudoers = true
   $foreman_proxy_use_sudoersd = true
@@ -164,6 +163,10 @@ class puppetmaster::foreman_proxy
   $foreman_proxy_mcollective_user = root
   $foreman_proxy_puppetssh_sudo = true
   $hosts_entries = { $foreman_ipaddress => $foreman_hostnames }
+  $foreman_proxy_foreman_ssl_ca = '/etc/puppetlabs/puppet/ssl/certs/ca_foreman.pem'
+  $foreman_proxy_foreman_ssl_cert = "/etc/puppetlabs/puppet/ssl/certs/${foreman_proxy_registered_name}_foreman.pem"
+  $foreman_proxy_foreman_ssl_key =  "/etc/puppetlabs/puppet/ssl/private_keys/${foreman_proxy_registered_name}_foreman.pem"
+  $foreman_proxy_template_url = "http://${facts['networking']['interfaces'][$foreman_proxy_dhcp_interface]['ip']}:8000"
   
   @firewall { '22 accept outgoing foreman-proxy remote ssh execution':
     chain  => 'OUTPUT',
@@ -268,6 +271,36 @@ class { '::puppet':
     before         => Class['::foreman_proxy'],
   }
 
+  package { 'libkadm5':
+    ensure   => installed,
+  }
+  
+  package { 'rubygem-rkerberos':
+    provider => 'rpm',
+    ensure   => installed,
+    source   => 'https://kojipkgs.fedoraproject.org//packages/rubygem-rkerberos/0.1.3/5.el7/x86_64/rubygem-rkerberos-0.1.3-5.el7.x86_64.rpm',
+    before   => Class['::foreman_proxy'],
+    require  => Package['libkadm5'],
+  }
+
+  exec { 'check_ca_cert':
+    command => '/bin/true',
+    onlyif  => "/usr/bin/test -e ${foreman_proxy_foreman_ssl_ca}",
+    before  => Class['::foreman_proxy'],
+  }
+
+  exec { 'check_cert':
+    command => '/bin/true',
+    onlyif  => "/usr/bin/test -e ${foreman_proxy_foreman_ssl_cert}",
+    before  => Class['::foreman_proxy'],
+  }
+
+  exec { 'check_key':
+    command => '/bin/true',
+    onlyif  => "/usr/bin/test -e ${foreman_proxy_foreman_ssl_key}",
+    before  => Class['::foreman_proxy'],
+  }
+
   class { '::foreman_proxy':
     version                 => $foreman_proxy_version,
     ensure_packages_version => $foreman_proxy_ensure_packages_version,
@@ -314,5 +347,8 @@ class { '::puppet':
     autosignfile            => $foreman_proxy_autosignfile,
     oauth_consumer_key      => $foreman_proxy_oauth_consumer_key,
     oauth_consumer_secret   => $foreman_proxy_oauth_consumer_secret,
+    ssl_ca                  => $foreman_proxy_foreman_ssl_ca,
+    ssl_cert                => $foreman_proxy_foreman_ssl_cert,
+    ssl_key                 => $foreman_proxy_foreman_ssl_key,
   }
 }

@@ -145,6 +145,7 @@
 #
 # $foreman_proxy4_ipaddress:: IP address of additional smart proxy 3. Example: '1.2.3.6'
 #
+# $manage_packetfilter:: Manage the packet filter. Defaults to true.
 class puppetmaster::lcm
 (
   String $foreman_db_password,
@@ -216,9 +217,9 @@ class puppetmaster::lcm
   String $foreman_proxy3_ipaddress,
   Array[String] $foreman_proxy4_hostnames,
   String $foreman_proxy4_ipaddress,
+  Boolean $manage_packetfilter = true,
 )
 {
-
   $foreman_version                          = '1.15.6'
   $foreman_repo                             = '1.15'
   $foreman_manage_memcached                 = true
@@ -256,16 +257,16 @@ class puppetmaster::lcm
   $foreman_proxy_puppetrun_provider         = puppetssh
   $foreman_proxy_mcollective_user           = root
   $foreman_proxy_puppetssh_sudo             = true
-
+  $foreman_server_external_nodes            = '/etc/puppetlabs/puppet/node.rb'
   $hosts_entries                            = deep_merge(
     { $foreman_proxy2_ipaddress => $foreman_proxy2_hostnames },
     { $foreman_proxy3_ipaddress => $foreman_proxy3_hostnames },
     { $foreman_proxy4_ipaddress => $foreman_proxy4_hostnames })
-  
+
   unless ("${facts['osfamily']}" == 'RedHat' and "${facts['os']['release']['major']}" == '7') {
     fail("${facts['os']['name']} ${facts['os']['release']['full']} not supported yet")
   }
-  
+
   # See https://github.com/theforeman/puppet-foreman#foreman-version-compatibility-notes
   if versioncmp($foreman_version, '1.17') < 0 {
     $dynflow_in_core = false
@@ -275,12 +276,12 @@ class puppetmaster::lcm
   }
 
   unless "${facts['osfamily']}" != 'RedHat' {
-    
-    class { selinux:
+
+    class { '::selinux':
       mode => 'enforcing',
       type => 'targeted',
     }
-    
+
     selinux::module { 'httpd_t':
       ensure    => 'present',
       source_te => '/usr/share/puppetmaster-installer/files/httpd_t.te',
@@ -291,7 +292,7 @@ class puppetmaster::lcm
       seltype  => 'httpd_sys_content_t',
       pathspec => '/etc/puppetlabs/puppet/ssl(/.*)?',
     }
-    
+
     selinux::exec_restorecon { '/etc/puppetlabs/puppet/ssl':
       require => Selinux::Fcontext['set-httpd-file-context'],
     }
@@ -305,7 +306,7 @@ class puppetmaster::lcm
 
   cron { 'Collect trend data':
     environment => 'PATH=/opt/puppetlabs/bin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin',
-    command     => '/sbin/foreman-rake foreman-rake trends:counter',
+    command     => '/sbin/foreman-rake trends:counter',
     user        => 'root',
     hour        => 0,
     minute      => 0/30,
@@ -336,53 +337,30 @@ class puppetmaster::lcm
       Class['::foreman_proxy'],
     ],
   }
-  
 
-  unless defined(Class['::puppetmaster::common']) {
-    
-    class { '::puppetmaster::common':
-      primary_names => $primary_names,
-      timezone      => $timezone,
-      hosts_entries => $hosts_entries,
-      before        => Class['::foreman'],
-    }
-  }
-  
-  class { '::puppet':
-    server         => true,
-    show_diff      => true,
-    server_foreman => true,
-    autosign       => '/etc/puppetlabs/puppet/autosign.conf',
-    server_reports => 'store, foreman',
-    require        => [ File['/etc/puppetlabs/puppet/fileserver.conf'], Puppet_authorization::Rule['files'] ],
-    before         => Class['::foreman'],
-  }
-
-  class { '::puppetmaster::databaseserver':
-  }
-  
-  class { '::puppetdb':
-    database_password     => $puppetdb_database_password,
-    ssl_deploy_certs      => true,
-    manage_dbserver       => false, 
-    require               => [
-      Class['::puppet'],
-      Class['::puppetmaster::databaseserver'],
-    ]
-  }
-  
-  class { '::puppetdb::master::config':
-    puppetdb_server => $puppetdb_server,
-    restart_puppet  => true,
+  class { '::puppetmaster::puppetdb':
+    show_diff                  => true,
+    server_foreman             => true,
+    autosign                   => '/etc/puppetlabs/puppet/autosign.conf',
+    server_reports             => 'store,foreman',
+    hosts_entries              => $hosts_entries,
+    puppetdb_database_password => $puppetdb_database_password,
+    timezone                   => $timezone,
+    manage_packetfilter        => $manage_packetfilter,
+    server_external_nodes      => $foreman_server_external_nodes,
+    before                     => [
+      Class['::foreman'],
+      Class['::foreman_proxy'],
+    ],
   }
 
   ::puppetmaster::database { 'foreman':
     dbname   => foreman,
     username => foreman,
     password => $foreman_db_password,
-    require  => Class['::puppetmaster::databaseserver'],
+    require  => Class['::puppetdb'],
     before   => Class['::foreman'],
-  }  
+  }
 
   class { '::foreman':
     foreman_url           => $foreman_url,
@@ -422,7 +400,7 @@ class puppetmaster::lcm
     class { '::foreman::compute::libvirt':
     }
   }
-    
+
   if $foreman_compute_ec2 {
     class { '::foreman::compute::ec2':
     }
@@ -432,12 +410,12 @@ class puppetmaster::lcm
     class { '::foreman::compute::gce':
     }
   }
-  
+
   if $foreman_compute_openstack {
     class { '::foreman::compute::openstack':
     }
   }
-  
+
   if $foreman_compute_ovirt {
     class { '::foreman::compute::ovirt':
     }
@@ -447,14 +425,14 @@ class puppetmaster::lcm
     class { '::foreman::plugin::azure':
     }
   }
-  
+
   if $foreman_plugin_cockpit {
     class { '::foreman::plugin::cockpit':
     }
   }
-  
+
   if $foreman_plugin_ansible {
-    
+
     class { '::foreman::plugin::ansible':
     }
 
@@ -478,7 +456,7 @@ class puppetmaster::lcm
 
     class { '::foreman::plugin::default_hostgroup':
     }
-    
+
     $default_hostgroup_template = @(END)
 ---
 :default_hostgroup:
@@ -514,7 +492,6 @@ END
     class { '::foreman::plugin::discovery':
     }
   }
-  
 
   if $foreman_plugin_hooks {
     class { '::foreman::plugin::hooks':
@@ -545,7 +522,7 @@ END
     dashboard_address => $foreman_puppetdb_dashboard_address,
     address           => $foreman_puppetdb_address,
   }
-  
+
   class { '::foreman::cli':
     version            => $foreman_version,
     foreman_url        => $foreman_url,
@@ -554,92 +531,94 @@ END
     manage_root_config => true,
   }
 
-
   if defined(Service['foreman::service']) {
     service { 'foreman::service':
       ensure => running,
     }
   }
-  
-  @firewall { '443 accept template and UI':
-    chain  => 'INPUT',
-    state  => ['NEW'],
-    dport  => ['80','443'],
-    proto  => 'tcp',
-    action => 'accept',
-    tag    => foreman,
+
+  if $manage_packetfilter {
+
+    @firewall { '443 accept template and UI':
+      chain  => 'INPUT',
+      state  => ['NEW'],
+      dport  => ['80','443'],
+      proto  => 'tcp',
+      action => 'accept',
+      tag    => default,
+    }
+
+    @firewall { '8443 accept foreman proxies':
+      chain  => 'INPUT',
+      state  => ['NEW'],
+      dport  => '8443',
+      proto  => 'tcp',
+      action => 'accept',
+      tag    => default,
+    }
+
+    @firewall { '8140 allow puppet':
+      chain  => 'INPUT',
+      state  => ['NEW'],
+      dport  => '8140',
+      proto  => 'tcp',
+      action => 'accept',
+      tag    => default,
+    }
+
+    @firewall { '8443 allow traffic to smart proxies':
+      chain  => 'OUTPUT',
+      state  => ['NEW'],
+      dport  => '8443',
+      proto  => 'tcp',
+      action => 'accept',
+      tag    => default,
+    }
+
+    @firewall { '22 accept outgoing foreman-proxy remote ssh execution':
+      chain  => 'OUTPUT',
+      state  => ['NEW'],
+      dport  => '22',
+      proto  => 'tcp',
+      action => 'accept',
+      tag    => default,
+    }
   }
-  
-  @firewall { '8443 accept foreman proxies':
-    chain  => 'INPUT',
-    state  => ['NEW'],
-    dport  => '8443',
-    proto  => 'tcp',
-    action => 'accept',
-    tag    => foreman,
-  }
-  
-  @firewall { '8140 allow puppet':
-    chain  => 'INPUT',
-    state  => ['NEW'],
-    dport  => '8140',
-    proto  => 'tcp',
-    action => 'accept',
-    tag    => foreman,
-  }
-  
-  @firewall { '8443 allow traffic to smart proxies':
-    chain  => 'OUTPUT',
-    state  => ['NEW'],
-    dport  => '8443',
-    proto  => 'tcp',
-    action => 'accept',
-    tag    => foreman,
-  }
-  
-  @firewall { '22 accept outgoing foreman-proxy remote ssh execution':
-    chain  => 'OUTPUT',
-    state  => ['NEW'],
-    dport  => '22',
-    proto  => 'tcp',
-    action => 'accept',
-    tag    => foreman,
-  }
-  
-  if ($foreman_proxy_dns) {
-    
+
+  if $foreman_proxy_dns and $manage_packetfilter {
+
     @firewall { '53 allow incoming dns tcp':
       chain  => 'INPUT',
       state  => ['NEW'],
       dport  => '53',
       proto  => 'tcp',
       action => 'accept',
-      tag    => foreman_proxy_dns,
+      tag    => default,
     }
-    
-    firewall { '53 allow incoming dns udp':
+
+    @firewall { '53 allow incoming dns udp':
       chain  => 'INPUT',
       state  => ['NEW'],
       dport  => '53',
       proto  => 'udp',
       action => 'accept',
-      tag    => foreman_proxy_dns,
+      tag    => default,
     }
   }
-  
-  if ($foreman_proxy_dhcp) {
-    
+
+  if $foreman_proxy_dhcp and $manage_packetfilter {
+
     @firewall { '6768 allow dhcp':
       chain  => 'INPUT',
       state  => ['NEW'],
       dport  => [ '67', '68'],
       proto  => 'tcp',
       action => 'accept',
-      tag    => foreman_proxy_dns,
+      tag    => default,
     }
   }
 
-  if ($foreman_proxy_tftp_managed) {
+  if $foreman_proxy_tftp_managed and $manage_packetfilter {
 
     @firewall { '80 allow kickstart request':
       chain  => 'INPUT',
@@ -647,7 +626,7 @@ END
       dport  => '80',
       proto  => 'tcp',
       action => 'accept',
-      tag    => foreman_proxy_tftp,
+      tag    => default,
     }
 
     @firewall { '103 allow incoming tftp':
@@ -656,12 +635,11 @@ END
       dport  => '69',
       proto  => 'udp',
       action => 'accept',
-      tag    => foreman_proxy_tftp,
+      tag    => default,
     }
-
   }
 
-  if ($foreman_proxy_templates) {
+  if $foreman_proxy_templates {
 
     cron { 'Sync Foreman community templates':
       environment => 'PATH=/opt/puppetlabs/bin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin',
@@ -672,13 +650,16 @@ END
     }
   }
 
-  @firewall { '8140 allow foreman proxy incoming puppet':
-    chain  => 'INPUT',
-    state  => ['NEW'],
-    dport  => '8140',
-    proto  => 'tcp',
-    action => 'accept',
-    tag    => foreman_proxy_tftp,
+  if $foreman_proxy_templates and $manage_packetfilter {
+
+    @firewall { '8140 allow foreman proxy incoming puppet':
+      chain  => 'INPUT',
+      state  => ['NEW'],
+      dport  => '8140',
+      proto  => 'tcp',
+      action => 'accept',
+      tag    => default,
+    }
   }
 
   class { '::foreman_proxy':

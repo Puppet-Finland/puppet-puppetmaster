@@ -10,19 +10,19 @@
 puppetmaster::foreman_proxy:
   timezone: Europe/Helsinki
   primary_names:
-  - proxy.local
-  - proxy
+  - proxy2.local
+  - proxy2
   foreman_proxy_foreman_base_url: https://puppet.local
-  foreman_proxy_templates: false
-  foreman_proxy_templates_listen_on: both
+  foreman_proxy_templates: true
+  foreman_proxy_templates_listen_on: http
   foreman_proxy_trusted_hosts:
   - puppet.local
-  - proxy.local
-  foreman_proxy_dhcp: false
+  - proxy2.local
+  foreman_proxy_dhcp: true
   foreman_proxy_dhcp_listen_on: both
-  foreman_proxy_dns: false
-  foreman_proxy_dhcp_managed: false
-  foreman_proxy_dhcp_interface: eth0
+  foreman_proxy_dns: true
+  foreman_proxy_dhcp_managed: true
+  foreman_proxy_dhcp_interface: eth1
   foreman_proxy_dhcp_option_domain:
   - local
   foreman_proxy_dhcp_search_domains:
@@ -30,24 +30,24 @@ puppetmaster::foreman_proxy:
   foreman_proxy_dhcp_server: puppet.local
   foreman_proxy_dhcp_provider: isc
   foreman_proxy_dhcp_subnets:
-  - 172.16.3.0/255.255.255.0
-  foreman_proxy_dhcp_gateway: 172.16.3.254
-  foreman_proxy_dhcp_range: 172.16.3.100 172.16.3.200
-  foreman_proxy_dhcp_nameservers: 172.16.3.1
-  foreman_proxy_dhcp_pxeserver: 172.16.3.106
-  foreman_proxy_dns_managed: false
+  - 192.168.221.0/255.255.255.0
+  foreman_proxy_dhcp_gateway: 192.168.221.203
+  foreman_proxy_dhcp_range: 192.168.221.100 192.168.221.200
+  foreman_proxy_dhcp_nameservers: 192.168.221.205
+  foreman_proxy_dhcp_pxeserver: 192.168.221.205
+  foreman_proxy_dns_managed: true
   foreman_proxy_dns_forwarders:
   - 8.8.8.8
-  foreman_proxy_dns_interface: eth0
+  foreman_proxy_dns_interface: eth1
   foreman_proxy_dns_listen_on: both
   foreman_proxy_dns_provider: nsupdate
   foreman_proxy_dns_zone: local
-  foreman_proxy_dns_reverse: 3.16.172.in-addr.arpa
-  foreman_proxy_dns_server: 172.16.3.1
+  foreman_proxy_dns_reverse: 221.168.192.in-addr.arpa
+  foreman_proxy_dns_server: 192.168.221.205
   foreman_proxy_dns_ttl: 86400
-  foreman_proxy_tftp: false
+  foreman_proxy_tftp: true
   foreman_proxy_tftp_managed: true
-  foreman_proxy_tftp_servername: 172.16.3.1
+  foreman_proxy_tftp_servername: 192.168.221.205
   foreman_proxy_tftp_manage_wget: true
   foreman_proxy_tftp_listen_on: both
   foreman_proxy_bmc: false
@@ -56,5 +56,5 @@ puppetmaster::foreman_proxy:
   - puppet.local
   - puppet
   foreman_ipaddress: 192.168.221.203
-  foreman_proxy_oauth_consumer_key: AGqLYyYHzqZm9jktGpUoeud55CGMgaXj
-  foreman_proxy_oauth_consumer_secret: vpcpFsp5y2DAocz7HNYG5hSwzdsuBU3h
+  foreman_proxy_oauth_consumer_key: jZWnvCKSSU5rzsKLajvcriwLDfLNtbQU
+  foreman_proxy_oauth_consumer_secret: WQtyywtEqD6J2csDM6TtFgRhCQaRynvF

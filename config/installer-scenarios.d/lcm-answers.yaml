@@ -56,24 +56,25 @@ puppetmaster::lcm:
   foreman_proxy_dhcp_server: puppet.local
   foreman_proxy_dhcp_provider: isc
   foreman_proxy_dhcp_subnets:
-  - 172.16.3.0/255.255.255.0
-  foreman_proxy_dhcp_gateway: 172.16.3.254
-  foreman_proxy_dhcp_range: 172.16.3.100 172.16.3.200
-  foreman_proxy_dhcp_nameservers: 172.16.3.1
-  foreman_proxy_dhcp_pxeserver: 172.16.3.106
+  - 192.168.221.0/255.255.255.0
+  foreman_proxy_dhcp_gateway: 192.168.221.203
+  foreman_proxy_dhcp_range: 192.168.221.100 192.168.221.200
+  foreman_proxy_dhcp_nameservers: 192.168.221.203
+  foreman_proxy_dhcp_pxeserver: 192.168.221.203
   foreman_proxy_dns_managed: false
   foreman_proxy_dns_forwarders:
   - 8.8.8.8
+  - 8.8.4.4
   foreman_proxy_dns_interface: eth0
   foreman_proxy_dns_listen_on: both
   foreman_proxy_dns_provider: nsupdate
   foreman_proxy_dns_zone: local
-  foreman_proxy_dns_reverse: 3.16.172.in-addr.arpa
-  foreman_proxy_dns_server: 172.16.3.1
+  foreman_proxy_dns_reverse: 221.168.192.in-addr.arpa
+  foreman_proxy_dns_server: 192.168.221.203
   foreman_proxy_dns_ttl: 86400
   foreman_proxy_tftp: false
   foreman_proxy_tftp_managed: false
-  foreman_proxy_tftp_servername: 172.16.3.1
+  foreman_proxy_tftp_servername: 192.168.221.203
   foreman_proxy_tftp_manage_wget: true
   foreman_proxy_tftp_listen_on: both
   foreman_proxy_bmc: false
@@ -81,12 +82,13 @@ puppetmaster::lcm:
   foreman_proxy2_hostnames:
   - proxy2.local
   - proxy2
-  foreman_proxy2_ipaddress: 192.168.221.206
+  foreman_proxy2_ipaddress: 192.168.221.205
   foreman_proxy3_hostnames:
   - proxy3.local
   - proxy3
-  foreman_proxy3_ipaddress: 192.168.221.207
+  foreman_proxy3_ipaddress: 192.168.221.206
   foreman_proxy4_hostnames:
   - proxy4.local
   - proxy4
-  foreman_proxy4_ipaddress: 192.168.221.208
+  foreman_proxy4_ipaddress: 192.168.221.207
+  manage_packetfilter: true

@@ -20,8 +20,17 @@ class puppetmaster::common
     timezone => $timezone,
   }
 
-  class { '::hosts':
-    primary_names => $primary_names,
-    entries       => $hosts_entries,
+  if empty($hosts_entries) {
+
+    class { '::hosts':
+      primary_names => $primary_names,
+    }
+  }
+  else {
+    
+    class { '::hosts':
+      primary_names => $primary_names,
+      entries       => $valid_hosts_entries,
+    }
   }
 }
