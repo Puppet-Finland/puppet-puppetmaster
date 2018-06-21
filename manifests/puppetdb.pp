@@ -24,7 +24,7 @@
 #
 # $hosts_entries:: A hash of host entries to put in /etc/hosts
 #
-# $server_external_nodes. A string to an ENC executable. Default to empty string.
+# $server_external_nodes:: A string to an ENC executable. Default to empty string.
 class puppetmaster::puppetdb
 (
   Boolean                  $manage_packetfilter = true,
