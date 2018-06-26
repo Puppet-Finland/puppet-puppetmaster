@@ -102,14 +102,15 @@ class puppetmaster::puppetserver
   }
 
   class { '::puppet':
-    server                => true,
-    show_diff             => $show_diff,
-    server_foreman        => $server_foreman,
-    autosign              => $autosign,
-    autosign_entries      => $autosign_entries,
-    server_reports        => $server_reports,
-    server_external_nodes => $server_external_nodes,
-    require               => [ File['/etc/puppetlabs/puppet/fileserver.conf'], Puppet_authorization::Rule['files'] ],
+    server                                 => true,
+    show_diff                              => $show_diff,
+    server_foreman                         => $server_foreman,
+    autosign                               => $autosign,
+    autosign_entries                       => $autosign_entries,
+    server_reports                         => $server_reports,
+    server_external_nodes                  => $server_external_nodes,
+    server_environment_class_cache_enabled => true,
+    require                                => [ File['/etc/puppetlabs/puppet/fileserver.conf'], Puppet_authorization::Rule['files'] ],
   }
 
   if $manage_packetfilter {
