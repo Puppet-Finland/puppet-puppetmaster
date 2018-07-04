@@ -38,12 +38,12 @@ class puppetmaster::puppetserver
   String                   $server_external_nodes = '',
 )
 {
-  $primary_names = unique([ "${facts['fqdn']}", "${facts['hostname']}", 'puppet', "puppet.${facts['domain']}" ])
+  $primary_names = unique([ $facts['fqdn'], $facts['hostname'], 'puppet', "puppet.${facts['domain']}" ])
 
   class { '::puppetmaster::common':
-    primary_names       => $primary_names,
-    timezone            => $timezone,
-    hosts_entries       => $hosts_entries,
+    primary_names => $primary_names,
+    timezone      => $timezone,
+    hosts_entries => $hosts_entries,
   }
 
   file { '/var/files':
@@ -83,22 +83,6 @@ class puppetmaster::puppetserver
     allow              => '*',
     sort_order         => 400,
     path               => '/etc/puppetlabs/puppetserver/conf.d/auth.conf',
-  }
-
-  tidy { '/opt/puppetlabs/server/data/puppetserver/reports':
-    age     => $reports_lifetime,
-    matches => "*.yaml",
-    recurse => true,
-    rmdirs  => false,
-    type    => ctime,
-  }
-
-  tidy { '/var/log/puppetlabs/puppetserver':
-    age     => $logs_lifetime,
-    matches => "puppetserver.*",
-    recurse => true,
-    rmdirs  => false,
-    type    => ctime,
   }
 
   class { '::puppet':

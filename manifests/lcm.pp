@@ -263,7 +263,7 @@ class puppetmaster::lcm
     { $foreman_proxy3_ipaddress => $foreman_proxy3_hostnames },
     { $foreman_proxy4_ipaddress => $foreman_proxy4_hostnames })
 
-  unless ("${facts['osfamily']}" == 'RedHat' and "${facts['os']['release']['major']}" == '7') {
+  unless ($facts['osfamily'] == 'RedHat' and $facts['os']['release']['major'] == '7') {
     fail("${facts['os']['name']} ${facts['os']['release']['full']} not supported yet")
   }
 
@@ -275,7 +275,7 @@ class puppetmaster::lcm
     $dynflow_in_core = true
   }
 
-  unless "${facts['osfamily']}" != 'RedHat' {
+  unless $facts['osfamily'] != 'RedHat' {
 
     class { '::selinux':
       mode => 'enforcing',

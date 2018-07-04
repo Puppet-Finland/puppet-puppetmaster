@@ -98,17 +98,17 @@ String $foreman_db_password,
   $foreman_manage_memcached           = true
   $foreman_memcached_max_memory       = '8%'
   $foreman_url                        = "https://${facts['fqdn']}"
-  $primary_names                      = unique([ "${facts['fqdn']}", "${facts['hostname']}", 'puppet', "puppet.${facts['domain']}" ])
+  $primary_names                      = unique([ $facts['fqdn'], $facts['hostname'], 'puppet', "puppet.${facts['domain']}" ])
   $foreman_serveraliases              = $primary_names
   $foreman_puppetdb_dashboard_address = "http://${facts['fqdn']}:8080/pdb/dashboard"
   $foreman_puppetdb_address           = "https://${facts['fqdn']}:8081/v2/commands"
   $puppetdb_server                    = $facts['fqdn']
-  
-  
-  unless ("${facts['osfamily']}" == 'RedHat' and "${facts['os']['release']['major']}" == '7') {
+
+
+  unless ($facts['osfamily'] == 'RedHat' and $facts['os']['release']['major'] == '7') {
     fail("${facts['os']['name']} ${facts['os']['release']['full']} not supported yet")
   }
-  
+
   # See https://github.com/theforeman/puppet-foreman#foreman-version-compatibility-notes
   if versioncmp($foreman_version, '1.17') < 0 {
     $dynflow_in_core = false
@@ -117,13 +117,13 @@ String $foreman_db_password,
     $dynflow_in_core = true
   }
 
-  unless "${facts['osfamily']}" != 'RedHat' {
-    
-    class { selinux:
+  unless $facts['osfamily'] != 'RedHat' {
+
+    class { 'selinux':
       mode => 'enforcing',
       type => 'targeted',
     }
-    
+
     selinux::module { 'httpd_t':
       ensure    => 'present',
       source_te => '/usr/share/puppetmaster-installer/files/httpd_t.te',
@@ -134,7 +134,7 @@ String $foreman_db_password,
       seltype  => 'httpd_sys_content_t',
       pathspec => '/etc/puppetlabs/puppet/ssl(/.*)?',
     }
-    
+
     selinux::exec_restorecon { '/etc/puppetlabs/puppet/ssl':
       require => Selinux::Fcontext['set-httpd-file-context'],
     }
@@ -210,17 +210,17 @@ String $foreman_db_password,
   class { '::epel':
     before => Class['::foreman'],
   }
-  
+
 
   unless defined(Class['::puppetmaster::common']) {
-    
+
     class { '::puppetmaster::common':
       primary_names => $primary_names,
-      timezone      => $timezone, 
+      timezone      => $timezone,
       before        => Class['::foreman'],
     }
   }
-  
+
   class { '::puppet':
     server         => true,
     show_diff      => true,
@@ -233,17 +233,17 @@ String $foreman_db_password,
 
   class { '::puppetmaster::databaseserver':
   }
-  
+
   class { '::puppetdb':
-    database_password     => $puppetdb_database_password,
-    ssl_deploy_certs      => true,
-    manage_dbserver       => false, 
-    require               => [
+    database_password => $puppetdb_database_password,
+    ssl_deploy_certs  => true,
+    manage_dbserver   => false,
+    require           => [
       Class['::puppet'],
       Class['::puppetmaster::databaseserver'],
     ]
   }
-  
+
   class { '::puppetdb::master::config':
     puppetdb_server => $puppetdb_server,
     restart_puppet  => true,
@@ -255,7 +255,7 @@ String $foreman_db_password,
     password => $foreman_db_password,
     require  => Class['::puppetmaster::databaseserver'],
     before   => Class['::foreman'],
-  }  
+  }
 
   class { '::foreman':
     foreman_url           => $foreman_url,
@@ -295,7 +295,7 @@ String $foreman_db_password,
     class { '::foreman::compute::libvirt':
     }
   }
-    
+
   if $foreman_compute_ec2 {
     class { '::foreman::compute::ec2':
     }
@@ -305,12 +305,12 @@ String $foreman_db_password,
     class { '::foreman::compute::gce':
     }
   }
-  
+
   if $foreman_compute_openstack {
     class { '::foreman::compute::openstack':
     }
   }
-  
+
   if $foreman_compute_ovirt {
     class { '::foreman::compute::ovirt':
     }
@@ -320,14 +320,14 @@ String $foreman_db_password,
     class { '::foreman::plugin::azure':
     }
   }
-  
+
   if $foreman_plugin_cockpit {
     class { '::foreman::plugin::cockpit':
     }
   }
-  
+
   if $foreman_plugin_ansible {
-    
+
     class { '::foreman::plugin::ansible':
     }
 
@@ -351,7 +351,7 @@ String $foreman_db_password,
 
     class { '::foreman::plugin::default_hostgroup':
     }
-    
+
     $default_hostgroup_template = @(END)
 ---
 :default_hostgroup:
@@ -387,7 +387,7 @@ END
     class { '::foreman::plugin::discovery':
     }
   }
-  
+
 
   if $foreman_plugin_hooks {
     class { '::foreman::plugin::hooks':
@@ -418,7 +418,7 @@ END
     dashboard_address => $foreman_puppetdb_dashboard_address,
     address           => $foreman_puppetdb_address,
   }
-  
+
   class { '::foreman::cli':
     version            => $foreman_version,
     foreman_url        => $foreman_url,

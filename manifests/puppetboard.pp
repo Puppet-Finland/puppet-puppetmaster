@@ -20,18 +20,18 @@
 #
 class puppetmaster::puppetboard
 (
+  String                   $timezone,
+  String                   $puppetdb_database_password,
   Boolean                  $manage_packetfilter = true,
   String                   $puppetserver_allow_ipv4 = '127.0.0.1',
   String                   $puppetserver_allow_ipv6 = '::1',
   String                   $server_reports = 'store,puppetdb',
   Variant[Boolean, String] $autosign = '/etc/puppetlabs/puppet/autosign.conf',
   Optional[Array[String]]  $autosign_entries = undef,
-  String                   $timezone,
-  String                   $puppetdb_database_password,
 )
 {
 
-  $puppetboard_puppetdb_host              = "${facts['fqdn']}"
+  $puppetboard_puppetdb_host              = $facts['fqdn']
   $puppetboard_puppetdb_port              = 8081
   $puppetboard_puppetdb_dashboard_address = "http://${facts['fqdn']}:8080/pdb/dashboard"
   $puppetboard_puppetdb_address           = "https://${facts['fqdn']}:8081/v2/commands"
@@ -62,7 +62,7 @@ class puppetmaster::puppetboard
     timezone                   => $timezone,
     before                     => Class['::puppetboard'],
   }
-  
+
   file { [ $puppetboard_config_dir, $puppetboard_ssl_dir ]:
     ensure  => directory,
     owner   => 'root',
@@ -106,11 +106,11 @@ class puppetmaster::puppetboard
     default_mods      => false,
   }
 
-  if "${facts['osfamily']}" == 'RedHat' {
+  if $facts['osfamily'] == 'RedHat' {
     include ::apache::mod::version
 
     class { '::apache::mod::wsgi':
-      wsgi_socket_prefix => "/var/run/wsgi"
+      wsgi_socket_prefix => '/var/run/wsgi'
     }
 
   }
@@ -123,13 +123,13 @@ class puppetmaster::puppetboard
     puppetdb_host       => $puppetboard_puppetdb_host,
     puppetdb_port       => $puppetboard_puppetdb_port,
     manage_git          => $puppetboard_manage_git,
-    manage_virtualenv   => $puppetboard_manage_virtualenv, 
+    manage_virtualenv   => $puppetboard_manage_virtualenv,
     reports_count       => $puppetboard_reports_count,
     puppetdb_key        => $puppetdb_key,
     puppetdb_ssl_verify => $puppetdb_ca_cert,
     puppetdb_cert       => $puppetdb_cert,
   }
-  
+
   class { '::puppetboard::apache::conf': }
 
   if $manage_packetfilter {

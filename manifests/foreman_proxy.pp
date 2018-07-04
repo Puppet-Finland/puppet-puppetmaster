@@ -86,7 +86,7 @@
 #
 class puppetmaster::foreman_proxy
 (
-  
+
   String $timezone,
   Array[String] $primary_names,
   String $foreman_proxy_foreman_base_url,
@@ -136,7 +136,7 @@ class puppetmaster::foreman_proxy
   }
 
   # $primary_names = [ "${facts['fqdn']}", "${facts['hostname']}", 'puppet', "puppet.${facts['domain']}" ]
-  $foreman_proxy_registered_name = "${facts['fqdn']}"
+  $foreman_proxy_registered_name = $facts['fqdn']
   $foreman_proxy_repo = '1.15'
   $foreman_proxy_version = '1.15.6'
   $foreman_proxy_bind_host = '0.0.0.0'
@@ -167,7 +167,7 @@ class puppetmaster::foreman_proxy
   $foreman_proxy_foreman_ssl_cert = "/etc/puppetlabs/puppet/ssl/certs/${foreman_proxy_registered_name}_foreman.pem"
   $foreman_proxy_foreman_ssl_key =  "/etc/puppetlabs/puppet/ssl/private_keys/${foreman_proxy_registered_name}_foreman.pem"
   $foreman_proxy_template_url = "http://${facts['networking']['interfaces'][$foreman_proxy_dhcp_interface]['ip']}:8000"
-  
+
   @firewall { '22 accept outgoing foreman-proxy remote ssh execution':
     chain  => 'OUTPUT',
     state  => ['NEW'],
@@ -248,10 +248,10 @@ class puppetmaster::foreman_proxy
   }
 
   unless defined(Class['::puppetmaster::common']) {
-    
+
     class { '::puppetmaster::common':
       primary_names => $primary_names,
-      timezone      => $timezone, 
+      timezone      => $timezone,
       hosts_entries => $hosts_entries,
       before        => Class['::foreman_proxy'],
     }
@@ -260,7 +260,7 @@ class puppetmaster::foreman_proxy
   class { '::epel':
     before => Class['::foreman_proxy'],
   }
-  
+
 class { '::puppet':
     server         => true,
     show_diff      => true,
@@ -274,10 +274,10 @@ class { '::puppet':
   package { 'libkadm5':
     ensure   => installed,
   }
-  
+
   package { 'rubygem-rkerberos':
-    provider => 'rpm',
     ensure   => installed,
+    provider => 'rpm',
     source   => 'https://kojipkgs.fedoraproject.org//packages/rubygem-rkerberos/0.1.3/5.el7/x86_64/rubygem-rkerberos-0.1.3-5.el7.x86_64.rpm',
     before   => Class['::foreman_proxy'],
     require  => Package['libkadm5'],

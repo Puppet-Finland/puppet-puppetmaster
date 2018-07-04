@@ -27,18 +27,18 @@
 # $server_external_nodes:: A string to an ENC executable. Default to empty string.
 class puppetmaster::puppetdb
 (
+  String                   $puppetdb_database_password,
+  String                   $timezone,
   Boolean                  $manage_packetfilter = true,
   String                   $puppetserver_allow_ipv4 = '127.0.0.1',
   String                   $puppetserver_allow_ipv6 = '::1',
   String                   $server_reports = 'store,puppetdb',
   Variant[Boolean, String] $autosign = '/etc/puppetlabs/puppet/autosign.conf',
-  Optional[Array[String]]  $autosign_entries = undef,
-  String                   $puppetdb_database_password,
-  String                   $timezone,
   Boolean                  $show_diff = false,
   Boolean                  $server_foreman = false,
   Hash                     $hosts_entries = {},
   String                   $server_external_nodes = '',
+  Optional[Array[String]]  $autosign_entries = undef,
 )
 {
   class { '::puppetmaster::puppetserver':
@@ -48,10 +48,10 @@ class puppetmaster::puppetdb
     server_reports          => $server_reports,
     autosign                => $autosign,
     autosign_entries        => $autosign_entries,
-    timezone                => $timezone, 
+    timezone                => $timezone,
     show_diff               => $show_diff,
     server_foreman          => $server_foreman,
-    hosts_entries           => $host_entries,
+    hosts_entries           => $hosts_entries,
     server_external_nodes   => $server_external_nodes,
   }
 
@@ -62,7 +62,7 @@ class puppetmaster::puppetdb
   }
 
   class { '::puppetdb::master::config':
-    puppetdb_server     => $facts['fqdn'],
-    restart_puppet      => true,
+    puppetdb_server => $facts['fqdn'],
+    restart_puppet  => true,
   }
 }
