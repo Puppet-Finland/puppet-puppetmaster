@@ -30,7 +30,7 @@ class puppetmaster::common
 
     class { '::hosts':
       primary_names => $primary_names,
-      entries       => $valid_hosts_entries,
+      entries       => $hosts_entries,
     }
   }
 }

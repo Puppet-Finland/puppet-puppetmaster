@@ -51,7 +51,7 @@ class puppetmaster::puppetdb
     timezone                => $timezone,
     show_diff               => $show_diff,
     server_foreman          => $server_foreman,
-    hosts_entries           => $host_entries,
+    hosts_entries           => $hosts_entries,
     server_external_nodes   => $server_external_nodes,
   }
 
