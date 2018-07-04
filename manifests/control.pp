@@ -1,3 +1,4 @@
+#
 class puppetmaster::control
 (
   String $control_repo_url,
@@ -5,18 +6,18 @@ class puppetmaster::control
   String $identity_key = '/etc/puppetlabs/r10k/ssh/control_private_key'
 )
 {
-  
+
   file { '/etc/puppetlabs/r10k/ssh':
     ensure => 'directory',
     owner  => 'root',
     group  => 'root',
     mode   => '0755',
   }
-  
+
   file { $identity_key:
     ensure  => 'present',
     mode    => '0400',
-    content  => $control_repo_deploy_key,
+    content => $control_repo_deploy_key,
     require => File['/etc/puppetlabs/r10k/ssh'],
   }
 
@@ -44,9 +45,9 @@ END
   }
 
   sshkey { 'Deploy key':
-    ensure => present,
-    target => '/root/.ssh/known_hosts',
-    key    => $control_repo_deploy_key,
+    ensure  => present,
+    target  => '/root/.ssh/known_hosts',
+    key     => $control_repo_deploy_key,
     require => File['/root/.ssh'],
   }
 
@@ -62,7 +63,7 @@ END
 }
 
 
-  
 
 
-  
+
+

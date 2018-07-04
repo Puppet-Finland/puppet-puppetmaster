@@ -13,7 +13,7 @@ class puppetmaster::common
     'Debian' => ['apt-transport-https'],
     'Ubuntu' => [],
   }
-  
+
   ensure_packages($packages)
 
   class { '::timezone':
@@ -27,7 +27,7 @@ class puppetmaster::common
     }
   }
   else {
-    
+
     class { '::hosts':
       primary_names => $primary_names,
       entries       => $valid_hosts_entries,

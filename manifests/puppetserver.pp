@@ -38,12 +38,12 @@ class puppetmaster::puppetserver
   String                   $server_external_nodes = '',
 )
 {
-  $primary_names = unique([ "${facts['fqdn']}", "${facts['hostname']}", 'puppet', "puppet.${facts['domain']}" ])
+  $primary_names = unique([ $facts['fqdn'], $facts['hostname'], 'puppet', "puppet.${facts['domain']}" ])
 
   class { '::puppetmaster::common':
-    primary_names       => $primary_names,
-    timezone            => $timezone,
-    hosts_entries       => $hosts_entries,
+    primary_names => $primary_names,
+    timezone      => $timezone,
+    hosts_entries => $hosts_entries,
   }
 
   file { '/var/files':
