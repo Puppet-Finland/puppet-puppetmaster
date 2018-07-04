@@ -85,22 +85,6 @@ class puppetmaster::puppetserver
     path               => '/etc/puppetlabs/puppetserver/conf.d/auth.conf',
   }
 
-  tidy { '/opt/puppetlabs/server/data/puppetserver/reports':
-    age     => $reports_lifetime,
-    matches => "*.yaml",
-    recurse => true,
-    rmdirs  => false,
-    type    => ctime,
-  }
-
-  tidy { '/var/log/puppetlabs/puppetserver':
-    age     => $logs_lifetime,
-    matches => "puppetserver.*",
-    recurse => true,
-    rmdirs  => false,
-    type    => ctime,
-  }
-
   class { '::puppet':
     server                                 => true,
     show_diff                              => $show_diff,
