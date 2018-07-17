@@ -39,9 +39,9 @@ class puppetmaster::puppetboard
   $puppetboard_manage_git                 = true
   $puppetboard_manage_virtualenv          = true
   $puppetboard_reports_count              = 40
-  $puppetboard_puppetdb_key               = "${::settings::ssldir}/private_keys/${puppetboard_certname}.pem"
+  $puppetboard_puppetdb_key               = "${::settings::ssldir}/private_keys/${::fqdn}.pem"
   $puppetboard_puppetdb_ssl_verify        = "${::settings::ssldir}/certs/ca.pem"
-  $puppetboard_puppetdb_cert              = "${::settings::ssldir}/certs/${puppetboard_certname}.pem"
+  $puppetboard_puppetdb_cert              = "${::settings::ssldir}/certs/${::fqdn}.pem"
   $puppetboard_groups                     = 'puppet'
   # Copy over Puppet keys to a place where Puppetboard can access them
   $puppet_ssldir                          = '/etc/puppetlabs/puppet/ssl'
