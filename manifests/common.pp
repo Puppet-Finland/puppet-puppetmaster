@@ -21,6 +21,11 @@ class puppetmaster::common
     provider => 'puppet_gem',
   }
 
+  package { 'hiera-eyaml':
+    ensure   => 'present',
+    provider => 'puppetserver_gem',
+  }
+
   class { '::timezone':
     timezone => $timezone,
   }
