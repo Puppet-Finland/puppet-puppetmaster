@@ -3,135 +3,135 @@
 #
 # == Parameters:
 #
-# $foreman_db_password:: XXX
+# $foreman_db_password:: The password for the foreman database.
 #
-# $foreman_admin_firstname:: XXX
+# $foreman_admin_firstname:: The first name for Foreman Administator
 #
-# $foreman_admin_lastname:: XXX
+# $foreman_admin_lastname:: The last name for Foreman Administator
 # 
-# $foreman_admin_email:: XXX
+# $foreman_admin_email:: Foreman admin email
 #
-# $foreman_admin_password:: XXX
+# $foreman_admin_password:: Foreman admin password
 #
-# $puppetdb_database_password:: XXX
+# $puppetdb_database_password:: Puppetdb database password
 #
 # $primary_names:: Primary names for this machine. Example: ['puppet.local', 'puppet' ]
 #
-# $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki' or 'Etc/UTC'.
+# $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki' or 'Etc/UTC'. Defaults to 'Etc/UTC'
 #
 # == Advanced parameters:
 #
-# $foreman_plugin_cockpit:: XXX
+# $foreman_plugin_cockpit:: Enable Cockpit plugin
 #
-# $foreman_compute_vmware:: XXX
+# $foreman_compute_vmware:: Enable VMware computing resource
 #
-# $foreman_compute_libvirt:: XXX
+# $foreman_compute_libvirt:: Enable libvirt computing resource
 #
-# $foreman_compute_ec2:: XXX
+# $foreman_compute_ec2:: Enable ec2 computing resource
 #
-# $foreman_compute_gce:: XXX
+# $foreman_compute_gce:: Enable Google Computing Engine computing resource
 #
-# $foreman_compute_openstack:: XXX
+# $foreman_compute_openstack:: Enable Openstack computing resource
 #
-# $foreman_compute_ovirt:: XXX
+# $foreman_compute_ovirt:: Enable ovirt computing resource
 #
-# $foreman_compute_rackspace:: XXX
+# $foreman_compute_rackspace:: Enable Rackspace computing resource
 #
 # $foreman_plugin_azure:: Install support for Microsoft Azure
 #
-# $foreman_plugin_ansible:: XXX
+# $foreman_plugin_ansible:: Enable support for ansible
 #
-# $foreman_plugin_docker:: XXX
+# $foreman_plugin_docker:: Enable support for Docker
 #
-# $foreman_plugin_bootdisk:: XXX
+# $foreman_plugin_bootdisk:: Enable support for bootdisk creation
 # 
-# $foreman_plugin_default_hostgroup:: XXX
+# $foreman_plugin_default_hostgroup:: Enable support for Foreman default hostgroups
 #
-# $foreman_plugin_dhcp_browser:: XXX
+# $foreman_plugin_dhcp_browser:: Enable support for dhcp record browser
 #
-# $foreman_plugin_digitalocean:: XXX
+# $foreman_plugin_digitalocean:: Enable support for Digital Ocean resources
 #
-# $foreman_plugin_discovery:: XXX
+# $foreman_plugin_discovery:: Enable support for Foreman discovery
 #
-# $foreman_plugin_hooks:: XXX
+# $foreman_plugin_hooks:: Enable support for Foreman hooks
 #
-# $foreman_plugin_memcache:: XXX
+# $foreman_plugin_memcache:: Enable support for Memcached
 #
-# $foreman_plugin_remote_execution:: XXX
+# $foreman_plugin_remote_execution:: Enable support for Foreman remote execution
 #
-# $foreman_plugin_tasks:: XXX
+# $foreman_plugin_tasks:: Enable support for Foreman Tasks
 #
-# $foreman_plugin_templates:: XXX
+# $foreman_plugin_templates:: Enable support for foreman templates
 #
 # Foreman Proxy parameters
 #
-# $foreman_proxy_foreman_base_url:: XXX
+# $foreman_proxy_foreman_base_url:: The foreman URL the proxy wants to talk to 
 #
-# $foreman_proxy_templates:: XXX
+# $foreman_proxy_templates:: Enable support for templates
 #
-# $foreman_proxy_templates_listen_on:: XXX
+# $foreman_proxy_templates_listen_on:: Adress to listen on for templates
 #
-# $foreman_proxy_trusted_hosts:: XXX
+# $foreman_proxy_trusted_hosts:: The hosts the proxy allows to talk
 #
-# $foreman_proxy_dhcp:: XXX
+# $foreman_proxy_dhcp:: Enable support for dhcp
 #
-# $foreman_proxy_dhcp_listen_on:: XXX
+# $foreman_proxy_dhcp_listen_on:: Addresses to listen on for DHCP
 #
-# $foreman_proxy_dns:: XXX
+# $foreman_proxy_dns:: Enable support for DNS
 #
-# $foreman_proxy_dhcp_managed:: XXX
+# $foreman_proxy_dhcp_managed:: Manage dhcp or not
 #
-# $foreman_proxy_dhcp_interface:: XXX
+# $foreman_proxy_dhcp_interface:: DHCP listening interfaces
 #
-# $foreman_proxy_dhcp_option_domain:: XXX
+# $foreman_proxy_dhcp_option_domain:: The domain for the dhcp
 #
-# $foreman_proxy_dhcp_search_domains:: XXX
+# $foreman_proxy_dhcp_search_domains:: The seach domains
 #
-# $foreman_proxy_dhcp_server:: XXX
+# $foreman_proxy_dhcp_server:: The dhcp server
 #
-# $foreman_proxy_dhcp_provider:: XXX
+# $foreman_proxy_dhcp_provider:: The dhcp provider
 #
-# $foreman_proxy_dhcp_subnets:: XXX
+# $foreman_proxy_dhcp_subnets:: The subnets for the dhcp
 #
-# $foreman_proxy_dhcp_gateway:: XXX
+# $foreman_proxy_dhcp_gateway:: The default gateway 
 #
-# $foreman_proxy_dhcp_range:: XXX
+# $foreman_proxy_dhcp_range:: The address range
 #
-# $foreman_proxy_dhcp_nameservers:: XXX
+# $foreman_proxy_dhcp_nameservers:: The name servers
 #
-# $foreman_proxy_dhcp_pxeserver:: XXX
+# $foreman_proxy_dhcp_pxeserver:: The next server
 #
-# $foreman_proxy_dns_managed:: XXX
+# $foreman_proxy_dns_managed:: To manage the dns server or not
 #
-# $foreman_proxy_dns_forwarders:: XXX
+# $foreman_proxy_dns_forwarders:: The dns forwarders
 #
-# $foreman_proxy_dns_interface:: XXX
+# $foreman_proxy_dns_interface:: The dns interface(s) to listen on
 #
-# $foreman_proxy_dns_listen_on:: XXX
+# $foreman_proxy_dns_listen_on:: https, http, or both 
 #
-# $foreman_proxy_dns_provider:: XXX
+# $foreman_proxy_dns_provider:: DNS provider
 #
-# $foreman_proxy_dns_zone:: XXX
+# $foreman_proxy_dns_zone:: DNS zone name
 #
-# $foreman_proxy_dns_reverse:: XXX
+# $foreman_proxy_dns_reverse:: DNS reverse zone name
 #
-# $foreman_proxy_dns_server:: XXX
+# $foreman_proxy_dns_server:: Address of DNS server to manage
 #
-# $foreman_proxy_dns_ttl:: XXX
+# $foreman_proxy_dns_ttl:: DNS default TTL override
 #
-# $foreman_proxy_tftp:: XXX
+# $foreman_proxy_tftp:: Enable TFTP feature
 #
-# $foreman_proxy_tftp_managed:: XXX
+# $foreman_proxy_tftp_managed:: TFTP is managed by Foreman proxy
 #
-# $foreman_proxy_tftp_servername:: XXX
+# $foreman_proxy_tftp_servername:: Defines the TFTP Servername to use, overrides the name in the subnet declaration
 #
-# $foreman_proxy_tftp_manage_wget:: XXX
+# $foreman_proxy_tftp_manage_wget:: If enabled will install the wget package
 #
-# $foreman_proxy_tftp_listen_on:: XXX
+# $foreman_proxy_tftp_listen_on:: TFTP proxy to listen on https, http, or both
 #
-# $foreman_proxy_bmc:: XXX
+# $foreman_proxy_bmc:: Enable BMC feature
 #
-# $foreman_proxy_bmc_listen_on:: XXX
+# $foreman_proxy_bmc_listen_on:: BMC proxy to listen on https, http, or both
 #
 # $foreman_proxy2_hostnames:: List of hostnames for additional smart proxy 2. Example [ 'foo2.example.com', 'foo2' ]
 #
