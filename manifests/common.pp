@@ -16,6 +16,11 @@ class puppetmaster::common
 
   ensure_packages($packages)
 
+  package { 'r10k':
+    ensure   => 'present',
+    provider => 'puppet_gem',
+  }
+
   class { '::timezone':
     timezone => $timezone,
   }
