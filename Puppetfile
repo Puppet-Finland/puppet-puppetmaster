@@ -11,13 +11,7 @@ mod 'puppetfinland-kafo',
 
 mod 'puppetlabs-stdlib'
 
-# This is a workaround. At the moment this is a forked version, with only change being including the puppet-inifile v. 2.2.0 in metadata.json, to prevent clashes.
-mod 'puppet-hiera',
-    :git => 'https://github.com/kibahop/puppet-hiera.git',
-    :branch => 'master'
-
 # Modules used in profiles
-mod 'puppet-r10k', '>= 6.3.2'
 mod 'puppetlabs-ntp', '>= 7.1.1'
 mod 'chrekh-hosts', '>= 2.3.0'
 mod 'saz-timezone', '>= 4.1.1'
