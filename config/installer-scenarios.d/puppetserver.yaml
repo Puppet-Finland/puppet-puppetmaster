@@ -13,7 +13,6 @@
 :module_dirs:
 - "/usr/share/puppetmaster-installer/modules"
 - "/home"
-:hiera_config: /usr/share/puppetmaster-installer/config/hiera.conf
 :colors: true
 :color_of_background: :dark
 :hook_dirs: []
@@ -21,4 +20,5 @@
 :low_priority_modules: []
 :verbose_log_level: info
 :skip_puppet_version_check: true
+:hiera_config: "/usr/share/puppetmaster-installer/config/hiera.conf"
 :password: fCE6IPpKAOabDgxbw8s7S7qIGL6hgVliaL3JkrKr7IA
