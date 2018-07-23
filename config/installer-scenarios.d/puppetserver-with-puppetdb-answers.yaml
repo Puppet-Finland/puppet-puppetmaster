@@ -7,17 +7,4 @@
 # See params.pp in each class for what options are available
 
 ---
-puppetmaster::puppetdb:
-  puppetdb_database_password: changeme
-  timezone: Europe/Helsinki
-  manage_packetfilter: true
-  puppetserver_allow_ipv4: 127.0.0.1
-  puppetserver_allow_ipv6: "::1"
-  server_reports: store,puppetdb
-  autosign: "/etc/puppetlabs/puppet/autosign.conf"
-  show_diff: false
-  server_foreman: false
-  hosts_entries:
-    "{}": 
-  server_external_nodes: ''
-  autosign_entries: 
+puppetmaster::puppetdb: true

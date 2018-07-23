@@ -20,8 +20,8 @@
 #
 class puppetmaster::puppetboard
 (
-  String                   $timezone,
   String                   $puppetdb_database_password,
+  String                   $timezone = 'Etc/UTC',
   Boolean                  $manage_packetfilter = true,
   String                   $puppetserver_allow_ipv4 = '127.0.0.1',
   String                   $puppetserver_allow_ipv6 = '::1',
