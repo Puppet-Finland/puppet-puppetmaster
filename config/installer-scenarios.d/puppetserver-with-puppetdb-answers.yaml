@@ -8,15 +8,16 @@
 
 ---
 puppetmaster::puppetdb:
+  puppetdb_database_password: changeme
+  timezone: Europe/Helsinki
   manage_packetfilter: true
   puppetserver_allow_ipv4: 127.0.0.1
   puppetserver_allow_ipv6: "::1"
   server_reports: store,puppetdb
   autosign: "/etc/puppetlabs/puppet/autosign.conf"
-  autosign_entries: 
-  puppetdb_database_password: changeme
-  timezone: Europe/Helsinki
   show_diff: false
   server_foreman: false
   hosts_entries:
     "{}": 
+  server_external_nodes: ''
+  autosign_entries: 

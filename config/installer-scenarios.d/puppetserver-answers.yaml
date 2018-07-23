@@ -19,3 +19,4 @@ puppetmaster::puppetserver:
     "{}": 
   show_diff: false
   server_foreman: false
+  server_external_nodes: ''

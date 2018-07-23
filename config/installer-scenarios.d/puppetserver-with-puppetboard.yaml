@@ -20,4 +20,5 @@
 :low_priority_modules: []
 :verbose_log_level: info
 :skip_puppet_version_check: true
+:hiera_config: "/usr/share/puppetmaster-installer/config/hiera.conf"
 :password: SViXZKG2VPl82e9tzpraJl5kKgm4JYuS1wg2UgZM5rE
