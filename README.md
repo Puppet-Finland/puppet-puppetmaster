@@ -38,6 +38,14 @@ only work on CentOS 7.
 
 Ubuntu 18.04 can't be easily supported quite yet as Puppetlabs does not provide Puppet 5 packages for it. Additionally Ubuntu's official Vagrant box [does not have](https://github.com/cilium/cilium/issues/1918#issuecomment-344527888) the ifupdown package which Vagrant depends on.
 
+# Development
+
+Kafo installers have a nasty habit of modifying answer files which are versioned 
+by Git. To prevent these local answer file modifications from getting committed 
+by accident you can use a command like this:
+
+    $ find config -name "*-answers.yaml"|xargs git update-index --assume-unchanged
+
 # LICENSE
 
 This project uses the two-clause BSD license. See [LICENSE](LICENSE) for details.
