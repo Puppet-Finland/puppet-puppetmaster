@@ -153,7 +153,6 @@ class puppetmaster::lcm
   String $foreman_admin_lastname,
   String $foreman_admin_email,
   String $foreman_admin_password,
-  String $timezone,
   String $puppetdb_database_password,
   Array[String] $primary_names,
   Boolean $foreman_plugin_cockpit,
@@ -217,6 +216,7 @@ class puppetmaster::lcm
   String $foreman_proxy3_ipaddress,
   Array[String] $foreman_proxy4_hostnames,
   String $foreman_proxy4_ipaddress,
+  String $timezone = 'Etc/UTC',
   Boolean $manage_packetfilter = true,
 )
 {

@@ -87,7 +87,6 @@
 class puppetmaster::foreman_proxy
 (
 
-  String $timezone,
   Array[String] $primary_names,
   String $foreman_proxy_foreman_base_url,
   Boolean $foreman_proxy_templates,
@@ -127,6 +126,7 @@ class puppetmaster::foreman_proxy
   String $foreman_ipaddress,
   String $foreman_proxy_oauth_consumer_key,
   String $foreman_proxy_oauth_consumer_secret,
+  String $timezone = 'Etc/UTC',
 )
 {
   if defined(Service['foreman::service']) {

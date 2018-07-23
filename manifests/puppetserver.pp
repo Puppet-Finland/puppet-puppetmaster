@@ -25,7 +25,7 @@
 # $server_external_nodes:: The path to the ENC executable. Defaults to empty string.
 class puppetmaster::puppetserver
 (
-  String                   $timezone,
+  String                   $timezone = 'Etc/UTC',
   Boolean                  $manage_packetfilter = true,
   String                   $puppetserver_allow_ipv4 = '127.0.0.1',
   String                   $puppetserver_allow_ipv6 = '::1',
