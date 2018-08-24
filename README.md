@@ -10,15 +10,28 @@ This is a Puppet module and [Kafo](https://github.com/theforeman/kafo) installer
 
 Each of the above is a separate Kafo installer scenario.
 
-# Setup
+# Setup from git
 
 To run the installer you need to do some setup steps. 
 
 * Install Puppet 5 from Puppetlabs
-* Install git, kafo and librarian-puppet
+* Install git and rubygems from system packages (apt / yum)
+* Install gems using /opt/puppetlabs/puppet/bin/gem
+    * ```$ /opt/puppetlabs/puppet/bin/gem install yard puppet-strings kafo rdoc librarian-puppet```
 * Run librarian-puppet to fetch dependency modules
 
-For now you can check what Vagrant does in its bootstrapping script, [prepare.sh](vagrant/prepare.sh).
+# Setup from packages
+
+Package install creates a directory - /usr/share/puppetmaster-installer
+
+Installing from package does not require git or librarian package installs
+
+# Creating deb/rpm packages
+
+    $ vagrant up packager
+    $ vagrant ssh packager
+    $ cd puppetmaster-installer/packaging
+    $ ./package.sh
 
 # Usage
 
