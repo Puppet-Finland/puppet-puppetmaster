@@ -37,8 +37,13 @@ cp -r ../manifests ../files ../metadata.json ../LICENSE ../README.md $PUPPETMAST
 echo "Producing packages with fpm"
 FPM_COMMON_OPTS="-C ./build -x modules/*/.git --force --prefix /usr/share/puppetmaster-installer --name puppetmaster-installer --version ${VERSION} --iteration ${ITERATION} --license ${LICENSE} --vendor ${VENDOR} --maintainer \"<${MAINTAINER}>\" --url \"${URL}\" -s dir ."
 
+echo "  Producing RPM package"
+fpm -t rpm $FPM_COMMON_OPTS
+
+echo "  Removing scenarios not yet supported on Ubuntu/Debian"
+rm -f $BUILD_DIR/config/installer-scenarios.d/lcm.yaml
+rm -f $BUILD_DIR/config/installer-scenarios.d/foreman-proxy.yaml
+
 echo "  Producing Debian package"
 fpm -t deb $FPM_COMMON_OPTS
 
-echo "  Producing RPM package"
-fpm -t rpm $FPM_COMMON_OPTS
