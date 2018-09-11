@@ -38,7 +38,7 @@ Installing from package does not require git or librarian package installs
 To run the installer:
 
     $ sudo -i
-    $ bin/puppetmaster-installer -i --skip-puppet-version-check
+    $ bin/puppetmaster-installer -i
 
 The "-i" switch to ensures that the environment is root's environment, which is particularly important on Ubuntu and Debian.
 
