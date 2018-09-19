@@ -65,7 +65,7 @@ setup_puppet() {
         true
     else
         if [ $RHEL_VERSION ]; then
-            RELEASE_URL="https://yum.puppetlabs.com/puppet5/puppet-release-el-${RHEL_VERSION}.noarch.rpm"
+            RELEASE_URL="https://yum.puppetlabs.com/puppet5/puppet5-release-el-${RHEL_VERSION}.noarch.rpm"
             rpm -hiv "${RELEASE_URL}" || (c=$?; echo "Failed to install ${RELEASE_URL}"; (exit $c))
             yum -y install puppet-agent || (c=$?; echo "Failed to install puppet agent"; (exit $c))
             if systemctl list-unit-files --type=service | grep firewalld; then
