@@ -98,12 +98,24 @@ class puppetmaster::puppetboard
     }
   }
 
+  if $::osfamily == 'Debian' {
+    # Debian 8 onards (and recent Ubuntu versions) use conf-enabled instead of conf.d dir.
+    # puppetlabs-apache module does not follow this convention, and config
+    # files are not read from the correct place.
+    # https://tickets.puppetlabs.com/browse/MODULES-5990
+    # https://tickets.puppetlabs.com/browse/MODULES-3116
+    $confd_dir = '/etc/apache2/conf-enabled'
+  } else {
+    $confd_dir = undef
+  }
+
   class { '::apache':
     purge_configs     => true,
     mpm_module        => 'prefork',
     default_vhost     => true,
     default_ssl_vhost => true,
     default_mods      => false,
+    confd_dir         => $confd_dir,
   }
 
   if $facts['osfamily'] == 'RedHat' {
