@@ -98,12 +98,20 @@ class puppetmaster::puppetboard
     }
   }
 
+  # Work around an issue in puppetlabs/apache
+  $apache_confd_dir = $::osfamily ? {
+    'Debian' => '/etc/apache2/conf-enabled',
+    'RedHat' => '/etc/httpd/conf.d',
+    default  => '/etc/httpd/conf.d',
+  }
+
   class { '::apache':
     purge_configs     => true,
     mpm_module        => 'prefork',
     default_vhost     => true,
     default_ssl_vhost => true,
     default_mods      => false,
+    confd_dir         => $apache_confd_dir,
   }
 
   if $facts['osfamily'] == 'RedHat' {
