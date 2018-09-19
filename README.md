@@ -42,6 +42,10 @@ To run the installer:
 
 The "-i" switch to ensures that the environment is root's environment, which is particularly important on Ubuntu and Debian.
 
+# Notes about Foreman scenarios
+
+Foreman scenarios currently on work on CentOS 7. As Foreman and Smart Proxies communicate via TLS you will need to ensure that their names resolve correctly. The best way to do this is to have records for them in DNS, but using /etc/hosts is also an option.
+
 # Supported platforms
 
 This module supports CentOS 7, Debian 9 and Ubuntu 16.04.
