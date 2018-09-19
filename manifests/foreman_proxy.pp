@@ -162,7 +162,6 @@ class puppetmaster::foreman_proxy
   $foreman_proxy_puppetrun_provider = puppetssh
   $foreman_proxy_mcollective_user = root
   $foreman_proxy_puppetssh_sudo = true
-  $hosts_entries = { $foreman_ipaddress => $foreman_hostnames }
   $foreman_proxy_foreman_ssl_ca = '/etc/puppetlabs/puppet/ssl/certs/ca_foreman.pem'
   $foreman_proxy_foreman_ssl_cert = "/etc/puppetlabs/puppet/ssl/certs/${foreman_proxy_registered_name}_foreman.pem"
   $foreman_proxy_foreman_ssl_key =  "/etc/puppetlabs/puppet/ssl/private_keys/${foreman_proxy_registered_name}_foreman.pem"
@@ -252,7 +251,6 @@ class puppetmaster::foreman_proxy
     class { '::puppetmaster::common':
       primary_names => $primary_names,
       timezone      => $timezone,
-      hosts_entries => $hosts_entries,
       before        => Class['::foreman_proxy'],
     }
   }

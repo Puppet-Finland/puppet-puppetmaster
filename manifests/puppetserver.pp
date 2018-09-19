@@ -20,8 +20,6 @@
 #
 # $show_diff:: Show diff in the foreman user interface. Defaults to false.
 #
-# $hosts_entries:: A hash of host entries to put in /etc/hosts.
-#
 # $server_external_nodes:: The path to the ENC executable. Defaults to empty string.
 class puppetmaster::puppetserver
 (
@@ -32,7 +30,6 @@ class puppetmaster::puppetserver
   String                   $server_reports = 'store',
   Variant[Boolean, String] $autosign = '/etc/puppetlabs/puppet/autosign.conf',
   Optional[Array[String]]  $autosign_entries = undef,
-  Hash                     $hosts_entries = {},
   Boolean                  $show_diff = false,
   Boolean                  $server_foreman = false,
   String                   $server_external_nodes = '',
@@ -43,7 +40,6 @@ class puppetmaster::puppetserver
   class { '::puppetmaster::common':
     primary_names => $primary_names,
     timezone      => $timezone,
-    hosts_entries => $hosts_entries,
   }
 
   file { '/var/files':

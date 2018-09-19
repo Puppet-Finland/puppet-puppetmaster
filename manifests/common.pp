@@ -4,7 +4,6 @@ class puppetmaster::common
 (
   Array[String] $primary_names,
   String        $timezone,
-  Hash          $hosts_entries = {},
 )
 {
 
@@ -58,17 +57,8 @@ class puppetmaster::common
     timezone => $timezone,
   }
 
-  if empty($hosts_entries) {
-
-    class { '::hosts':
-      primary_names => $primary_names,
-    }
-  }
-  else {
-
-    class { '::hosts':
-      primary_names => $primary_names,
-      entries       => $hosts_entries,
-    }
+  class { '::hosts':
+    primary_names => $primary_names,
   }
 }
+
