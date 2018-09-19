@@ -98,7 +98,13 @@ class puppetmaster::puppetboard
     }
   }
 
-  # Work around an issue in puppetlabs/apache
+  # From Debian 8 onwards (and on recent Ubuntu versions) use conf-enabled 
+  # instead of conf.d dir. puppetlabs-apache module does not follow this 
+  # convention, and config files are not read from the correct place.
+  #
+  # https://tickets.puppetlabs.com/browse/MODULES-5990
+  # https://tickets.puppetlabs.com/browse/MODULES-3116
+  #
   $apache_confd_dir = $::osfamily ? {
     'Debian' => '/etc/apache2/conf-enabled',
     'RedHat' => '/etc/httpd/conf.d',
