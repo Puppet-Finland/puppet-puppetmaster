@@ -258,10 +258,6 @@ class puppetmaster::lcm
   $foreman_proxy_mcollective_user           = root
   $foreman_proxy_puppetssh_sudo             = true
   $foreman_server_external_nodes            = '/etc/puppetlabs/puppet/node.rb'
-  $hosts_entries                            = deep_merge(
-    { $foreman_proxy2_ipaddress => $foreman_proxy2_hostnames },
-    { $foreman_proxy3_ipaddress => $foreman_proxy3_hostnames },
-    { $foreman_proxy4_ipaddress => $foreman_proxy4_hostnames })
 
   unless ($facts['osfamily'] == 'RedHat' and $facts['os']['release']['major'] == '7') {
     fail("${facts['os']['name']} ${facts['os']['release']['full']} not supported yet")
@@ -343,7 +339,6 @@ class puppetmaster::lcm
     server_foreman             => true,
     autosign                   => '/etc/puppetlabs/puppet/autosign.conf',
     server_reports             => 'store,foreman',
-    hosts_entries              => $hosts_entries,
     puppetdb_database_password => $puppetdb_database_password,
     timezone                   => $timezone,
     manage_packetfilter        => $manage_packetfilter,
