@@ -108,4 +108,22 @@ Vagrant.configure("2") do |config|
       vb.memory = 2048
     end
   end
+
+  config.vm.define "puppetserver-bionic" do |box|
+    box.vm.box = "ubuntu/bionic64"
+    box.vm.box_version = "20180919.0.0"
+    box.vm.hostname = "puppet.local"
+    box.vm.network "private_network", ip: "192.168.221.206"
+    box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
+    box.vm.synced_folder ".", "/usr/share/puppetmaster-installer", type: "virtualbox"
+    box.vm.provision "shell" do |s|
+      s.path = "vagrant/prepare.sh"
+      s.args = ["-b", "/usr/share/puppetmaster-installer"]
+    end
+    box.vm.provision "shell", inline: "puppet apply --modulepath /usr/share/puppetmaster-installer/modules /usr/share/puppetmaster-installer/vagrant/xenial.pp"
+    box.vm.provider "virtualbox" do |vb|
+      vb.gui = false
+      vb.memory = 4096
+    end
+  end
 end
