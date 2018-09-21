@@ -8,30 +8,41 @@ This is a Puppet module and [Kafo](https://github.com/theforeman/kafo) installer
 * Puppetserver with [Foreman Smart Proxy](https://github.com/theforeman/smart-proxy)
 * Puppetserver with [Foreman Smart Proxy](https://github.com/theforeman/smart-proxy) and [Foreman](https://github.com/theforeman/foreman)
 
-Each of the above is a separate Kafo installer scenario.
+Each of the above is a separate Kafo installer scenario. This installer works on CentOS 7, Debian 9, Ubuntu 16.04 and Ubuntu 18.04. However, the Foreman scenarios are only supported on CentOS 7.
 
-# Setup from git
+# Setup
 
-To run the installer you need to do some setup steps. 
+To run the installer outside of Vagrant do 
 
 * Install Puppet 5 from Puppetlabs
-* Install git and rubygems from system packages (apt / yum)
-* Install gems using /opt/puppetlabs/puppet/bin/gem
-    * ```$ /opt/puppetlabs/puppet/bin/gem install yard puppet-strings kafo rdoc librarian-puppet```
-* Run librarian-puppet to fetch dependency modules
+* Install rubygems from system packages using apt or yum
+* Install Kafo's dependencies using /opt/puppetlabs/puppet/bin/gem
+    * ```$ /opt/puppetlabs/puppet/bin/gem install yard puppet-strings kafo rdoc```
+* Ensure that executables under /opt/puppetlabs are in PATH. You can do this with a shell profile fragment (e.g. /etc/profile.d/puppetmaster-installer.sh) that has the following content:
+    * ```export PATH=/opt/puppetlabs/bin:/opt/puppetlabs/puppet/bin:/usr/share/puppetmaster-installer/bin:$PATH```
+* Run the above export command in the currently active terminal, or logout and log back in
 
-# Setup from packages
+If you using the release Debian/RPM packages then this is all you need to do.
 
-Package install creates a directory - /usr/share/puppetmaster-installer
+If you're using the Git version of this installer, then additional setup is needed. First ensure that /usr/share/puppetmaster is present by creating a symbolic link. For example:
 
-Installing from package does not require git or librarian package installs
+    $ sudo -i
+    $ ln -s /home/joe/puppet-puppetmaster /usr/share/puppetmaster
 
-# Creating deb/rpm packages
+Then you need to fetch the Puppet modules this installer depends on:
 
-    $ vagrant up packager
-    $ vagrant ssh packager
-    $ cd puppetmaster-installer/packaging
-    $ ./package.sh
+    $ /opt/puppetlabs/puppet/bin/gem install librarian-puppet
+    $ cd /usr/share/puppetmaster
+    $ librarian-puppet install --verbose
+
+Finally you need to ensure that the puppetmaster module is visible to the Kafo installer:
+
+    $ cd /usr/share/puppetmaster/modules
+    $ ln -s /usr/share/puppetmaster /usr/share/puppetmaster/modules/puppetmaster
+
+These extra steps can be omitted when running the Vagrant boxes as the provisioning steps handle all of them automatically. The provisioning scripts are in general a good reference for what this installer needs to work properly.
+
+Also note that as Foreman and Smart Proxies communicate via TLS you will need to ensure that their names resolve correctly before running the installer. The best way to do this is to have records for them in DNS, but using /etc/hosts is also an option.
 
 # Usage
 
@@ -40,22 +51,24 @@ To run the installer:
     $ sudo -i
     $ bin/puppetmaster-installer -i
 
-The "-i" switch to ensures that the environment is root's environment, which is particularly important on Ubuntu and Debian.
-
-# Notes about Foreman scenarios
-
-Foreman scenarios currently on work on CentOS 7. As Foreman and Smart Proxies communicate via TLS you will need to ensure that their names resolve correctly. The best way to do this is to have records for them in DNS, but using /etc/hosts is also an option.
-
-# Supported platforms
-
-This module supports CentOS 7, Debian 9 and Ubuntu 16.04.
-
-Puppetserver, PuppetDB and Puppetboard scenarios work across all supported platforms. Currently Foreman scenarios
-only work on CentOS 7.
-
-Ubuntu 18.04 can't be easily supported quite yet as Puppetlabs does not provide Puppet 5 packages for it. Additionally Ubuntu's official Vagrant box [does not have](https://github.com/cilium/cilium/issues/1918#issuecomment-344527888) the ifupdown package which Vagrant depends on.
+The "-i" switch to sudo ensures that the environment is root's environment, which is particularly important on Ubuntu and Debian. The -i switch to the installer makes it run in interactive mode, which is probably what you want to do.
 
 # Development
+
+## Testing with Vagrant
+
+This repository makes heavy use of Vagrant and Virtualbox for testing. You will need to use a fairly up-to-date Vagrant or you will run into networking issue with the Ubuntu boxes. We recommend using Vagrant 2.1.5 or later.
+
+## Creating deb/rpm packages
+
+Creating Debian and RPM packages is straightforward with the Debian 9 -based packager VM:
+
+    $ vagrant up packager
+    $ vagrant ssh packager
+    $ cd puppetmaster-installer/packaging
+    $ ./package.sh
+
+## Living with changes Kafo makes to versioned answer files
 
 Kafo installers have a nasty habit of modifying answer files which are versioned 
 by Git. To prevent these local answer file modifications from getting committed 
