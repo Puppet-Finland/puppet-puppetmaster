@@ -3,15 +3,14 @@
 # Exit on any error
 set -e
 
-# Preparations required prior to "puppet apply".
-
 usage() {
     echo
-    echo "Usage: prepare.sh -b basedir"
+    echo "Usage: prepare.sh -b basedir [-m]"
     echo
     echo "Options:"
     echo " -b   Base directory for dependency Puppet modules installed by"
     echo "      librarian-puppet."
+    echo " -m   Install Puppet modules required by Kafo with librarian-puppet"
     exit 1
 }
 
@@ -22,9 +21,13 @@ if [ "$1" = "" ]; then
     usage
 fi
 
-while getopts "n:f:o:b:h" options; do
+# Default values
+INSTALL_MODULES=false
+
+while getopts "b:mh" options; do
     case $options in
         b ) BASEDIR=$OPTARG;;
+        m ) INSTALL_MODULES=true;;
         h ) usage;;
         \? ) usage;;
         * ) usage;;
@@ -90,54 +93,26 @@ setup_puppet() {
     fi
 }
 
-run_puppet_1() {
+### Main program
 
-PROF_FILE='/etc/profile.d/puppeteers.sh'
-FILE=$(mktemp)
-cat<<EOF>$FILE
-file { "$PROF_FILE":
-  ensure  => present,
-  content => 'export PATH=/opt/puppetlabs/bin:/opt/puppetlabs/puppet/bin:/usr/share/puppetmaster-installer/bin:$PATH',
-  replace => false,
-}
-
-package { 'librarian-puppet':
-  ensure   => latest,
-  provider => 'puppet_gem',
-}
-
-package { 'git':
-  ensure => 'latest',
-}
-
-exec { 'Run librarian-puppet':
-  cwd       => "$BASEDIR",
-  logoutput => true,
-  command   => 'librarian-puppet install --verbose',
-  timeout   => 600,
-  path      => ['/bin','/usr/bin','/opt/puppetlabs/bin','/opt/puppetlabs/puppet/bin'],
-}
-EOF
-cat $FILE | /opt/puppetlabs/bin/puppet apply 
-rm $FILE
-}
-
-run_puppet_2() {
-FILE=$(mktemp)
-cat<<EOF>$FILE
-class { '::kafo':
-  gem_provider => 'puppet_gem',
-}
-EOF
-cat $FILE | /opt/puppetlabs/bin/puppet apply --modulepath=$BASEDIR/modules
-rm $FILE
-}
-
-# Main program
+# Install and configure puppet
 detect_osfamily
 setup_puppet
-# We run these separately due to duplicate path management
-run_puppet_1
-run_puppet_2
+
+# Configure with "puppet apply"
+PUPPET_APPLY="/opt/puppetlabs/bin/puppet apply --modulepath=$BASEDIR/modules"
+
+# Pass variables from this script to Puppet manifests via environment variables
+export FACTER_profile='/etc/profile.d/puppeteers.sh'
+export FACTER_basedir="$BASEDIR"
+
+$PUPPET_APPLY $BASEDIR/vagrant/profile.pp
+
+if [ "$INSTALL_MODULES" = "true" ]; then
+    $PUPPET_APPLY $BASEDIR/vagrant/git.pp
+    $PUPPET_APPLY $BASEDIR/vagrant/librarian.pp
+fi
+
+$PUPPET_APPLY $BASEDIR/vagrant/kafo.pp
 
 cd $CWD

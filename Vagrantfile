@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
     box.vm.synced_folder ".", "/home/ubuntu/puppetmaster-installer", type: "virtualbox"
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
-      s.args = ["-b", "/home/ubuntu/puppetmaster-installer"]
+      s.args = ["-b", "/home/ubuntu/puppetmaster-installer", "-m"]
     end
     box.vm.provision "shell", path: "vagrant/prepare_packager.sh"
     box.vm.provider "virtualbox" do |vb|
@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
     box.vm.synced_folder ".", "/usr/share/puppetmaster-installer", type: "virtualbox"
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
-      s.args = ["-b", "/usr/share/puppetmaster-installer"]
+      s.args = ["-b", "/usr/share/puppetmaster-installer", "-m"]
     end
     box.vm.provision "shell", inline: "puppet apply --modulepath /usr/share/puppetmaster-installer/modules /usr/share/puppetmaster-installer/vagrant/xenial.pp"
     box.vm.provider "virtualbox" do |vb|
@@ -50,7 +50,7 @@ Vagrant.configure("2") do |config|
     box.vm.synced_folder ".", "/usr/share/puppetmaster-installer", type: "virtualbox"
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
-      s.args = ["-b", "/usr/share/puppetmaster-installer"]
+      s.args = ["-b", "/usr/share/puppetmaster-installer", "-m"]
     end
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
@@ -67,7 +67,7 @@ Vagrant.configure("2") do |config|
     box.vm.synced_folder ".", "/usr/share/puppetmaster-installer", type: "virtualbox"
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
-      s.args = ["-b", "/usr/share/puppetmaster-installer"]
+      s.args = ["-b", "/usr/share/puppetmaster-installer", "-m"]
     end
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
@@ -75,24 +75,7 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  config.vm.define "puppetserver-artful" do |box|
-    box.vm.box = "ubuntu/artful64"
-    box.vm.box_version = "20180420.0.0"
-    box.vm.hostname = "puppet.local"
-    box.vm.network "private_network", ip: "192.168.221.204"
-    box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
-    box.vm.synced_folder ".", "/usr/share/puppetmaster-installer", type: "virtualbox"
-    box.vm.provision "shell" do |s|
-      s.path = "vagrant/prepare.sh"
-      s.args = ["-b", "/usr/share/puppetmaster-installer"]
-    end
-    box.vm.provision "shell", inline: "puppet apply --modulepath /usr/share/puppetmaster-installer/modules /usr/share/puppetmaster-installer/vagrant/xenial.pp"
-    box.vm.provider "virtualbox" do |vb|
-      vb.gui = false
-      vb.memory = 4096
-    end
-  end
-    config.vm.define "puppetserver-proxy" do |box|
+  config.vm.define "puppetserver-proxy" do |box|
     box.vm.box = "centos/7"
     box.vm.box_version = "1801.02"
     box.vm.hostname = "proxy2.local"
@@ -101,7 +84,7 @@ Vagrant.configure("2") do |config|
     box.vm.synced_folder ".", "/home/puppetmaster", type: "virtualbox"
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
-      s.args = ["-b", "/home/puppetmaster"]
+      s.args = ["-b", "/home/puppetmaster", "-m"]
     end
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
@@ -118,7 +101,7 @@ Vagrant.configure("2") do |config|
     box.vm.synced_folder ".", "/usr/share/puppetmaster-installer", type: "virtualbox"
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
-      s.args = ["-b", "/usr/share/puppetmaster-installer"]
+      s.args = ["-b", "/usr/share/puppetmaster-installer", "-m"]
     end
     box.vm.provision "shell", inline: "puppet apply --modulepath /usr/share/puppetmaster-installer/modules /usr/share/puppetmaster-installer/vagrant/xenial.pp"
     box.vm.provider "virtualbox" do |vb|
