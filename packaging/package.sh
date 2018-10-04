@@ -7,7 +7,7 @@
 BUILD_DIR="./build"
 PUPPETMASTER_MODULE_DIR="${BUILD_DIR}/modules/puppetmaster"
 LICENSE="BSD-2-Clause"
-VENDOR="Puppeteers"
+VENDOR="Puppeteers_Oy"
 MAINTAINER="info@puppeteers.fi"
 URL="https://www.puppeteers.fi"
 
@@ -35,7 +35,7 @@ mkdir $PUPPETMASTER_MODULE_DIR
 cp -r ../manifests ../files ../metadata.json ../LICENSE ../README.md $PUPPETMASTER_MODULE_DIR
 
 echo "Producing packages with fpm"
-FPM_COMMON_OPTS="-C ./build -x modules/*/.git --force --prefix /usr/share/puppetmaster-installer --name puppetmaster-installer --version ${VERSION} --iteration ${ITERATION} --license ${LICENSE} --vendor ${VENDOR} --maintainer \"<${MAINTAINER}>\" --url \"${URL}\" -s dir ."
+FPM_COMMON_OPTS="-C ./build -x modules/*/.git --force --prefix /usr/share/puppetmaster-installer --name puppetmaster-installer --version ${VERSION} --iteration ${ITERATION} --license ${LICENSE} --vendor \"${VENDOR}\" --maintainer \"<${MAINTAINER}>\" --url \"${URL}\" -s dir ."
 
 echo "  Producing RPM package"
 fpm -t rpm $FPM_COMMON_OPTS
