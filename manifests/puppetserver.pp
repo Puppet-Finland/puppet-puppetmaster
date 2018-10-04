@@ -2,7 +2,7 @@
 #
 # == Parameters:
 #
-# $manage_packetfilter:: Manage IPv4 and IPv6 rules. Defaults to true.
+# $manage_packetfilter:: Manage IPv4 and IPv6 rules. Defaults to false.
 #
 # $puppetserver_allow_ipv4:: Allow connections to puppetserver from this IPv4 address or subnet. Example: '10.0.0.0/8'. Defaults to '127.0.0.1.
 #
@@ -24,7 +24,7 @@
 class puppetmaster::puppetserver
 (
   String                   $timezone = 'Etc/UTC',
-  Boolean                  $manage_packetfilter = true,
+  Boolean                  $manage_packetfilter = false,
   String                   $puppetserver_allow_ipv4 = '127.0.0.1',
   String                   $puppetserver_allow_ipv6 = '::1',
   String                   $server_reports = 'store',

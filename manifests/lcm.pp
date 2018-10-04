@@ -145,7 +145,7 @@
 #
 # $foreman_proxy4_ipaddress:: IP address of additional smart proxy 3. Example: '1.2.3.6'
 #
-# $manage_packetfilter:: Manage the packet filter. Defaults to true.
+# $manage_packetfilter:: Manage the packet filter. Defaults to false.
 class puppetmaster::lcm
 (
   String $foreman_db_password,
