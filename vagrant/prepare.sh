@@ -27,7 +27,7 @@ fi
 INSTALL_LIBRARIAN=false
 INSTALL_MODULES=false
 
-while getopts "b:mh" options; do
+while getopts "b:lmh" options; do
     case $options in
         b ) BASEDIR=$OPTARG;;
         l ) INSTALL_LIBRARIAN=true;;
