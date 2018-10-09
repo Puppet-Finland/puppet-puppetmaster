@@ -33,6 +33,9 @@ cp -r ../config $BUILD_DIR/
 # Get rid of last_scenario.yaml, if present
 rm -f $BUILD_DIR/config/installer-scenarios.d/last_scenario.yaml
 cp -r ../modules $BUILD_DIR/
+# Remove broken symbolic link to puppetmaster module, so that the files are
+# copied there correctlyi
+rm -f $BUILD_DIR/modules/puppetmaster
 mkdir $PUPPETMASTER_MODULE_DIR
 cp -r ../manifests ../files ../metadata.json ../LICENSE ../README.md $PUPPETMASTER_MODULE_DIR
 
