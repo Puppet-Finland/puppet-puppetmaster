@@ -5,12 +5,14 @@ set -e
 
 usage() {
     echo
-    echo "Usage: prepare.sh -b basedir [-m]"
+    echo "Usage: prepare.sh -b basedir [-l] [-m]"
     echo
     echo "Options:"
     echo " -b   Base directory for dependency Puppet modules installed by"
     echo "      librarian-puppet."
-    echo " -m   Install Puppet modules required by Kafo with librarian-puppet"
+    echo " -l   Install librarian-puppet"
+    echo " -m   Install Puppet modules required by Kafo with librarian-puppet."
+    echo "      Implies -l."
     exit 1
 }
 
@@ -22,11 +24,13 @@ if [ "$1" = "" ]; then
 fi
 
 # Default values
+INSTALL_LIBRARIAN=false
 INSTALL_MODULES=false
 
 while getopts "b:mh" options; do
     case $options in
         b ) BASEDIR=$OPTARG;;
+        l ) INSTALL_LIBRARIAN=true;;
         m ) INSTALL_MODULES=true;;
         h ) usage;;
         \? ) usage;;
@@ -108,9 +112,13 @@ export FACTER_basedir="$BASEDIR"
 
 $PUPPET_APPLY $BASEDIR/vagrant/profile.pp
 
-if [ "$INSTALL_MODULES" = "true" ]; then
+if [ "$INSTALL_LIBRARIAN" = "true" ] || [ "$INSTALL_MODULES" = "true" ]; then
     $PUPPET_APPLY $BASEDIR/vagrant/git.pp
     $PUPPET_APPLY $BASEDIR/vagrant/librarian.pp
+fi
+
+if [ "$INSTALL_MODULES" = "true" ]; then
+    $PUPPET_APPLY $BASEDIR/vagrant/modules.pp
 fi
 
 $PUPPET_APPLY $BASEDIR/vagrant/kafo.pp
