@@ -2,6 +2,16 @@
 #
 # == Parameters:
 #
+# $puppetdb_database_password:: Password for the puppetdb database in postgresql
+#
+# $autosign:: Set up autosign entries. Set to true to enable naive autosigning.
+#
+# $autosign_entries:: List of autosign entries. Requires that autosign is pointing to the path of autosign.conf.
+#
+# $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki' or 'Etc/UTC'.
+#
+# == Advanced parameters:
+#
 # $manage_packetfilter:: Manage IPv4 and IPv6 rules. Defaults to false.
 #
 # $puppetserver_allow_ipv4:: Allow connections to puppetserver from this IPv4 address or subnet. Example: '10.0.0.0/8'. Defaults to '127.0.0.1'.
@@ -10,19 +20,12 @@
 #
 # $server_reports:: Where to store reports. Defaults to 'store,puppetdb'.
 #
-# $autosign:: Set up autosign entries. Set to true to enable naive autosigning.
+# $server_external_nodes:: The path to the ENC executable. Defaults to empty string.
 #
-# $autosign_entries:: List of autosign entries. Requires that autosign is pointing to the path of autosign.conf.
+# $server_foreman:: Used internally in Foreman scenarios. Do not change the default (false) unless you know what you are doing.
 #
-# $puppetdb_database_password:: Password for the puppetdb database in postgresql
+# $show_diff:: Used internally in Foreman scenarios. Do not change the default (false) unless you know what you are doing.
 #
-# $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki' or 'Etc/UTC'.
-#
-# $server_foreman:: Is this a foreman server. Defaults to false
-#
-# $show_diff:: Show diff in the foreman user interface. Defaults to false.
-#
-# $server_external_nodes:: A string to an ENC executable. Default to empty string.
 class puppetmaster::puppetdb
 (
   String                   $puppetdb_database_password,
