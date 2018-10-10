@@ -2,25 +2,28 @@
 #
 # == Parameters:
 #
-# $manage_packetfilter:: Manage IPv4 and IPv6 rules. Defaults to false.
-#
-# $puppetserver_allow_ipv4:: Allow connections to puppetserver from this IPv4 address or subnet. Example: '10.0.0.0/8'. Defaults to '127.0.0.1.
-#
-# $puppetserver_allow_ipv6:: Allow connections to puppetserver from this IPv6 address or subnet. Defaults to '::1'.
-#
-# $server_reports:: Where to store reports. Defaults to 'store'.
-#
 # $autosign:: Set up autosign entries. Set to true to enable naive autosigning.
 #
 # $autosign_entries:: List of autosign entries. Requires that autosign is pointing to the path of autosign.conf.
 #
 # $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki' or 'Etc/UTC'.
 #
-# $server_foreman:: Is this a foreman server. Defaults to false.
+# == Advanced parameters:
 #
-# $show_diff:: Show diff in the foreman user interface. Defaults to false.
+# $manage_packetfilter:: Manage IPv4 and IPv6 rules. Defaults to false.
+#
+# $puppetserver_allow_ipv4:: Allow connections to puppetserver from this IPv4 address or subnet. Example: '10.0.0.0/8'. Defaults to '127.0.0.1'.
+#
+# $puppetserver_allow_ipv6:: Allow connections to puppetserver from this IPv6 address or subnet. Defaults to '::1'.
+#
+# $server_reports:: Where to store reports. Defaults to 'store'.
 #
 # $server_external_nodes:: The path to the ENC executable. Defaults to empty string.
+#
+# $server_foreman:: Used internally in Foreman scenarios. Do not change the default (false) unless you know what you are doing.
+#
+# $show_diff:: Used internally in Foreman scenarios. Do not change the default (false) unless you know what you are doing.
+#
 class puppetmaster::puppetserver
 (
   String                   $timezone = 'Etc/UTC',

@@ -2,21 +2,25 @@
 #
 # == Parameters:
 #
-# $manage_packetfilter:: Manage IPv4 and IPv6 rules. Defaults to false.
-#
-# $puppetserver_allow_ipv4:: Allow connections to puppetserver from this IPv4 address or subnet. Example: '10.0.0.0/8'. Defaults to '127.0.0.1.
-#
-# $puppetserver_allow_ipv6:: Allow connections to puppetserver from this IPv6 address or subnet. Defaults to '::1'.
-#
-# $server_reports:: Where to store reports. Defaults to 'store,puppetdb'.
+# $puppetdb_database_password:: Password for the puppetdb database in postgresql
 #
 # $autosign:: Set up autosign entries. Set to true to enable naive autosigning.
 #
 # $autosign_entries:: List of autosign entries. Requires that autosign is pointing to the path of autosign.conf.
 #
 # $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki' or 'Etc/UTC'.
-# 
-# $puppetdb_database_password:: Database password for puppetdb
+#
+# == Advanced parameters:
+#
+# $manage_packetfilter:: Manage IPv4 and IPv6 rules. Defaults to false.
+#
+# $puppetserver_allow_ipv4:: Allow connections to puppetserver from this IPv4 address or subnet. Example: '10.0.0.0/8'. Defaults to '127.0.0.1'.
+#
+# $puppetserver_allow_ipv6:: Allow connections to puppetserver from this IPv6 address or subnet. Defaults to '::1'.
+#
+# $server_reports:: Where to store reports. Defaults to 'store,puppetdb'.
+#
+# $server_external_nodes:: The path to the ENC executable. Defaults to empty string.
 #
 class puppetmaster::puppetboard
 (
@@ -27,6 +31,7 @@ class puppetmaster::puppetboard
   String                   $puppetserver_allow_ipv6 = '::1',
   String                   $server_reports = 'store,puppetdb',
   Variant[Boolean, String] $autosign = '/etc/puppetlabs/puppet/autosign.conf',
+  String                   $server_external_nodes = '',
   Optional[Array[String]]  $autosign_entries = undef,
 )
 {
@@ -60,6 +65,7 @@ class puppetmaster::puppetboard
     autosign_entries           => $autosign_entries,
     puppetdb_database_password => $puppetdb_database_password,
     timezone                   => $timezone,
+    server_external_nodes      => $server_external_nodes,
     before                     => Class['::puppetboard'],
   }
 
