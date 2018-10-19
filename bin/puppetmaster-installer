@@ -3,7 +3,7 @@ require 'rubygems'
 require 'kafo'
 
 # where to find scenarios
-CONFIG_DIR = './config/installer-scenarios.d/'
+CONFIG_DIR = '/usr/share/puppetmaster-installer/config/installer-scenarios.d/'
 
 # Run the install
 @result = Kafo::KafoConfigure.run

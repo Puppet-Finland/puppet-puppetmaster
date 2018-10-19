@@ -46,7 +46,7 @@ Also note that as Foreman and Smart Proxies communicate via TLS you will need to
 
 # Usage
 
-To run the installer:
+To run the installer from the installer directory:
 
     $ sudo -i
     $ bin/puppetmaster-installer -i
