@@ -30,6 +30,7 @@ echo "Preparing build directory for fpm"
 mkdir $BUILD_DIR
 cp -r ../bin $BUILD_DIR/
 cp -r ../config $BUILD_DIR/
+cp -r ../hooks $BUILD_DIR/
 # Get rid of last_scenario.yaml, if present
 rm -f $BUILD_DIR/config/installer-scenarios.d/last_scenario.yaml
 cp -r ../modules $BUILD_DIR/
