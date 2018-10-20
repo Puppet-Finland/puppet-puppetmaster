@@ -15,7 +15,8 @@
 - "/usr/share/puppetmaster-installer"
 :colors: true
 :color_of_background: :dark
-:hook_dirs: []
+:hook_dirs:
+- "/usr/share/puppetmaster-installer/hooks"
 :custom: {}
 :low_priority_modules: []
 :verbose_log_level: info
