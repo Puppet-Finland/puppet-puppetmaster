@@ -7,7 +7,10 @@
 :log_name: puppetboard.log
 :log_level: info
 :no_prefix: false
-:mapping: {}
+:mapping:
+  :puppetmaster_puppetboard:
+    :dir_name: puppetmaster
+    :manifest_name: puppetboard
 :answer_file: "/usr/share/puppetmaster-installer/config/installer-scenarios.d/puppetserver-with-puppetboard-answers.yaml"
 :installer_dir: "."
 :module_dirs:

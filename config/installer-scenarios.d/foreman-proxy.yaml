@@ -7,7 +7,10 @@
 :log_name: proxy.log
 :log_level: info
 :no_prefix: false
-:mapping: {}
+:mapping:
+  :puppetmaster_foreman_proxy:
+    :dir_name: puppetmaster
+    :manifest_name: foreman_proxy
 :answer_file: "/usr/share/puppetmaster-installer/config/installer-scenarios.d/foreman-proxy-answers.yaml"
 :installer_dir: "."
 :module_dirs:

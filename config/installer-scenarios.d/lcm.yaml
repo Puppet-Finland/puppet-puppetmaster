@@ -7,7 +7,10 @@
 :log_name: lcm.log
 :log_level: info
 :no_prefix: false
-:mapping: {}
+:mapping:
+  :puppetmaster_lcm:
+    :dir_name: puppetmaster
+    :manifest_name: lcm
 :answer_file: "/usr/share/puppetmaster-installer/config/installer-scenarios.d/lcm-answers.yaml"
 :installer_dir: "."
 :module_dirs:
