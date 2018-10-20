@@ -40,6 +40,9 @@ rm -f $BUILD_DIR/modules/puppetmaster
 mkdir $PUPPETMASTER_MODULE_DIR
 cp -r ../manifests ../files ../metadata.json ../LICENSE ../README.md $PUPPETMASTER_MODULE_DIR
 
+echo "Removing .yardoc directories"
+find $BUILD_DIR -type d -name ".yardoc"|xargs rm -rf
+
 echo "Producing packages with fpm"
 FPM_COMMON_OPTS="-C ./build -x modules/*/.git --force --prefix /usr/share/puppetmaster-installer --name puppetmaster-installer --version ${VERSION} --iteration ${ITERATION} --license ${LICENSE} --vendor \"${VENDOR}\" --maintainer \"<${MAINTAINER}>\" --url \"${URL}\" -s dir ."
 
