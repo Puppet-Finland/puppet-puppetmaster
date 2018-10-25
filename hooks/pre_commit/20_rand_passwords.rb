@@ -9,7 +9,7 @@ def randomize_parameter(mod, param)
   puts "NOTICE: #{param} was set to a random string"
 end
 
-# Iterate over all scenarios/modules where a mandatory password may be missing
+# Iterate over all scenarios/modules where PuppetDB password may be missing
 %w[puppetmaster_puppetdb puppetmaster_puppetboard puppetmaster_lcm].each do |mod|
   begin
     randomize_parameter mod, 'puppetdb_database_password' if module_enabled? mod
@@ -18,3 +18,8 @@ end
     # modules/scenarios will be active at a time.
   end
 end
+
+# Randomize Puppetboard password if it is not explicitly set. We do this even
+# when puppetboard_require_auth is disabled, because otherwise we would have to
+# define an empty string as the default parameter value.
+randomize_parameter 'puppetmaster_puppetboard', 'puppetboard_password' if module_enabled? 'puppetmaster_puppetboard'

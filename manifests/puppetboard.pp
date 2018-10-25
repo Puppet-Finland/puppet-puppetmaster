@@ -4,6 +4,8 @@
 #
 # $puppetdb_database_password:: Password for the puppetdb database in postgresql
 #
+# $puppetboard_password:: Password for Puppetboard
+#
 # $autosign:: Set up autosign entries. Set to true to enable naive autosigning.
 #
 # $autosign_entries:: List of autosign entries. Requires that autosign is pointing to the path of autosign.conf.
@@ -13,6 +15,10 @@
 # == Advanced parameters:
 #
 # $manage_packetfilter:: Manage IPv4 and IPv6 rules. Defaults to false.
+#
+# $puppetboard_require_auth:: Require basic authentication in Puppetboard. Defaults to true.
+#
+# $puppetboard_username:: Username for accessing Puppetboard. Defaults to 'admin'.
 #
 # $puppetserver_allow_ipv4:: Allow connections to puppetserver from this IPv4 address or subnet. Example: '10.0.0.0/8'. Defaults to '127.0.0.1'.
 #
@@ -25,6 +31,9 @@
 class puppetmaster::puppetboard
 (
   String                   $puppetdb_database_password,
+  String                   $puppetboard_password,
+  Boolean                  $puppetboard_require_auth = true,
+  String                   $puppetboard_username = 'admin',
   String                   $timezone = 'Etc/UTC',
   Boolean                  $manage_packetfilter = false,
   String                   $puppetserver_allow_ipv4 = '127.0.0.1',
@@ -51,6 +60,7 @@ class puppetmaster::puppetboard
   # Copy over Puppet keys to a place where Puppetboard can access them
   $puppet_ssldir                          = '/etc/puppetlabs/puppet/ssl'
   $puppetboard_config_dir                 = '/etc/puppetlabs/puppetboard'
+  $puppetboard_htpasswd_file              = "${apache_conf_dir}/puppetboard.htpasswd"
   $puppetboard_ssl_dir                    = "${puppetboard_config_dir}/ssl"
   $puppetdb_cert                          = "${puppetboard_ssl_dir}/${::fqdn}.crt"
   $puppetdb_key                           = "${puppetboard_ssl_dir}/${::fqdn}.key"
@@ -111,10 +121,16 @@ class puppetmaster::puppetboard
   # https://tickets.puppetlabs.com/browse/MODULES-5990
   # https://tickets.puppetlabs.com/browse/MODULES-3116
   #
-  $apache_confd_dir = $::osfamily ? {
-    'Debian' => '/etc/apache2/conf-enabled',
-    'RedHat' => '/etc/httpd/conf.d',
-    default  => '/etc/httpd/conf.d',
+  case $::osfamily {
+    'Debian': {
+      $apache_conf_dir = '/etc/apache2'
+      $apache_confd_dir = "${apache_conf_dir}/conf-enabled" }
+    'RedHat': {
+      $apache_conf_dir = '/etc/httpd'
+      $apache_confd_dir = "${apache_conf_dir}/conf.d" }
+    default: {
+      $apache_conf_dir = '/etc/httpd'
+      $apache_confd_dir = "${apache_conf_dir}/conf.d" }
   }
 
   class { '::apache':
@@ -151,6 +167,44 @@ class puppetmaster::puppetboard
   }
 
   class { '::puppetboard::apache::conf': }
+
+  if $puppetboard_require_auth {
+    include ::apache::mod::auth_basic
+    include ::apache::mod::authn_core
+    include ::apache::mod::authn_file
+    include ::apache::mod::authz_user
+
+    file { "${apache_confd_dir}/puppetboard-basic-auth.conf":
+      ensure  => 'present',
+      content => template('puppetmaster/puppetboard-basic-auth.conf.erb'),
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      notify  => Class['::apache::service'],
+    }
+
+    # Create basic auth user and set password as needed. Note that if either
+    # the username or password changes the file is recreated (see "man htpasswd").
+    exec { 'set-puppetdb-password':
+      command   => "echo ${puppetboard_password}|htpasswd -i -c ${puppetboard_htpasswd_file} ${puppetboard_username}",
+      unless    => "echo ${puppetboard_password}|htpasswd -i -v ${puppetboard_htpasswd_file} ${puppetboard_username}",
+      path      => ['/bin','/usr/bin'],
+      logoutput => false,
+    }
+
+  } else {
+    # If we could easily ensure that the above modules are disabled we would
+    # do that. But we can't, not at least in a cross-platform way. So we just
+    # get rid of the config file to disable authentication itself.
+    file { "${apache_confd_dir}/puppetboard_basic_auth.conf":
+      ensure => 'absent',
+      notify => Class['::apache::service'],
+    }
+
+    file { $puppetboard_htpasswd_file:
+      ensure => 'absent',
+    }
+  }
 
   if $manage_packetfilter {
     @firewall { '00443 accept tls traffic to puppetserver':

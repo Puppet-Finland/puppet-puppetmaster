@@ -1,0 +1,7 @@
+<Location /puppetboard>
+    AuthType Basic
+    AuthName "Login to Puppetboard"
+    AuthBasicProvider file
+    AuthUserFile <%= @puppetboard_htpasswd_file %>
+    Require valid-user
+</Location>

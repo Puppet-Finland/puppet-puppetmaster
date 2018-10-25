@@ -2,7 +2,13 @@
 if [0, 2].include? @kafo.exit_code
   say "\n" + "<%= color('Puppetserver is now listening for agent connections on TCP port 8140', :good) %>"
   begin
-    say "<%= color('Puppetboard can be reached from https://<instance-ip>/puppetboard', :good) %>" if module_enabled? 'puppetmaster_puppetboard'
+    if module_enabled? 'puppetmaster_puppetboard'
+      say "<%= color('Puppetboard can be reached from https://<instance-ip>/puppetboard', :good) %>"
+      if param('puppetmaster_puppetboard', 'puppetboard_require_auth').value == true
+        say "<%= color('Puppetboard username: #{param('puppetmaster_puppetboard', 'puppetboard_username').value}', :good) %>"
+        say "<%= color('Puppetboard password: #{param('puppetmaster_puppetboard', 'puppetboard_password').value}', :good) %>"
+      end
+    end
   rescue NoMethodError
   end
   say "\n" + 'Please ensure that your firewall is not blocking access to the configured Puppet services'
