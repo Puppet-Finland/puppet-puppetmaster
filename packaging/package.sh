@@ -38,7 +38,7 @@ cp -r ../modules $BUILD_DIR/
 # copied there correctlyi
 rm -f $BUILD_DIR/modules/puppetmaster
 mkdir $PUPPETMASTER_MODULE_DIR
-cp -r ../manifests ../files ../metadata.json ../LICENSE ../README.md $PUPPETMASTER_MODULE_DIR
+cp -r ../manifests ../files ../templates ../metadata.json ../LICENSE ../README.md $PUPPETMASTER_MODULE_DIR
 
 echo "Removing .yardoc directories"
 find $BUILD_DIR -type d -name ".yardoc"|xargs rm -rf
