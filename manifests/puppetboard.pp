@@ -16,7 +16,7 @@
 #
 # $manage_packetfilter:: Manage IPv4 and IPv6 rules. Defaults to false.
 #
-# $puppetboard_require_auth:: Require basic authentication in Puppetboard. Defaults to true.
+# $puppetboard_require_auth:: Require basic authentication in Puppetboard. Defaults to true, as Puppetboard exposes lots of information about your infrastructure and should not be accessible to anyone, not even internally within an organization or a network. So, you _should not_ disable this unless you are going to limit access to Puppetboard by some other means such as IP-based filtering or by using some other form of authentication.
 #
 # $puppetboard_username:: Username for accessing Puppetboard. Defaults to 'admin'.
 #
