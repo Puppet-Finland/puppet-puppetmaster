@@ -1,6 +1,6 @@
 {
   "name": "puppetfinland-puppetmaster",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "author": "Puppet-Finland team",
   "license": "BSD license",
   "summary": "A simple wrapper class for setting up puppetmasters",
