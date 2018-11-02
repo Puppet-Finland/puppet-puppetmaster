@@ -123,4 +123,7 @@ fi
 
 $PUPPET_APPLY $BASEDIR/vagrant/kafo.pp
 
+$PUPPET_APPLY $BASEDIR/vagrant/remove_system_ruby.pp
+
+
 cd $CWD

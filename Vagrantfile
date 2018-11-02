@@ -32,7 +32,6 @@ Vagrant.configure("2") do |config|
       s.path = "vagrant/prepare.sh"
       s.args = ["-b", "/usr/share/puppetmaster-installer", "-m"]
     end
-    box.vm.provision "shell", inline: "puppet apply --modulepath /usr/share/puppetmaster-installer/modules /usr/share/puppetmaster-installer/vagrant/xenial.pp"
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 4096
@@ -103,7 +102,6 @@ Vagrant.configure("2") do |config|
       s.path = "vagrant/prepare.sh"
       s.args = ["-b", "/usr/share/puppetmaster-installer", "-m"]
     end
-    box.vm.provision "shell", inline: "puppet apply --modulepath /usr/share/puppetmaster-installer/modules /usr/share/puppetmaster-installer/vagrant/xenial.pp"
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 4096
