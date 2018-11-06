@@ -8,6 +8,8 @@ packaging/build
 Puppetfile.lock
 configuration*.log
 .vagrant
+\#*\#
+.\#*
 *~
-ubuntu-xenial-16.04-cloudimg-console.log
+ubuntu-*-cloudimg-console.log
 config/installer-scenarios.d/last_scenario.yaml
