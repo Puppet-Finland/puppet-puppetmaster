@@ -22,4 +22,7 @@ end
 # Randomize Puppetboard password if it is not explicitly set. We do this even
 # when puppetboard_require_auth is disabled, because otherwise we would have to
 # define an empty string as the default parameter value.
-randomize_parameter 'puppetmaster_puppetboard', 'puppetboard_password' if module_enabled? 'puppetmaster_puppetboard'
+begin
+  randomize_parameter 'puppetmaster_puppetboard', 'puppetboard_password' if module_enabled? 'puppetmaster_puppetboard'
+rescue NoMethodError
+end

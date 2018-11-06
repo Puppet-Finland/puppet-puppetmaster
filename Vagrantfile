@@ -31,8 +31,8 @@ Vagrant.configure("2") do |config|
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
       s.args = ["-b", "/usr/share/puppetmaster-installer", "-m"]
+      s.env = {"RUN_INSTALLER" => ENV['RUN_INSTALLER'] }
     end
-    box.vm.provision "shell", inline: "puppet apply --modulepath /usr/share/puppetmaster-installer/modules /usr/share/puppetmaster-installer/vagrant/xenial.pp"
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 4096
@@ -51,6 +51,7 @@ Vagrant.configure("2") do |config|
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
       s.args = ["-b", "/usr/share/puppetmaster-installer", "-m"]
+      s.env = {"RUN_INSTALLER" => ENV['RUN_INSTALLER'] }
     end
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
@@ -68,6 +69,7 @@ Vagrant.configure("2") do |config|
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
       s.args = ["-b", "/usr/share/puppetmaster-installer", "-m"]
+      s.env = {"RUN_INSTALLER" => ENV['RUN_INSTALLER'] }
     end
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
@@ -102,8 +104,8 @@ Vagrant.configure("2") do |config|
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
       s.args = ["-b", "/usr/share/puppetmaster-installer", "-m"]
+      s.env = {"RUN_INSTALLER" => ENV['RUN_INSTALLER'] }
     end
-    box.vm.provision "shell", inline: "puppet apply --modulepath /usr/share/puppetmaster-installer/modules /usr/share/puppetmaster-installer/vagrant/xenial.pp"
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
       vb.memory = 4096
