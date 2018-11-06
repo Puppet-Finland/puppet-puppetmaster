@@ -31,7 +31,8 @@ Vagrant.configure("2") do |config|
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
       s.args = ["-b", "/usr/share/puppetmaster-installer", "-m"]
-      s.env = {"RUN_INSTALLER" => ENV['RUN_INSTALLER'] }
+      s.env = {"RUN_INSTALLER" => ENV['RUN_INSTALLER'],
+               "SCENARIO"      => ENV['SCENARIO'] }
     end
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
@@ -51,7 +52,8 @@ Vagrant.configure("2") do |config|
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
       s.args = ["-b", "/usr/share/puppetmaster-installer", "-m"]
-      s.env = {"RUN_INSTALLER" => ENV['RUN_INSTALLER'] }
+      s.env = {"RUN_INSTALLER" => ENV['RUN_INSTALLER'],
+               "SCENARIO"      => ENV['SCENARIO'] }
     end
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
@@ -69,7 +71,8 @@ Vagrant.configure("2") do |config|
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
       s.args = ["-b", "/usr/share/puppetmaster-installer", "-m"]
-      s.env = {"RUN_INSTALLER" => ENV['RUN_INSTALLER'] }
+      s.env = {"RUN_INSTALLER" => ENV['RUN_INSTALLER'],
+               "SCENARIO"      => ENV['SCENARIO'] }
     end
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
@@ -104,7 +107,8 @@ Vagrant.configure("2") do |config|
     box.vm.provision "shell" do |s|
       s.path = "vagrant/prepare.sh"
       s.args = ["-b", "/usr/share/puppetmaster-installer", "-m"]
-      s.env = {"RUN_INSTALLER" => ENV['RUN_INSTALLER'] }
+      s.env = {"RUN_INSTALLER" => ENV['RUN_INSTALLER'],
+               "SCENARIO"      => ENV['SCENARIO'] }
     end
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false

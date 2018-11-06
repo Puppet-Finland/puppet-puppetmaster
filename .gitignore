@@ -8,6 +8,7 @@ packaging/build
 Puppetfile.lock
 configuration*.log
 .vagrant
+vagrant/test/logs
 \#*\#
 .\#*
 *~
