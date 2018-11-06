@@ -59,6 +59,12 @@ The "-i" switch to sudo ensures that the environment is root's environment, whic
 
 This repository makes heavy use of Vagrant and Virtualbox for testing. You will need to use a fairly up-to-date Vagrant or you will run into networking issue with the Ubuntu boxes. We recommend using Vagrant 2.1.5 or later.
 
+It is possible to run installer at the end of provisioning like this:
+
+    RUN_INSTALLER=true vagrant up puppetserver-bionic
+
+The end result should be a working puppetserver. Currently this testing is limited to one hardcoded scenario and settings.
+
 ## Creating deb/rpm packages
 
 Creating Debian and RPM packages is straightforward with the Debian 9 -based packager VM:

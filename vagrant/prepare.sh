@@ -13,6 +13,9 @@ usage() {
     echo " -l   Install librarian-puppet"
     echo " -m   Install Puppet modules required by Kafo with librarian-puppet."
     echo "      Implies -l."
+    echo
+    echo "Environment variables:"
+    echo "  RUN_INSTALLER=true: run installer at the end of the provisioning" 
     exit 1
 }
 
@@ -124,6 +127,10 @@ fi
 $PUPPET_APPLY $BASEDIR/vagrant/kafo.pp
 
 $PUPPET_APPLY $BASEDIR/vagrant/remove_system_ruby.pp
+
+if [ "$RUN_INSTALLER" = "true" ]; then
+    $PUPPET_APPLY $BASEDIR/vagrant/puppetmaster_install.pp
+fi
 
 
 cd $CWD
