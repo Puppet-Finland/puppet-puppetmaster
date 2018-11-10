@@ -2,13 +2,13 @@ notify { 'Installing puppetmaster': }
 
 $installer_dir = '/usr/share/puppetmaster-installer'
 $last_scenario = "${installer_dir}/config/installer-scenarios.d/last_scenario.yaml"
-$install_cmd = "${installer_dir}/bin/puppetmaster-installer --scenario puppetserver --puppetmaster-puppetserver-autosign=true --puppetmaster-puppetserver-timezone='Europe/Helsinki'"
+$install_cmd = "${installer_dir}/bin/puppetmaster-installer --scenario ${facts['scenario']} --dont-save-answers"
 
 file { $last_scenario:
   ensure => 'absent',
 }
 
-exec { 'Setup vanilla puppetserver':
+exec { "Run puppetmaster scenario ${facts['scenario']}":
   cwd       => $installer_dir,
   logoutput => true,
   command   => $install_cmd,

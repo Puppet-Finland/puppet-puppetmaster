@@ -129,6 +129,7 @@ $PUPPET_APPLY $BASEDIR/vagrant/kafo.pp
 $PUPPET_APPLY $BASEDIR/vagrant/remove_system_ruby.pp
 
 if [ "$RUN_INSTALLER" = "true" ]; then
+    export FACTER_scenario=$SCENARIO
     $PUPPET_APPLY $BASEDIR/vagrant/puppetmaster_install.pp
 fi
 

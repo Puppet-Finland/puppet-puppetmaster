@@ -57,13 +57,22 @@ The "-i" switch to sudo ensures that the environment is root's environment, whic
 
 ## Testing with Vagrant
 
-This repository makes heavy use of Vagrant and Virtualbox for testing. You will need to use a fairly up-to-date Vagrant or you will run into networking issue with the Ubuntu boxes. We recommend using Vagrant 2.1.5 or later.
+This repository makes heavy use of Vagrant and Virtualbox for testing. You will
+need to use a fairly up-to-date Vagrant or you will run into networking issue
+with the Ubuntu boxes. We recommend using Vagrant 2.1.5 or later.
 
-It is possible to run installer at the end of provisioning like this:
+It is possible to run installer at the end of provisioning. This feature is
+primarily designed for Vagrant-based testing. To automatically setup a
+puppetserver with your desired answers first copy your answer file to
+config/installer-scenarios.d and run the installer like this:
 
-    RUN_INSTALLER=true vagrant up puppetserver-bionic
+    RUN_INSTALLER=true SCENARIO=puppetserver vagrant up puppetserver-bionic
 
-The end result should be a working puppetserver. Currently this testing is limited to one hardcoded scenario and settings.
+The answer file needs to match the scenario you chose. See [vagrant/run_vagrant_tests.sh](vagrant/run_vagrant_tests.sh)
+to see how this feature is utilized to automate regression testing.
+
+Alternatively you can use installer's command-line parameters to define your
+answers.
 
 ## Creating deb/rpm packages
 
