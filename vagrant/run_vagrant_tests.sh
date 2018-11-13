@@ -50,4 +50,14 @@ run_test puppetserver-bionic puppetserver puppetserver-answers.yaml_default
 run_test puppetserver-stretch puppetserver puppetserver-answers.yaml_default
 run_test puppetserver-centos7 puppetserver puppetserver-answers.yaml_default
 
+# Puppetserver + PuppetDB with default settings
+run_test puppetserver-bionic puppetserver-with-puppetdb puppetserver-with-puppetdb-answers.yaml_default
+run_test puppetserver-stretch puppetserver-with-puppetdb puppetserver-with-puppetdb-answers.yaml_default
+run_test puppetserver-centos7 puppetserver-with-puppetdb puppetserver-with-puppetdb-answers.yaml_default
+
+# Puppetserver + PuppetDB + Puppetboard with default settings
+run_test puppetserver-bionic puppetserver-with-puppetboard puppetserver-with-puppetboard-answers.yaml_default
+run_test puppetserver-stretch puppetserver-with-puppetboard puppetserver-with-puppetboard-answers.yaml_default
+run_test puppetserver-centos7 puppetserver-with-puppetboard puppetserver-with-puppetboard-answers.yaml_default
+
 
