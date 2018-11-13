@@ -1,0 +1,15 @@
+---
+puppetmaster::puppetboard:
+  puppetdb_database_password: changeme
+  puppetboard_password: changeme
+  puppetboard_require_auth: true
+  puppetboard_username: admin
+  timezone: Etc/UTC
+  manage_packetfilter: false
+  puppetserver_allow_ipv4: 127.0.0.1
+  puppetserver_allow_ipv6: "::1"
+  server_reports: store,puppetdb
+  autosign: "/etc/puppetlabs/puppet/autosign.conf"
+  server_external_nodes: ''
+  autosign_entries:
+
