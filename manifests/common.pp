@@ -2,8 +2,13 @@
 #
 class puppetmaster::common
 (
-  Array[String] $primary_names,
-  String        $timezone,
+  Array[String]           $primary_names,
+  String                  $timezone,
+  Boolean                 $control_repo = false,
+  Optiona[Enum['gitlab']] $provider = undef,
+  Optional[String]        $repo_url = undef,
+  Optional[String]        $key_path = undef,
+  Optional[String]        $repo_host = undef,
 )
 {
 
@@ -14,11 +19,6 @@ class puppetmaster::common
   }
 
   ensure_packages($packages)
-
-  package { 'r10k':
-    ensure   => 'present',
-    provider => 'puppet_gem',
-  }
 
   package { 'hiera-eyaml':
     ensure   => 'present',
@@ -60,5 +60,14 @@ class puppetmaster::common
   class { '::hosts':
     primary_names => $primary_names,
   }
-}
 
+  if $control_repo {
+
+    class { '::puppetmaster::common::r10k':
+      provider  => $provider,
+      repo_url  => $repo_url,
+      key_path  => $key_path,
+      repo_host => $repo_host,
+    }
+  }
+}

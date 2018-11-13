@@ -12,6 +12,8 @@
 #
 # $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki' or 'Etc/UTC'.
 #
+# $control_repo:: Enable control repo. You MUST also set up $provider, $repo_url, $key_path and $repo_host
+#                 in Advanced parameters to use this functionality. Defaults to false.
 # == Advanced parameters:
 #
 # $manage_packetfilter:: Manage IPv4 and IPv6 rules. Defaults to false.
@@ -28,6 +30,13 @@
 #
 # $server_external_nodes:: The path to the ENC executable. Defaults to empty string.
 #
+# $provider:: Your git repository provider. Currently supported are: 'gitlab'.
+# 
+# $repo_url:: The url to your control repository. Example: 'git@gitlab.com:mycompany/control-repo.git'
+#
+# $key_path:: The private key to use for accessing $repo_url. defaults to '/etc/puppetlabs/r10k/ssh/r10k_key'
+# 
+# $repo_host:: The fully qualified name of the $provider host. Example gitlab.com
 class puppetmaster::puppetboard
 (
   String                   $puppetdb_database_password,
@@ -42,6 +51,11 @@ class puppetmaster::puppetboard
   Variant[Boolean, String] $autosign = '/etc/puppetlabs/puppet/autosign.conf',
   String                   $server_external_nodes = '',
   Optional[Array[String]]  $autosign_entries = undef,
+  String                   $key_path = '/etc/puppetlabs/r10k/ssh/r10k_key',
+  Boolean                  $control_repo = false,
+  Optional[Enum['gitlab']] $provider = undef,
+  Optional[String]         $repo_url = undef,
+  Optional[String]         $repo_host = undef,
 )
 {
 
@@ -76,6 +90,11 @@ class puppetmaster::puppetboard
     puppetdb_database_password => $puppetdb_database_password,
     timezone                   => $timezone,
     server_external_nodes      => $server_external_nodes,
+    provider                   => $provider,
+    key_path                   => $key_path,
+    control_repo               => $control_repo,
+    repo_url                   => $repo_url,
+    repo_host                  => $repo_host,
     before                     => Class['::puppetboard'],
   }
 

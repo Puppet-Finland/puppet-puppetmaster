@@ -62,3 +62,4 @@ mod 'theforeman/tftp',
     :commit => 'df5b665cc7574baeec612d79fc0057a0931fe067'
 mod 'saz-timezone', '5.0.2'
 mod 'puppetlabs-vcsrepo', '2.3.0'
+mod 'puppet-r10k', '6.7.0'
