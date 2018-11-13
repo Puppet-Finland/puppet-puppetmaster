@@ -53,6 +53,40 @@ To run the installer from the installer directory:
 
 The "-i" switch to sudo ensures that the environment is root's environment, which is particularly important on Ubuntu and Debian. The -i switch to the installer makes it run in interactive mode, which is probably what you want to do.
 
+You can run the installer automatically like this:
+
+    $ sudo -i
+    $ /usr/share/puppetmaster-installer/bin/puppetmaster-installer\
+     --scenario puppetserver-with-puppetboard\
+     --puppetmaster-puppetboard-puppetdb-database-password='pass'\
+     --puppetmaster-puppetboard-timezone='Europe/Helsinki'
+
+When using Vagrant you can automate puppetserver setup during provisioning as
+well. To do this you need to modify two config files:
+
+* config/automated_install.conf (basic settings)
+* config/installer-scenarios.d/automated_install_answers.yaml (installer settings)
+
+Make sure that you change the default passwords in the answer file.
+
+If you change the scenario from the default (puppetserver-with-puppetboard) make
+sure that your answer file matches the scenario. You can create a matching
+answer file by removing config/installer-scenarios.d/last_scenario.yaml (if
+present), launching the installer interactively in a Vagrant VM, selecting the
+desired scenario, setting the parameters and launching the installer. Once the
+installer is running, the contents of that scenario's answer file will match
+what you selected. You can then copy that answer file to
+automated_install_answers.yaml. Alternatively you can use "Display current
+config" output as the content of the answer file. However, you then need to
+replace the first underscore ("\_") with "::" because the kafo installer does
+module mapping. In either case make sure you have defined the passwords in the
+answer file or installation will fail immediately.
+
+Then, in the root of the repository, run
+
+    $ sudo -i
+    $ bin/puppetmaster-install.sh
+
 # Development
 
 ## Testing with Vagrant
