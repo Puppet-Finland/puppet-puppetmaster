@@ -16,6 +16,8 @@ usage() {
     echo
     echo "Environment variables:"
     echo "  RUN_INSTALLER=true: run installer at the end of the provisioning" 
+    echo "  SCENARIO=<scenario>: the scenario to use. For example \"puppetserver\"."
+    echo
     exit 1
 }
 
