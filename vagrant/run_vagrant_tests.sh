@@ -45,6 +45,9 @@ mkdir -p test/logs
 TIMESTAMP=$(date +'%s')
 COMMIT=$(git rev-parse --short HEAD)
 
+# Puppetsever with GitLab r10k configuration
+run_test puppetserver-bionic puppetserver puppetserver-answers.yaml_gitlab
+
 # Puppetserver with default settings
 run_test puppetserver-bionic puppetserver puppetserver-answers.yaml_default
 run_test puppetserver-stretch puppetserver puppetserver-answers.yaml_default
