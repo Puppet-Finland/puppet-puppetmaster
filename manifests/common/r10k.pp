@@ -8,22 +8,22 @@ class puppetmaster::common::r10k
   String         $repo_host,
 )
 {
-  
+
   file { '/root/.ssh':
     ensure => 'directory',
     owner  => 'root',
     group  => 'root',
     mode   => '0600',
   }
-  
+
   case $provider {
     'gitlab': {
 
       sshkey { 'gitlab.com':
-        ensure => present,
-        type   => 'ecdsa-sha2-nistp256',
-        target => '/root/.ssh/known_hosts',
-        key    => 'AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFSMqzJeV9rUzU4kWitGjeR4PWSa29SPqJ1fVkhtj3Hw9xjLVXVYrU9QlYWrOLXBpQ6KWjbjTDTdDkoohFzgbEY=',
+        ensure  => present,
+        type    => 'ecdsa-sha2-nistp256',
+        target  => '/root/.ssh/known_hosts',
+        key     => 'AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFSMqzJeV9rUzU4kWitGjeR4PWSa29SPqJ1fVkhtj3Hw9xjLVXVYrU9QlYWrOLXBpQ6KWjbjTDTdDkoohFzgbEY=',
         require => File['/root/.ssh'],
       }
     }
@@ -56,4 +56,4 @@ class puppetmaster::common::r10k
     require => File['/root/.ssh'],
   }
 }
-  
+
