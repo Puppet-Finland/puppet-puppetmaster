@@ -10,9 +10,9 @@ puppetmaster::puppetserver:
   show_diff: false
   server_foreman: false
   server_external_nodes: ''
-  autosign_entries:
-  control_repo: true
-  repo_host: gitlab.com
-  repo_url: "git@gitlab.com:puppeteers/control-repo.git"
+  autosign_entries:
+  control_repo: true
+  repo_host: gitlab.com
+  repo_url: "git@gitlab.com:puppeteers/control-repo.git"
   provider: gitlab
   key_path: "/etc/puppetlabs/r10k/ssh/r10k_key"
