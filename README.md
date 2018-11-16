@@ -87,6 +87,14 @@ Then, in the root of the repository, run
     $ sudo -i
     $ bin/puppetmaster-install.sh
 
+Vagrant will automatically copy your r10k deployment key and eyaml keys to
+correct locations if they are placed under keys directory in the repository
+root:
+
+ * private_key.pkcs7.pem (eyaml private key)
+ * public_key.pkcs7.pem (eyaml public key)
+ * r10k_key (r10k deployment key)
+
 # Development
 
 ## Testing with Vagrant
