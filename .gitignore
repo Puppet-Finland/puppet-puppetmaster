@@ -14,3 +14,4 @@ vagrant/test/logs
 *~
 ubuntu-*-cloudimg-console.log
 config/installer-scenarios.d/last_scenario.yaml
+keys/
