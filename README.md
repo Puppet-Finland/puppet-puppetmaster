@@ -122,8 +122,15 @@ Creating Debian and RPM packages is straightforward with the Debian 9 -based pac
 
     $ vagrant up packager
     $ vagrant ssh packager
-    $ cd puppetmaster-installer/packaging
+    $ cd /home/ubuntu/puppetmaster-installer/packaging
     $ ./package.sh
+
+When upgrading package to new version the following Git spell will show which
+files have been added, modified or deleted since the last release:
+
+    $ git show --pretty="" --name-status <start-commit>...HEAD|sort|uniq
+
+This helps avoid leaving critical files out of the packages.
 
 ## Living with changes Kafo makes to versioned answer files
 
