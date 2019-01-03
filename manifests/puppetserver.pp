@@ -28,7 +28,7 @@
 #
 # $show_diff:: Used internally in Foreman scenarios. Do not change the default (false) unless you know what you are doing.
 #
-# $provider:: Your git repository provider. Currently supported are: 'gitlab'.
+# $provider:: Your git repository provider. Provider 'gitlab' (gitlab.com) is fully supported, but this parameter can be any string: you just need to add the public SSH key of the Git server to /root/.ssh/known_hosts manually.
 # 
 # $repo_url:: The url to your control repository. Example: 'git@gitlab.com:mycompany/control-repo.git'
 #
@@ -49,7 +49,7 @@ class puppetmaster::puppetserver
   String                   $server_external_nodes = '',
   String                   $key_path = '/etc/puppetlabs/r10k/ssh/r10k_key',
   Boolean                  $control_repo = false,
-  Optional[Enum['gitlab']] $provider = undef,
+  Optional[String]         $provider = undef,
   Optional[Array[String]]  $autosign_entries = undef,
   Optional[String]         $repo_url = undef,
   Optional[String]         $repo_host = undef,

@@ -2,10 +2,10 @@
 #
 class puppetmaster::common::r10k
 (
-  Enum['gitlab'] $provider,
-  String         $repo_url,
-  String         $key_path,
-  String         $repo_host,
+  Optional[String] $provider,
+  String           $repo_url,
+  String           $key_path,
+  String           $repo_host,
 )
 {
 
