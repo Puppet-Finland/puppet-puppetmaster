@@ -225,7 +225,7 @@ class puppetmaster::lcm
   $foreman_manage_memcached                 = true
   $foreman_memcached_max_memory             = '8%'
   $foreman_url                              = "https://${facts['fqdn']}"
-  $primary_names                            = unique([ "${facts['fqdn']}", "${facts['hostname']}", 'puppet', "puppet.${facts['domain']}" ])
+  $primary_names                            = unique([ $facts['fqdn'], $facts['hostname'], 'puppet', "puppet.${facts['domain']}" ])
   $foreman_serveraliases                    = $primary_names
   $foreman_puppetdb_dashboard_address       = "http://${facts['fqdn']}:8080/pdb/dashboard"
   $foreman_puppetdb_address                 = "https://${facts['fqdn']}:8081/v2/commands"

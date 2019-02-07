@@ -10,6 +10,7 @@ if [0, 2].include? @kafo.exit_code
       end
     end
   rescue NoMethodError
+    nil
   end
   say "\n" + 'Please ensure that your firewall is not blocking access to the configured Puppet services'
 else
