@@ -1,3 +1,3 @@
 describe 'puppetmaster::puppetserver', :type => 'class' do
-  it { should compile }
+  it { is_expected.to compile }
 end
