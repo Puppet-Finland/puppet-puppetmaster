@@ -1,3 +1,3 @@
-describe 'puppetmaster::puppetserver', :type => 'class' do
-  it { is_expected.to compile }
+describe 'puppetmaster::puppetserver' do
+  it { is_expected.to contain_class('puppetmaster::common') }
 end
