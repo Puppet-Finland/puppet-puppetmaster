@@ -1,7 +1,7 @@
 notify { 'Running librarian-puppet': }
 
 exec { 'Run librarian-puppet':
-  cwd       => "${::basedir}",
+  cwd       => $::basedir,
   logoutput => true,
   command   => 'librarian-puppet install --verbose',
   timeout   => 600,
