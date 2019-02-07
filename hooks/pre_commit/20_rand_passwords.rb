@@ -10,12 +10,13 @@ def randomize_parameter(mod, param)
 end
 
 # Iterate over all scenarios/modules where PuppetDB password may be missing
-%w[puppetmaster_puppetdb puppetmaster_puppetboard puppetmaster_lcm].each do |mod|
+['puppetmaster_puppetdb', 'puppetmaster_puppetboard', 'puppetmaster_lcm'].each do |mod|
   begin
     randomize_parameter mod, 'puppetdb_database_password' if module_enabled? mod
   rescue NoMethodError
     # We get here every time this hook gets called, because only one of the
     # modules/scenarios will be active at a time.
+    nil
   end
 end
 
@@ -25,4 +26,5 @@ end
 begin
   randomize_parameter 'puppetmaster_puppetboard', 'puppetboard_password' if module_enabled? 'puppetmaster_puppetboard'
 rescue NoMethodError
+  nil
 end
