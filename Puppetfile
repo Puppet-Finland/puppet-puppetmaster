@@ -27,9 +27,6 @@ mod 'theforeman/git',
     :git => 'https://github.com/theforeman/puppet-git',
     :commit => 'c7662b61cf31e45e13f28f7ce6a7a3a1b892cff6'
 mod 'chrekh-hosts', '2.3.1'
-mod 'puppetfinland-kafo',
-    :git => 'https://github.com/Puppet-Finland/puppet-kafo.git',
-    :tag => '1.0.2'
 mod 'saz-locales', '2.5.1'
 mod 'puppet-make', '2.1.0'
 mod 'saz-memcached', '3.3.0'
