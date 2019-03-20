@@ -63,7 +63,7 @@ class puppetmaster::common
 
     file { "${eyaml_dir}/${eyaml_key}":
       mode    => '0600',
-      require => Exec["copy-eyaml-${eyaml_key}"],
+      require => Exec["copy-eyaml-key-${eyaml_key}"],
       *       => $eyaml_file_defaults,
     }
   }
