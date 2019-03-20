@@ -30,13 +30,13 @@
 #
 # $server_external_nodes:: The path to the ENC executable. Defaults to empty string.
 #
-# $provider:: Your git repository provider. Provider 'gitlab' (gitlab.com) is fully supported, but this parameter can be any string: you just need to add the public SSH key of the Git server to /root/.ssh/known_hosts manually.
+# $provider:: Your git repository provider. Providers 'gitlab' (gitlab.com) and 'bitbucket' are fully supported, but this parameter can be any string: you just need to add the public SSH key of the Git server to /root/.ssh/known_hosts manually.
 # 
 # $repo_url:: The url to your control repository. Example: 'git@gitlab.com:mycompany/control-repo.git'
 #
 # $key_path:: The private key to use for accessing $repo_url. defaults to '/etc/puppetlabs/r10k/ssh/r10k_key'
 # 
-# $repo_host:: The fully qualified name of the $provider host. Example gitlab.com
+# $repo_host:: The fully qualified name of the $provider host. For example 'gitlab.com' or 'bitbucket.org'.
 class puppetmaster::puppetboard
 (
   String                   $puppetdb_database_password,
