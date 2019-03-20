@@ -59,6 +59,8 @@ class puppetmaster::puppetboard
 )
 {
 
+  include ::puppetmaster::package_cache
+
   $puppetboard_puppetdb_host              = $facts['fqdn']
   $puppetboard_puppetdb_port              = 8081
   $puppetboard_puppetdb_dashboard_address = "http://${facts['fqdn']}:8080/pdb/dashboard"

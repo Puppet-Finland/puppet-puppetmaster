@@ -55,6 +55,7 @@ class puppetmaster::puppetserver
   Optional[String]         $repo_host = undef,
 )
 {
+  include ::puppetmaster::package_cache
 
   if $control_repo {
     unless $provider and $repo_url and $key_path and $repo_host {
