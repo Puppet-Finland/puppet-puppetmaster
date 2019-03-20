@@ -38,6 +38,8 @@ class puppetmaster::common
     *      => $eyaml_file_defaults,
   }
 
+  # For simplicity always create the eyaml keys, even if they get overwritten
+  # by user-defined keys in the next step.
   exec { 'create-eyaml-keys':
     user    => 'puppet',
     cwd     => $eyaml_dir,
@@ -47,10 +49,23 @@ class puppetmaster::common
     require => [ Package['hiera-eyaml'], File[$eyaml_dir] ],
   }
 
-  file { ["${eyaml_dir}/private_key.pkcs7.pem","${eyaml_dir}/public_key.pkcs7.pem"]:
-    mode    => '0600',
-    require => Exec['create-eyaml-keys'],
-    *       => $eyaml_file_defaults,
+  # If user has added eyaml keys into the installer directory copy them over.
+  # Even if keys are not there, ensure that their permissions are correct
+  ['private_key.pkcs7.pem','public_key.pkcs7.pem'].each |$eyaml_key| {
+    $installer_dir = '/usr/share/puppetmaster-installer'
+
+    exec { "copy-eyaml-key-${eyaml_key}":
+      cwd     => $installer_dir,
+      command => "test -r ${eyaml_key} && cp -v ${eyaml_key} ${eyaml_dir}/",
+      path    => ['/bin','/sbin','/usr/bin','/usr/sbin'],
+      require => Exec['create-eyaml-keys'],
+    }
+
+    file { "${eyaml_dir}/${eyaml_key}":
+      mode    => '0600',
+      require => Exec["copy-eyaml-key-${eyaml_key}"],
+      *       => $eyaml_file_defaults,
+    }
   }
 
   class { '::timezone':
