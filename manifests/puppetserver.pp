@@ -58,8 +58,8 @@ class puppetmaster::puppetserver
   include ::puppetmaster::package_cache
 
   if $control_repo {
-    unless $provider and $repo_url and $key_path and $repo_host {
-      notify { 'Control repository functionality is enabled. You must also define $provider, $repo_url and $repo_host': }
+    unless $provider and $repo_url and $key_path {
+      notify { 'Control repository functionality is enabled. You must also define $provider, $repo_url and in some cases also $repo_host': }
       $use_control_repo = false
     }
     else {
