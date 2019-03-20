@@ -55,6 +55,8 @@ class puppetmaster::puppetdb
   Optional[String]         $repo_host = undef,
 )
 {
+  include ::puppetmaster::package_cache
+
   class { '::puppetmaster::puppetserver':
     manage_packetfilter     => $manage_packetfilter,
     puppetserver_allow_ipv4 => $puppetserver_allow_ipv4,
