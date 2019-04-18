@@ -56,7 +56,7 @@ class puppetmaster::common
 
     exec { "copy-eyaml-key-${eyaml_key}":
       cwd     => $installer_dir,
-      command => "test -r ${eyaml_key} && cp -v ${eyaml_key} ${eyaml_dir}/",
+      command => "test -r ${eyaml_key} && cp -v ${eyaml_key} ${eyaml_dir}/ || true",
       path    => ['/bin','/sbin','/usr/bin','/usr/sbin'],
       require => Exec['create-eyaml-keys'],
     }
