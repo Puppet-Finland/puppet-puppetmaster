@@ -26,6 +26,7 @@ class puppetmaster::common
   }
 
   $eyaml_dir = '/etc/puppetlabs/puppet/eyaml'
+  $eyaml_keys_dir = "${eyaml_dir}/keys"
 
   $eyaml_file_defaults = {
     owner  => 'puppet',
@@ -36,6 +37,13 @@ class puppetmaster::common
     ensure => 'directory',
     mode   => '0700',
     *      => $eyaml_file_defaults,
+  }
+
+  file { $eyaml_keys_dir:
+    ensure  => 'directory',
+    mode    => '0700',
+    require => File[$eyaml_dir],
+    *       => $eyaml_file_defaults,
   }
 
   # For simplicity always create the eyaml keys, even if they get overwritten
@@ -56,12 +64,12 @@ class puppetmaster::common
 
     exec { "copy-eyaml-key-${eyaml_key}":
       cwd     => $installer_dir,
-      command => "test -r ${eyaml_key} && cp -v ${eyaml_key} ${eyaml_dir}/ || true",
+      command => "test -r ${eyaml_key} && cp -v ${eyaml_key} ${eyaml_keys_dir} || true",
       path    => ['/bin','/sbin','/usr/bin','/usr/sbin'],
       require => Exec['create-eyaml-keys'],
     }
 
-    file { "${eyaml_dir}/${eyaml_key}":
+    file { "${eyaml_keys_dir}/${eyaml_key}":
       mode    => '0600',
       require => Exec["copy-eyaml-key-${eyaml_key}"],
       *       => $eyaml_file_defaults,
