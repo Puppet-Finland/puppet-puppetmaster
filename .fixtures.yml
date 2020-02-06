@@ -1,0 +1,19 @@
+fixtures:
+  forge_modules:
+    debconf:
+      repo: "stm/debconf"
+      ref:  "3.0.0"
+    hosts:
+      repo: "chrekh/hosts"
+      ref:  "2.3.1"
+    stdlib:
+      repo: "puppetlabs/stdlib"
+      ref:  "4.25.1"
+    timezone:
+      repo: "saz/timezone"
+      ref:  "5.0.2"
+  repositories:
+    puppetserver_gem:
+      repo: "https://github.com/Puppet-Finland/puppetlabs-puppetserver_gem.git"
+      ref:  "c03720943996eb1269ee914c2dc24686ca37848d"
+
