@@ -1,5 +1,8 @@
 fixtures:
   forge_modules:
+    apt:
+      repo: "puppetlabs/apt"
+      ref:  "7.3.0"
     apache:
       repo: "puppetlabs/apache"
       ref:  "4.1.0"
@@ -9,15 +12,24 @@ fixtures:
     debconf:
       repo: "stm/debconf"
       ref:  "3.0.0"
+    firewall:
+      repo: "puppetlabs/firewall"
+      ref:  "1.12.0"
     hosts:
       repo: "chrekh/hosts"
       ref:  "2.3.1"
     inifile:
       repo: "puppetlabs/inifile"
       ref:  "4.1.0"
+    postgresql:
+      repo: "puppetlabs/postgresql"
+      ref:  "5.4.0"
     puppet_authorization:
       repo: "puppetlabs/puppet_authorization"
       ref:  "0.4.0"
+    puppetdb:
+      repo: "puppetlabs/puppetdb"
+      ref:  "6.0.2"
     stdlib:
       repo: "puppetlabs/stdlib"
       ref:  "4.25.1"
