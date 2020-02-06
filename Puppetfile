@@ -3,6 +3,9 @@
 
 forge 'https://forgeapi.puppetlabs.com'
 
+mod 'puppetlabs-apt', '7.3.0'
+mod 'puppetlabs-concat', '6.2.0'
+mod 'stm-debconf', '3.0.0'
 mod 'theforeman/dhcp',
     :git => 'https://github.com/theforeman/puppet-dhcp',
     :commit => '28f86453915d507c02f00574f37d3a87b6867a9f'
@@ -27,6 +30,7 @@ mod 'theforeman/git',
     :git => 'https://github.com/theforeman/puppet-git',
     :commit => 'c7662b61cf31e45e13f28f7ce6a7a3a1b892cff6'
 mod 'chrekh-hosts', '2.3.1'
+mod 'puppetlabs-inifile', '4.1.0'
 mod 'saz-locales', '2.5.1'
 mod 'puppet-make', '2.1.0'
 mod 'saz-memcached', '3.3.0'
