@@ -58,6 +58,24 @@ class puppetmaster::puppetboard
   Optional[String]         $repo_host = undef,
 )
 {
+  # From Debian 8 onwards (and on recent Ubuntu versions) use conf-enabled 
+  # instead of conf.d dir. puppetlabs-apache module does not follow this 
+  # convention, and config files are not read from the correct place.
+  #
+  # https://tickets.puppetlabs.com/browse/MODULES-5990
+  # https://tickets.puppetlabs.com/browse/MODULES-3116
+  #
+  case $::osfamily {
+    'Debian': {
+      $apache_conf_dir = '/etc/apache2'
+      $apache_confd_dir = "${apache_conf_dir}/conf-enabled" }
+    'RedHat': {
+      $apache_conf_dir = '/etc/httpd'
+      $apache_confd_dir = "${apache_conf_dir}/conf.d" }
+    default: {
+      $apache_conf_dir = '/etc/httpd'
+      $apache_confd_dir = "${apache_conf_dir}/conf.d" }
+  }
 
   include ::puppetmaster::package_cache
 
@@ -133,25 +151,6 @@ class puppetmaster::puppetboard
       seltype => $seltype,
       require => Exec[$key[1]],
     }
-  }
-
-  # From Debian 8 onwards (and on recent Ubuntu versions) use conf-enabled 
-  # instead of conf.d dir. puppetlabs-apache module does not follow this 
-  # convention, and config files are not read from the correct place.
-  #
-  # https://tickets.puppetlabs.com/browse/MODULES-5990
-  # https://tickets.puppetlabs.com/browse/MODULES-3116
-  #
-  case $::osfamily {
-    'Debian': {
-      $apache_conf_dir = '/etc/apache2'
-      $apache_confd_dir = "${apache_conf_dir}/conf-enabled" }
-    'RedHat': {
-      $apache_conf_dir = '/etc/httpd'
-      $apache_confd_dir = "${apache_conf_dir}/conf.d" }
-    default: {
-      $apache_conf_dir = '/etc/httpd'
-      $apache_confd_dir = "${apache_conf_dir}/conf.d" }
   }
 
   class { '::apache':

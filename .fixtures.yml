@@ -40,6 +40,9 @@ fixtures:
     puppet:
       repo: "https://github.com/theforeman/puppet-puppet"
       ref:  "73f7fe6cb344b1f00ff15e8779097e55bb0bf274"
+    puppetboard:
+      repo: "https://github.com/voxpupuli/puppet-module-puppetboard.git"
+      ref:  "7bff39638e1078d0b520e2222f068938fe8d9ed6"
     puppetserver_gem:
       repo: "https://github.com/Puppet-Finland/puppetlabs-puppetserver_gem.git"
       ref:  "c03720943996eb1269ee914c2dc24686ca37848d"
