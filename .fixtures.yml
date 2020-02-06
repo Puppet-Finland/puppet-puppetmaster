@@ -1,11 +1,23 @@
 fixtures:
   forge_modules:
+    apache:
+      repo: "puppetlabs/apache"
+      ref:  "4.1.0"
+    concat:
+      repo: "puppetlabs/concat"
+      ref:  "6.2.0"
     debconf:
       repo: "stm/debconf"
       ref:  "3.0.0"
     hosts:
       repo: "chrekh/hosts"
       ref:  "2.3.1"
+    inifile:
+      repo: "puppetlabs/inifile"
+      ref:  "4.1.0"
+    puppet_authorization:
+      repo: "puppetlabs/puppet_authorization"
+      ref:  "0.4.0"
     stdlib:
       repo: "puppetlabs/stdlib"
       ref:  "4.25.1"
@@ -13,6 +25,9 @@ fixtures:
       repo: "saz/timezone"
       ref:  "5.0.2"
   repositories:
+    puppet:
+      repo: "https://github.com/theforeman/puppet-puppet"
+      ref:  "73f7fe6cb344b1f00ff15e8779097e55bb0bf274"
     puppetserver_gem:
       repo: "https://github.com/Puppet-Finland/puppetlabs-puppetserver_gem.git"
       ref:  "c03720943996eb1269ee914c2dc24686ca37848d"
