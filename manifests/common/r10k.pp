@@ -24,7 +24,7 @@ class puppetmaster::common::r10k
         ensure  => present,
         type    => 'ecdsa-sha2-nistp256',
         target  => '/root/.ssh/known_hosts',
-        key     => 'AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFSMqzJeV9rUzU4kWitGjeR4PWSa29SPqJ1fVkhtj3Hw9xjLVXVYrU9QlYWrOLXBpQ6KWjbjTDTdDkoohFzgbEY=',
+        key     => 'AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFSMqzJeV9rUzU4kWitGjeR4PWSa29SPqJ1fVkhtj3Hw9xjLVXVYrU9QlYWrOLXBpQ6KWjbjTDTdDkoohFzgbEY=', # lint:ignore:140chars
         require => File['/root/.ssh'],
       }
     }
@@ -34,7 +34,7 @@ class puppetmaster::common::r10k
         ensure  => present,
         type    => 'ssh-rsa',
         target  => '/root/.ssh/known_hosts',
-        key     => 'AAAAB3NzaC1yc2EAAAABIwAAAQEAubiN81eDcafrgMeLzaFPsw2kNvEcqTKl/VqLat/MaB33pZy0y3rJZtnqwR2qOOvbwKZYKiEO1O6VqNEBxKvJJelCq0dTXWT5pbO2gDXC6h6QDXCaHo6pOHGPUy+YBaGQRGuSusMEASYiWunYN0vCAI8QaXnWMXNMdFP3jHAJH0eDsoiGnLPBlBp4TNm6rYI74nMzgz3B9IikW4WVK+dc8KZJZWYjAuORU3jc1c/NPskD2ASinf8v3xnfXeukU0sJ5N6m5E8VLjObPEO+mN2t/FZTMZLiFqPWc/ALSqnMnnhwrNi2rbfg/rd/IpL8Le3pSBne8+seeFVBoGqzHM9yXw==',
+        key     => 'AAAAB3NzaC1yc2EAAAABIwAAAQEAubiN81eDcafrgMeLzaFPsw2kNvEcqTKl/VqLat/MaB33pZy0y3rJZtnqwR2qOOvbwKZYKiEO1O6VqNEBxKvJJelCq0dTXWT5pbO2gDXC6h6QDXCaHo6pOHGPUy+YBaGQRGuSusMEASYiWunYN0vCAI8QaXnWMXNMdFP3jHAJH0eDsoiGnLPBlBp4TNm6rYI74nMzgz3B9IikW4WVK+dc8KZJZWYjAuORU3jc1c/NPskD2ASinf8v3xnfXeukU0sJ5N6m5E8VLjObPEO+mN2t/FZTMZLiFqPWc/ALSqnMnnhwrNi2rbfg/rd/IpL8Le3pSBne8+seeFVBoGqzHM9yXw==', # lint:ignore:140chars
         require => File['/root/.ssh'],
       }
     }
@@ -74,7 +74,7 @@ class puppetmaster::common::r10k
 
   exec { 'copy-r10k-key':
     cwd     => $installer_dir,
-    command => "test -r r10k_key && cp -v r10k_key ${r10k_key_dir}/ && chown root:root ${r10k_key_dir}/r10k_key && chmod 600 ${r10k_key_dir}/r10k_key",
+    command => "test -r r10k_key && cp -v r10k_key ${r10k_key_dir}/ && chown root:root ${r10k_key_dir}/r10k_key && chmod 600 ${r10k_key_dir}/r10k_key", # lint:ignore:140chars
     path    => ['/bin','/sbin','/usr/bin','/usr/sbin'],
     require => File[$r10k_key_dir],
   }
