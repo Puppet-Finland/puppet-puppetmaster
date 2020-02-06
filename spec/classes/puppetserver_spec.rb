@@ -8,13 +8,17 @@ describe 'puppetmaster::puppetserver' do
                   :ipv4_pri_addrs => '10.50.0.1',
                   :ipv6_pri_addrs => '::1' }
 
+  let(:params) do
+    {
+      'timezone'     => 'UTC',
+      'control_repo' => true
+    }
+  end
+
   on_supported_os.each do |os, os_facts|
-    context "on #{os}" do
+    context "default settings on #{os}" do
       let(:params) do
-        {
-          'timezone'     => 'UTC',
-          'control_repo' => true
-        }
+        super()
       end
 
       let(:facts) { os_facts.merge(extra_facts) }
