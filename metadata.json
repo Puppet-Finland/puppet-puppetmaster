@@ -6,7 +6,9 @@
   "license": "BSD-2-Clause",
   "source": "https://github.com/Puppet-Finland/puppet-puppetmaster",
   "project_page": "https://github.com/Puppet-Finland/puppet-puppetmaster",
-  "dependencies": [],
+  "dependencies": [
+
+  ],
   "operatingsystem_support": [
     {
       "operatingsystem": "CentOS",
@@ -33,7 +35,7 @@
       "version_requirement": ">= 5.0.0 < 6.0.0"
     }
   ],
-  "pdk-version": "1.9.0",
-  "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git",
-  "template-ref": "1.9.0-0-g7281db5"
+  "pdk-version": "1.15.0",
+  "template-url": "pdk-default#1.15.0",
+  "template-ref": "tags/1.15.0-0-g0bc522e"
 }
