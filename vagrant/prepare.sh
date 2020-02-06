@@ -9,10 +9,10 @@ usage() {
     echo
     echo "Options:"
     echo " -b   Base directory for dependency Puppet modules installed by"
-    echo "      librarian-puppet."
-    echo " -l   Install librarian-puppet"
-    echo " -m   Install Puppet modules required by Kafo with librarian-puppet."
-    echo "      Implies -l."
+    echo "      r10k."
+    echo " -r   Install r10k"
+    echo " -m   Install Puppet modules required by Kafo with r10k."
+    echo "      Implies -r."
     echo
     echo "Environment variables:"
     echo "  RUN_INSTALLER=true: run installer at the end of the provisioning" 
@@ -29,13 +29,13 @@ if [ "$1" = "" ]; then
 fi
 
 # Default values
-INSTALL_LIBRARIAN=false
+INSTALL_R10K=false
 INSTALL_MODULES=false
 
 while getopts "b:lmh" options; do
     case $options in
         b ) BASEDIR=$OPTARG;;
-        l ) INSTALL_LIBRARIAN=true;;
+        l ) INSTALL_R10K=true;;
         m ) INSTALL_MODULES=true;;
         h ) usage;;
         \? ) usage;;
@@ -117,9 +117,9 @@ export FACTER_basedir="$BASEDIR"
 
 $PUPPET_APPLY $BASEDIR/vagrant/profile.pp
 
-if [ "$INSTALL_LIBRARIAN" = "true" ] || [ "$INSTALL_MODULES" = "true" ]; then
+if [ "$INSTALL_R10K" = "true" ] || [ "$INSTALL_MODULES" = "true" ]; then
     $PUPPET_APPLY $BASEDIR/vagrant/git.pp
-    $PUPPET_APPLY $BASEDIR/vagrant/librarian.pp
+    $PUPPET_APPLY $BASEDIR/vagrant/r10k.pp
 fi
 
 if [ "$INSTALL_MODULES" = "true" ]; then

@@ -1,9 +1,9 @@
-notify { 'Running librarian-puppet': }
+notify { 'Running r10k': }
 
-exec { 'Run librarian-puppet':
+exec { 'Run r10k':
   cwd       => $::basedir,
   logoutput => true,
-  command   => 'librarian-puppet install --verbose',
+  command   => 'r10k puppetfile install --moduledir=modules',
   timeout   => 600,
   path      => ['/bin','/usr/bin','/opt/puppetlabs/bin','/opt/puppetlabs/puppet/bin'],
 }
