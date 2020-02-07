@@ -217,7 +217,7 @@ class puppetmaster::puppetboard
     # If we could easily ensure that the above modules are disabled we would
     # do that. But we can't, not at least in a cross-platform way. So we just
     # get rid of the config file to disable authentication itself.
-    file { "${apache_confd_dir}/puppetboard_basic_auth.conf":
+    file { "${apache_confd_dir}/puppetboard-basic-auth.conf":
       ensure => 'absent',
       notify => Class['::apache::service'],
     }
