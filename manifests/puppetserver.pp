@@ -127,7 +127,7 @@ class puppetmaster::puppetserver
     server_reports                         => $server_reports,
     server_external_nodes                  => $server_external_nodes,
     server_environment_class_cache_enabled => true,
-    require                                => [ File['/etc/puppetlabs/puppet/fileserver.conf'], Puppet_authorization::Rule['files'] ],
+    require                                => Puppet_authorization::Rule['files'],
   }
 
   if $manage_packetfilter {
