@@ -26,4 +26,48 @@ describe 'puppetmaster::puppetboard' do
       it { is_expected.to compile }
     end
   end
+
+  # Run the following tests on only one platform. Details on the syntax are here:
+  #
+  # <https://github.com/mcanevet/rspec-puppet-facts>
+  #
+  bionic = { supported_os: [
+               {
+                 'operatingsystem'        => 'Ubuntu',
+                 'operatingsystemrelease' => ['18.04']
+               },
+             ],
+          }
+
+  on_supported_os(bionic).each do |os, os_facts|
+    context "with bitbucket provider" do
+      let(:params) do
+        super().merge({ 'provider' => 'bitbucket',
+                        'repo_url' => 'git@bitbucket.org:myorg/control-repo.git'})
+      end
+
+      let(:facts) { os_facts.merge(extra_facts) }
+      it { is_expected.to contain_sshkey('bitbucket.org')}
+    end
+
+    context "with gitlab provider" do
+      let(:params) do
+        super().merge({ 'provider' => 'gitlab',
+                        'repo_url' => 'git@gitlab.com:myorg/control-repo.git'})
+      end
+
+      let(:facts) { os_facts.merge(extra_facts) }
+      it { is_expected.to contain_sshkey('gitlab.com')}
+    end
+
+    context "with custom provider without repo_host" do
+      let(:params) do
+        super().merge({ 'provider' => 'myorg',
+                        'repo_url' => 'git@gitlab.example.org:myorg/control-repo.git'})
+      end
+
+      let(:facts) { os_facts.merge(extra_facts) }
+      it { is_expected.to compile.and_raise_error(/ERROR/) }
+    end
+  end
 end

@@ -33,6 +33,9 @@ fixtures:
     puppetdb:
       repo: "puppetlabs/puppetdb"
       ref:  "6.0.2"
+    r10k:
+      repo: "puppet/r10k"
+      ref:  "6.7.0"
     stdlib:
       repo: "puppetlabs/stdlib"
       ref:  "4.25.1"
@@ -43,6 +46,9 @@ fixtures:
       repo: "puppetlabs-vcsrepo"
       ref:  "2.3.0"
   repositories:
+    git:
+      repo: "https://github.com/theforeman/puppet-git"
+      ref:  "c7662b61cf31e45e13f28f7ce6a7a3a1b892cff6"
     puppet:
       repo: "https://github.com/theforeman/puppet-puppet"
       ref:  "73f7fe6cb344b1f00ff15e8779097e55bb0bf274"
