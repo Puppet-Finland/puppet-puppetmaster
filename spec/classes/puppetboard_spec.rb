@@ -69,5 +69,23 @@ describe 'puppetmaster::puppetboard' do
       let(:facts) { os_facts.merge(extra_facts) }
       it { is_expected.to compile.and_raise_error(/ERROR/) }
     end
+
+    context "with puppetboard auth" do
+      let(:params) do
+        super().merge({ 'puppetboard_require_auth' => true, })
+      end
+
+      let(:facts) { os_facts.merge(extra_facts) }
+      it { is_expected.to contain_file('/etc/apache2/conf-enabled/puppetboard-basic-auth.conf').with_ensure('present') }
+    end
+
+    context "without puppetboard auth" do
+      let(:params) do
+        super().merge({ 'puppetboard_require_auth' => false, })
+      end
+
+      let(:facts) { os_facts.merge(extra_facts) }
+      it { is_expected.to contain_file('/etc/apache2/conf-enabled/puppetboard-basic-auth.conf').with_ensure('absent') }
+    end
   end
 end
