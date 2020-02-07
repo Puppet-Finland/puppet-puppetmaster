@@ -4,19 +4,12 @@ package { 'rubygems':
   ensure => 'present',
 }
 
-# We need to use a stable version of Highline module or kafo installers
-# won't work
-package { 'highline':
-  ensure   => '1.7.10',
-  provider => 'puppet_gem',
-}
-
 package { 'kafo':
-  ensure   => '2.1.0',
+  ensure   => 'present',
   provider => 'puppet_gem',
 }
 
-$gems = [ 'rdoc', 'yard', 'puppet-strings', 'librarian-puppet' ]
+$gems = [ 'rdoc', 'yard', 'puppet-strings']
 
 package { $gems:
   ensure   => 'present',
