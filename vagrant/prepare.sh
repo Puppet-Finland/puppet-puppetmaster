@@ -77,7 +77,7 @@ setup_puppet() {
         true
     else
         if [ $RHEL_VERSION ]; then
-            RELEASE_URL="https://yum.puppetlabs.com/puppet5/puppet5-release-el-${RHEL_VERSION}.noarch.rpm"
+            RELEASE_URL="https://yum.puppet.com/puppet6-release-el-${RHEL_VERSION}.noarch.rpm"
             rpm -hiv "${RELEASE_URL}" || (c=$?; echo "Failed to install ${RELEASE_URL}"; (exit $c))
             yum -y install puppet-agent || (c=$?; echo "Failed to install puppet agent"; (exit $c))
             if systemctl list-unit-files --type=service | grep firewalld; then
@@ -87,10 +87,10 @@ setup_puppet() {
             fi
         else
             if [ $UBUNTU_VERSION ]; then
-                APT_URL="https://apt.puppetlabs.com/puppet5-release-${UBUNTU_VERSION}.deb"
+                APT_URL="https://apt.puppet.com/puppet6-release-${UBUNTU_VERSION}.deb"
             fi
             if [ $DEBIAN_VERSION ]; then
-                APT_URL="https://apt.puppetlabs.com/puppet5-release-${DEBIAN_VERSION}.deb"
+                APT_URL="https://apt.puppet.com/puppet6-release-${DEBIAN_VERSION}.deb"
             fi
             # https://serverfault.com/questions/500764/dpkg-reconfigure-unable-to-re-open-stdin-no-file-or-directory
             export DEBIAN_FRONTEND=noninteractive
