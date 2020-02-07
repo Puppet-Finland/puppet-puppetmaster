@@ -9,7 +9,7 @@ describe 'puppetmaster::puppetdb' do
   let(:node) { 'puppet.example.org' }
   let(:params) do
     {
-      'timezone'                   => 'UTC',
+      'timezone'                   => 'Etc/UTC',
       'control_repo'               => true,
       'puppetdb_database_password' => 'foobar'
     }
