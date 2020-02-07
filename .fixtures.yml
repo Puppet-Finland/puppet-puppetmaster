@@ -48,10 +48,10 @@ fixtures:
   repositories:
     git:
       repo: "https://github.com/theforeman/puppet-git"
-      ref:  "c7662b61cf31e45e13f28f7ce6a7a3a1b892cff6"
+      ref:  "6.0.1"
     puppet:
       repo: "https://github.com/theforeman/puppet-puppet"
-      ref:  "73f7fe6cb344b1f00ff15e8779097e55bb0bf274"
+      ref:  "12.1.0"
     puppetboard:
       repo: "https://github.com/voxpupuli/puppet-module-puppetboard.git"
       ref:  "7bff39638e1078d0b520e2222f068938fe8d9ed6"

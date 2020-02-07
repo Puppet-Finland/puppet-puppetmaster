@@ -29,7 +29,7 @@ mod 'puppetlabs-gcc',
     :ref => '9df39a91300be42ff583438996ed26b379131eca'
 mod 'theforeman/git',
     :git => 'https://github.com/theforeman/puppet-git',
-    :commit => 'c7662b61cf31e45e13f28f7ce6a7a3a1b892cff6'
+    :ref => '6.0.1'
 mod 'chrekh-hosts', '2.3.1'
 mod 'puppetlabs-inifile', '4.1.0'
 mod 'saz-locales', '2.5.1'
@@ -41,7 +41,7 @@ mod 'puppetfinland-packetfilter', '2.0.3'
 mod 'puppetlabs/postgresql', '5.4.0'
 mod 'theforeman/puppet',
     :git => 'https://github.com/theforeman/puppet-puppet',
-    :commit => '73f7fe6cb344b1f00ff15e8779097e55bb0bf274'
+    :ref => '12.1.0'
 mod 'puppetlabs-puppet_authorization', '0.4.0'
 mod 'puppet-puppetboard',
     :git => 'https://github.com/voxpupuli/puppet-module-puppetboard.git',

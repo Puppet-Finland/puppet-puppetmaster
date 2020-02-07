@@ -124,7 +124,6 @@ class puppetmaster::puppetserver
     server_foreman                         => $server_foreman,
     autosign                               => $autosign,
     autosign_entries                       => $autosign_entries,
-    server_passenger                       => false,
     server_reports                         => $server_reports,
     server_external_nodes                  => $server_external_nodes,
     server_environment_class_cache_enabled => true,
