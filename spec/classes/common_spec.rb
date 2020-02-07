@@ -1,20 +1,23 @@
 require 'spec_helper'
 
 describe 'puppetmaster::common' do
-  extra_facts = { :fqdn           => 'puppet.example.org', 
-                  :hostname       => 'puppet',
-                  :ipv4_lo_addrs  => '127.0.0.1',
+  extra_facts = { :ipv4_lo_addrs  => '127.0.0.1',
                   :ipv6_lo_addrs  => '::1',
                   :ipv4_pri_addrs => '10.50.0.1',
                   :ipv6_pri_addrs => '::1' }
 
+  let(:node) { 'puppet.example.org' }
+  let(:params) do
+    {
+      'primary_names' => ['puppet.example.org'],
+      'timezone'      => 'Etc/UTC'
+    }
+  end
+
   on_supported_os.each do |os, os_facts|
-    context "on #{os}" do
+    context "minimal settings on #{os}" do
       let(:params) do
-        {
-          'primary_names' => ['puppet.example.org'],
-          'timezone'      => 'UTC'
-        }
+        super()
       end
 
       let(:facts) { os_facts.merge(extra_facts) }
