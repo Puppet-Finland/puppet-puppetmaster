@@ -59,6 +59,7 @@ mod 'puppetlabs-ruby',
     :ref => 'ac7aae51ae3e49b9d9e2c19397fa964d6aaf505a'
 mod 'puppet-selinux', '1.5.2'
 mod 'puppetlabs-stdlib', '4.25.1'
+mod 'camptocamp-systemd', '2.8.0'
 mod 'theforeman/tftp',
     :git => 'https://github.com/theforeman/puppet-tftp',
     :commit => 'df5b665cc7574baeec612d79fc0057a0931fe067'
