@@ -12,6 +12,9 @@ fixtures:
     debconf:
       repo: "stm/debconf"
       ref:  "3.0.0"
+    epel:
+      repo: "stahnma/epel"
+      ref:  "1.3.0"
     firewall:
       repo: "puppetlabs/firewall"
       ref:  "1.12.0"
@@ -36,6 +39,9 @@ fixtures:
     timezone:
       repo: "saz/timezone"
       ref:  "5.0.2"
+    vcsrepo:
+      repo: "puppetlabs-vcsrepo"
+      ref:  "2.3.0"
   repositories:
     puppet:
       repo: "https://github.com/theforeman/puppet-puppet"
@@ -46,4 +52,7 @@ fixtures:
     puppetserver_gem:
       repo: "https://github.com/Puppet-Finland/puppetlabs-puppetserver_gem.git"
       ref:  "c03720943996eb1269ee914c2dc24686ca37848d"
+    python:
+      repo: "https://github.com/voxpupuli/puppet-python"
+      ref:  "2f16648a91b6c7942b34950a88d7d5a6b386c9b6"
 

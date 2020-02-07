@@ -4,6 +4,7 @@
 forge 'https://forgeapi.puppetlabs.com'
 
 mod 'puppetlabs-apt', '7.3.0'
+mod 'puppetlabs-apache', '5.4.0'
 mod 'puppetlabs-concat', '6.2.0'
 mod 'stm-debconf', '3.0.0'
 mod 'theforeman/dhcp',
