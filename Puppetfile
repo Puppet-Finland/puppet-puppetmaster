@@ -5,7 +5,9 @@ forge 'https://forgeapi.puppetlabs.com'
 
 mod 'puppetlabs-apt', '7.3.0'
 mod 'puppetlabs-apache', '5.4.0'
+mod 'puppetlabs-augeas_core', '1.0.5'
 mod 'puppetlabs-concat', '6.2.0'
+mod 'puppetlabs-cron_core', '1.0.3'
 mod 'stm-debconf', '3.0.0'
 mod 'theforeman/dhcp', '5.1.0'
 mod 'theforeman/dns', '6.2.0'
@@ -39,11 +41,13 @@ mod 'puppetlabs-ruby',
   :ref => 'puppet6'
 mod 'puppet-selinux', '3.1.0'
 mod 'puppetlabs-stdlib', '6.2.0'
+mod 'puppetlabs-sshkeys_core', '1.0.3'
 mod 'camptocamp-systemd', '2.8.0'
 mod 'theforeman/tftp', '5.0.1'
 mod 'saz-timezone',
   :git => 'https://github.com/Puppet-Finland/puppet-timezone.git',
   :ref => 'puppet6'
 mod 'puppetlabs-vcsrepo', '3.1.0'
+mod 'puppetlabs-yumrepo_core', '1.0.6'
 
 
