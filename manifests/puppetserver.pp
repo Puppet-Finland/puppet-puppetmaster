@@ -119,6 +119,7 @@ class puppetmaster::puppetserver
   }
 
   class { '::puppet':
+    manage_packages                        => 'server',
     server                                 => true,
     show_diff                              => $show_diff,
     server_foreman                         => $server_foreman,
