@@ -191,6 +191,7 @@ class puppetmaster::puppetboard
   class { '::puppetboard::apache::conf': }
 
   if $puppetboard_require_auth {
+    include ::apache::mod::auth_basic
     include ::apache::mod::authn_core
     include ::apache::mod::authn_file
     include ::apache::mod::authz_user
