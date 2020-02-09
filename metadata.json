@@ -1,6 +1,6 @@
 {
   "name": "puppetfinland-puppetmaster",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "author": "Puppet-Finland team",
   "summary": "A simple wrapper class for setting up puppetmasters",
   "license": "BSD-2-Clause",
@@ -32,7 +32,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 5.0.0 < 6.0.0"
+      "version_requirement": ">= 5.0.0 < 7.0.0"
     }
   ],
   "pdk-version": "1.15.0",
