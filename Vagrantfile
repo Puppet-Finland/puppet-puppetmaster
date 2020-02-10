@@ -65,7 +65,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "puppetserver-centos7" do |box|
     box.vm.box = "centos/7"
-    box.vm.box_version = "1804.02"
+    box.vm.box_version = "2020.01"
     box.vm.hostname = "puppet.local"
     box.vm.network "private_network", ip: "192.168.221.203"
     box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
@@ -85,7 +85,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "puppetserver-proxy" do |box|
     box.vm.box = "centos/7"
-    box.vm.box_version = "1801.02"
+    box.vm.box_version = "2020.01"
     box.vm.hostname = "proxy2.local"
     box.vm.network "private_network", ip: "192.168.221.205"
     box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
@@ -102,7 +102,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "puppetserver-bionic" do |box|
     box.vm.box = "ubuntu/bionic64"
-    box.vm.box_version = "20180919.0.0"
+    box.vm.box_version = "20200206.0.0"
     box.vm.hostname = "puppet.local"
     box.vm.network "private_network", ip: "192.168.221.206"
     box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
