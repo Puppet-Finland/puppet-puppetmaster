@@ -65,6 +65,8 @@ class puppetmaster::puppetserver
     else {
       $use_control_repo = true
     }
+  } else {
+      $use_control_repo = false
   }
 
   $primary_names = unique([ $facts['fqdn'], $facts['hostname'], 'puppet', "puppet.${facts['domain']}" ])
