@@ -176,7 +176,7 @@ class puppetmaster::puppetboard
 
   class { '::puppetboard':
     # puppet-puppetboard clones puppetboard from Git, so we need to specify a known-good version
-    revision            => '2c3a593c5d27',
+    revision            => 'v2.0.0',
     groups              => $puppetboard_groups,
     puppetdb_host       => $puppetboard_puppetdb_host,
     puppetdb_port       => $puppetboard_puppetdb_port,
@@ -186,6 +186,7 @@ class puppetmaster::puppetboard
     puppetdb_key        => $puppetdb_key,
     puppetdb_ssl_verify => $puppetdb_ca_cert,
     puppetdb_cert       => $puppetdb_cert,
+    require             => Class['::puppet'],
   }
 
   class { '::puppetboard::apache::conf': }
