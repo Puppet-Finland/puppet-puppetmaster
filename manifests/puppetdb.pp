@@ -79,6 +79,7 @@ class puppetmaster::puppetdb
     database_password => $puppetdb_database_password,
     ssl_deploy_certs  => true,
     database_validate => false,
+    require           => Class['::puppetmaster::puppetserver'],
   }
 
   class { '::puppetdb::master::config':
