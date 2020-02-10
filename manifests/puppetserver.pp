@@ -88,38 +88,6 @@ class puppetmaster::puppetserver
     group  => 'puppet',
   }
 
-  file { '/etc/puppetlabs/puppet/fileserver.conf':
-    ensure => 'present'
-  }
-
-  ini_setting { 'files_path':
-    ensure            => present,
-    path              => '/etc/puppetlabs/puppet/fileserver.conf',
-    section           => 'files',
-    setting           => 'path',
-    value             => '/var/files',
-    key_val_separator => ' ',
-    require           => File['/etc/puppetlabs/puppet/fileserver.conf'],
-  }
-
-  ini_setting { 'files_allow':
-    ensure            => present,
-    path              => '/etc/puppetlabs/puppet/fileserver.conf',
-    section           => 'files',
-    setting           => 'allow',
-    value             => '*',
-    key_val_separator => ' ',
-    require           => File['/etc/puppetlabs/puppet/fileserver.conf'],
-  }
-
-  puppet_authorization::rule { 'files':
-    match_request_path => '^/puppet/v3/file_(content|metadata)s?/files/',
-    match_request_type => 'regex',
-    allow              => '*',
-    sort_order         => 400,
-    path               => '/etc/puppetlabs/puppetserver/conf.d/auth.conf',
-  }
-
   class { '::puppet':
     manage_packages                        => 'server',
     server                                 => true,
@@ -130,8 +98,42 @@ class puppetmaster::puppetserver
     server_reports                         => $server_reports,
     server_external_nodes                  => $server_external_nodes,
     server_environment_class_cache_enabled => true,
-    require                                => Puppet_authorization::Rule['files'],
   }
+
+  file { '/etc/puppetlabs/puppet/fileserver.conf':
+    ensure  => 'present',
+    require => Class['::puppet'],
+  }
+
+  $ini_setting_defaults = {
+    'ensure'            => 'present',
+    'path'              => '/etc/puppetlabs/puppet/fileserver.conf',
+    'section'           => 'files',
+    'key_val_separator' => ' ',
+    'require'           => File['/etc/puppetlabs/puppet/fileserver.conf'],
+  }
+
+  ini_setting { 'files_path':
+    setting => 'path',
+    value   => '/var/files',
+    *       => $ini_setting_defaults,
+  }
+
+  ini_setting { 'files_allow':
+    setting => 'allow',
+    value   => '*',
+    *       => $ini_setting_defaults,
+  }
+
+  puppet_authorization::rule { 'files':
+    match_request_path => '^/puppet/v3/file_(content|metadata)s?/files/',
+    match_request_type => 'regex',
+    allow              => '*',
+    sort_order         => 400,
+    path               => '/etc/puppetlabs/puppetserver/conf.d/auth.conf',
+    require            => Class['::puppet'],
+  }
+
 
   if $manage_packetfilter {
     include ::packetfilter::endpoint
