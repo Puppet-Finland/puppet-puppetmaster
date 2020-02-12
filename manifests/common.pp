@@ -53,7 +53,7 @@ class puppetmaster::common
     cwd     => $eyaml_dir,
     command => 'eyaml createkeys',
     path    => ['/opt/puppetlabs/puppet/lib/ruby/vendor_gems/bin'],
-    creates => "${eyaml_dir}/private_key.pkcs7.pem",
+    creates => "${eyaml_keys_dir}/private_key.pkcs7.pem",
     require => [ Package['hiera-eyaml'], File[$eyaml_dir] ],
   }
 
