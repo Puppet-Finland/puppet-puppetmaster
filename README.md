@@ -106,6 +106,25 @@ is in a more stable state the patching logic can be removed.
 
 # Development
 
+## Testing with PDK
+
+This module has basic rspec tests that help ensure that catalog compilation
+works across all supported platforms. To run the unit tests do
+
+```
+$ pdk test unit
+```
+
+To validate code run
+
+```
+$ pdk validate
+```
+
+Note that you should move away or remove the "modules" directory that r10k
+creates when you launch a Vagrant VM. Otherwise you will get tons of complaints
+about issues in dependency modules.
+
 ## Testing with Vagrant
 
 This repository makes heavy use of Vagrant and Virtualbox for testing. You will
