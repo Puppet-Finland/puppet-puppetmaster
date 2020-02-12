@@ -154,8 +154,8 @@ class puppetmaster::puppetboard
   }
 
   class { '::apache':
-    purge_configs     => true,
-    mpm_module        => 'prefork',
+    purge_configs     => false,
+    mpm_module        => 'event',
     default_vhost     => true,
     default_ssl_vhost => true,
     default_mods      => false,
@@ -176,7 +176,7 @@ class puppetmaster::puppetboard
 
   class { '::puppetboard':
     # puppet-puppetboard clones puppetboard from Git, so we need to specify a known-good version
-    revision            => 'v2.0.0',
+    revision            => 'c215ebd0a734b2a6d2f5711310bef441aab10e2d',
     groups              => $puppetboard_groups,
     puppetdb_host       => $puppetboard_puppetdb_host,
     puppetdb_port       => $puppetboard_puppetdb_port,
@@ -187,6 +187,19 @@ class puppetmaster::puppetboard
     puppetdb_ssl_verify => $puppetdb_ca_cert,
     puppetdb_cert       => $puppetdb_cert,
     require             => Class['::puppet'],
+  }
+
+  # Currently we need to patch Puppetboard to make it work with Puppet 2.x.
+  # Moreover, Puppet 3 support in Puppetboard is incomplete.  This fix is based on
+  #
+  # <https://github.com/voxpupuli/puppetboard/pull/548>
+  file { '/srv/puppetboard/puppetboard/puppetboard/app.py':
+    ensure  => 'present',
+    content => template('puppetmaster/app.py.erb'),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    require => Class['::puppetboard'],
   }
 
   class { '::puppetboard::apache::conf': }
