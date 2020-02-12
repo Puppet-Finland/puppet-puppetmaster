@@ -65,7 +65,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "puppetserver-centos7" do |box|
     box.vm.box = "centos/7"
-    box.vm.box_version = "2020.01"
+    box.vm.box_version = "1905.1"
     box.vm.hostname = "puppet.local"
     box.vm.network "private_network", ip: "192.168.221.203"
     box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
