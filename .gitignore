@@ -26,4 +26,5 @@
 .envrc
 /inventory.yaml
 /modules
-/ubuntu-bionic-18.04-cloudimg-console.log
+ubuntu-*-cloudimg-console.log
+last_scenario.yaml
