@@ -4,16 +4,12 @@
 Vagrant.configure("2") do |config|
 
   config.vm.define "packager" do |box|
-    box.vm.box = "ubuntu/xenial64"
-    box.vm.box_version = "20171118.0.0"
+    box.vm.box = "ubuntu/bionic64"
+    box.vm.box_version = "20200402.0.0"
     box.vm.hostname = "packager.local"
     box.vm.network "private_network", ip: "192.168.221.200"
     box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
     box.vm.synced_folder ".", "/home/ubuntu/puppetmaster-installer", type: "virtualbox"
-    box.vm.provision "shell" do |s|
-      s.path = "vagrant/prepare.sh"
-      s.args = ["-b", "/home/ubuntu/puppetmaster-installer", "-m"]
-    end
     box.vm.provision "shell", path: "vagrant/prepare_packager.sh"
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false

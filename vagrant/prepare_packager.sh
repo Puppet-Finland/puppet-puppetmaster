@@ -6,4 +6,4 @@
 #
 apt-get update
 apt-get -y install ruby-dev build-essential rpm
-gem install fpm
+gem install r10k fpm

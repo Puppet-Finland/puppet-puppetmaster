@@ -17,7 +17,7 @@ test -r package.sh || (echo "ERROR: you must run from the directory where packag
 echo "Updating puppet modules"
 CWD=$(pwd)
 cd ..
-librarian-puppet install || (echo "ERROR: librarian-puppet failed, cannot continue!" ; cd $CWD; exit 1)
+r10k puppetfile install --moduledir=modules --force || (echo "ERROR: r10k failed, cannot continue!" ; cd $CWD; exit 1)
 cd $CWD
 
 echo "Loading package version information from version.sh"
