@@ -4,7 +4,6 @@
 #
 # Run all installer scenario variants to detect regressions early
 #
-
 usage() {
   echo "Usage: run_vagrant_tests.sh"
 }
@@ -45,22 +44,14 @@ mkdir -p test/logs
 TIMESTAMP=$(date +'%s')
 COMMIT=$(git rev-parse --short HEAD)
 
-# Puppetsever with GitLab r10k configuration
+# Puppetserver with GitLab r10k configuration
 run_test puppetserver-bionic puppetserver puppetserver-answers.yaml_gitlab
 
 # Puppetserver with default settings
 run_test puppetserver-bionic puppetserver puppetserver-answers.yaml_default
-run_test puppetserver-stretch puppetserver puppetserver-answers.yaml_default
-run_test puppetserver-centos7 puppetserver puppetserver-answers.yaml_default
 
 # Puppetserver + PuppetDB with default settings
 run_test puppetserver-bionic puppetserver-with-puppetdb puppetserver-with-puppetdb-answers.yaml_default
-run_test puppetserver-stretch puppetserver-with-puppetdb puppetserver-with-puppetdb-answers.yaml_default
-run_test puppetserver-centos7 puppetserver-with-puppetdb puppetserver-with-puppetdb-answers.yaml_default
 
 # Puppetserver + PuppetDB + Puppetboard with default settings
 run_test puppetserver-bionic puppetserver-with-puppetboard puppetserver-with-puppetboard-answers.yaml_default
-run_test puppetserver-stretch puppetserver-with-puppetboard puppetserver-with-puppetboard-answers.yaml_default
-run_test puppetserver-centos7 puppetserver-with-puppetboard puppetserver-with-puppetboard-answers.yaml_default
-
-
