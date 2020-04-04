@@ -21,28 +21,8 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  config.vm.define "puppetserver-xenial" do |box|
-    box.vm.box = "ubuntu/xenial64"
-    box.vm.box_version = "20171118.0.0"
-    box.vm.hostname = "puppet.local"
-    box.vm.network "private_network", ip: "192.168.221.201"
-    box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
-    box.vm.synced_folder ".", "/usr/share/puppetmaster-installer", type: "virtualbox"
-    box.vm.provision "shell" do |s|
-      s.path = "vagrant/prepare.sh"
-      s.args = ["-b", "/usr/share/puppetmaster-installer", "-m"]
-      s.env = {"RUN_INSTALLER" => ENV['RUN_INSTALLER'],
-               "SCENARIO"      => ENV['SCENARIO'] }
-    end
-    box.vm.provision "shell", path: "vagrant/install_keys.sh"
-    box.vm.provider "virtualbox" do |vb|
-      vb.gui = false
-      vb.memory = 4096
-    end
-  end
-
   config.vm.define "puppetserver-buster" do |box|
-    box.vm.box = "debian/buster64"
+    box.vm.box = "debian/contrib-buster64"
     box.vm.box_version = "10.3.0"
     box.vm.hostname = "puppet.local"
     box.vm.network "private_network", ip: "192.168.221.202"
@@ -102,7 +82,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "puppetserver-bionic" do |box|
     box.vm.box = "ubuntu/bionic64"
-    box.vm.box_version = "20200206.0.0"
+    box.vm.box_version = "20200402.0.0"
     box.vm.hostname = "puppet.local"
     box.vm.network "private_network", ip: "192.168.221.206"
     box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
