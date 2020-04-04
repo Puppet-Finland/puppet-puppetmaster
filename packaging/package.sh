@@ -31,7 +31,8 @@ mkdir $BUILD_DIR
 cp -r ../bin $BUILD_DIR/
 cp -r ../config $BUILD_DIR/
 cp -r ../hooks $BUILD_DIR/
-# Get rid of last_scenario.yaml, if present
+# Get rid of useless files
+find $BUILD_DIR -name "ubuntu-*-cloudimg-console.log" -exec rm -f {} \;
 rm -f $BUILD_DIR/config/installer-scenarios.d/last_scenario.yaml
 cp -r ../modules $BUILD_DIR/
 # Remove broken symbolic link to puppetmaster module, so that the files are
