@@ -1,7 +1,7 @@
 ---
 puppetmaster::puppetboard:
-  puppetdb_database_password: changeme
-  puppetboard_password: changeme
+  puppetdb_database_password: c9ltl3od7ra7890d
+  puppetboard_password: 3zd47xz0cwqq1w0a
   puppetboard_require_auth: true
   puppetboard_username: admin
   timezone: Etc/UTC
@@ -12,4 +12,9 @@ puppetmaster::puppetboard:
   autosign: "/etc/puppetlabs/puppet/autosign.conf"
   server_external_nodes: ''
   autosign_entries:
+  key_path: "/etc/puppetlabs/r10k/ssh/r10k_key"
+  control_repo: false
+  provider:
+  repo_url:
+  repo_host:
 
