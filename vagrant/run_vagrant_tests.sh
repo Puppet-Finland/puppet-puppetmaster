@@ -8,8 +8,15 @@ usage() {
   echo "Usage: run_vagrant_tests.sh"
 }
 
+# Ensure that working directory is correct
 if ! [ -r "./run_vagrant_tests.sh" ]; then
     echo "ERROR: this script must be run from <installer-basedir>/vagrant"
+    exit 1
+fi
+
+# Ensure that modules directory is present and link to puppetmaster module is there
+if ! [ -d "../modules/puppetmaster" ]; then
+    echo "ERROR: ../modules/puppetmaster directory is missing. Either r10k did not run or the link to the root of puppet-puppetmaster is missing."
     exit 1
 fi
 
@@ -48,10 +55,10 @@ COMMIT=$(git rev-parse --short HEAD)
 run_test puppetserver-bionic puppetserver puppetserver-answers.yaml_gitlab
 
 # Puppetserver with default settings
-run_test puppetserver-bionic puppetserver puppetserver-answers.yaml_default
+#run_test puppetserver-bionic puppetserver puppetserver-answers.yaml_default
 
 # Puppetserver + PuppetDB with default settings
-run_test puppetserver-bionic puppetserver-with-puppetdb puppetserver-with-puppetdb-answers.yaml_default
+#run_test puppetserver-bionic puppetserver-with-puppetdb puppetserver-with-puppetdb-answers.yaml_default
 
 # Puppetserver + PuppetDB + Puppetboard with default settings
 run_test puppetserver-bionic puppetserver-with-puppetboard puppetserver-with-puppetboard-answers.yaml_default
