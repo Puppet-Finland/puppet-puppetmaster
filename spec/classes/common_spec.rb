@@ -1,16 +1,16 @@
 require 'spec_helper'
 
 describe 'puppetmaster::common' do
-  extra_facts = { :ipv4_lo_addrs  => '127.0.0.1',
-                  :ipv6_lo_addrs  => '::1',
-                  :ipv4_pri_addrs => '10.50.0.1',
-                  :ipv6_pri_addrs => '::1' }
+  extra_facts = { ipv4_lo_addrs: '127.0.0.1',
+                  ipv6_lo_addrs: '::1',
+                  ipv4_pri_addrs: '10.50.0.1',
+                  ipv6_pri_addrs: '::1' }
 
   let(:node) { 'puppet.example.org' }
   let(:params) do
     {
-      'primary_names' => ['puppet.example.org'],
-      'timezone'      => 'Etc/UTC'
+      primary_names: ['puppet.example.org'],
+      timezone:      'Etc/UTC',
     }
   end
 
@@ -21,6 +21,7 @@ describe 'puppetmaster::common' do
       end
 
       let(:facts) { os_facts.merge(extra_facts) }
+
       it { is_expected.to compile }
     end
   end

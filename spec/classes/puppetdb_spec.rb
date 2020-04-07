@@ -1,17 +1,17 @@
 require 'spec_helper'
 
 describe 'puppetmaster::puppetdb' do
-  extra_facts = { :ipv4_lo_addrs  => '127.0.0.1',
-                  :ipv6_lo_addrs  => '::1',
-                  :ipv4_pri_addrs => '10.50.0.1',
-                  :ipv6_pri_addrs => '::1' }
+  extra_facts = { ipv4_lo_addrs:  '127.0.0.1',
+                  ipv6_lo_addrs:  '::1',
+                  ipv4_pri_addrs: '10.50.0.1',
+                  ipv6_pri_addrs: '::1' }
 
   let(:node) { 'puppet.example.org' }
   let(:params) do
     {
-      'timezone'                   => 'Etc/UTC',
-      'control_repo'               => true,
-      'puppetdb_database_password' => 'foobar'
+      timezone:                   'Etc/UTC',
+      control_repo:               true,
+      puppetdb_database_password: 'foobar',
     }
   end
 
@@ -22,6 +22,7 @@ describe 'puppetmaster::puppetdb' do
       end
 
       let(:facts) { os_facts.merge(extra_facts) }
+
       it { is_expected.to compile }
     end
   end
