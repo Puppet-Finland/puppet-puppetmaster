@@ -28,7 +28,7 @@
 #
 # $show_diff:: Used internally in Foreman scenarios. Do not change the default (false) unless you know what you are doing.
 #
-# $provider:: Your git repository provider. Providers 'gitlab' (gitlab.com) and 'bitbucket' are fully supported, but this parameter can be any string: you just need to add the public SSH key of the Git server to /root/.ssh/known_hosts manually.
+# $provider:: Your git repository provider. Providers 'gitlab' (gitlab.com) and 'bitbucket' are fully supported, but this parameter can be any string: you just need to add the public SSH key of the Git server to /root/.ssh/known_hosts manually. 
 # 
 # $repo_url:: The url to your control repository. Example: 'git@gitlab.com:mycompany/control-repo.git'
 #
