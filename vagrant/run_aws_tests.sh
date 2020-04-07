@@ -21,6 +21,12 @@ run_test() {
     VM=$1
     SCENARIO=$2
     ANSWER_FILE=$3
+    if [ "$4" = "true" ]; then
+      RUN_R10K=true
+    else
+      RUN_R10K=false
+    fi
+
     LOGFILE="test/logs/${VM}-${AWS_AMI}-${SCENARIO}-${ANSWER_FILE_NAME}-${TIMESTAMP}.log"
 
     echo >> $LOGFILE 2>&1
@@ -28,7 +34,8 @@ run_test() {
     echo >> $LOGFILE 2>&1
 
     AWS_AMI=$AWS_AMI vagrant up $VM >> $LOGFILE 2>&1
-    RUN_INSTALLER=true SCENARIO=$SCENARIO ANSWER_FILE=$ANSWER_FILE vagrant provision $VM >> $LOGFILE 2>&1
+    RUN_R10K=$RUN_R10K RUN_INSTALLER=true SCENARIO=$SCENARIO ANSWER_FILE=$ANSWER_FILE vagrant provision $VM >> $LOGFILE 2>&1
+    vagrant destroy -f $VM >> $LOGFILE 2>&1
 }
 
 # Main program
@@ -36,9 +43,6 @@ mkdir -p test/logs
 
 TIMESTAMP=$(date +'%s')
 COMMIT=$(git rev-parse --short HEAD)
-#run_test puppetserver-bionic-aws puppetserver-with-puppetboard puppetserver-with-puppetboard-answers.yaml_default
 
-run_test puppetserver-bionic-aws puppetserver puppetserver-answers.yaml_gitlab
-
-
-
+run_test puppetserver-bionic-aws puppetserver-with-puppetboard puppetserver-with-puppetboard-answers.yaml_default false
+run_test puppetserver-bionic-aws puppetserver puppetserver-answers.yaml_gitlab true
