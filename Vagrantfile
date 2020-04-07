@@ -118,5 +118,34 @@ Vagrant.configure("2") do |config|
       override.ssh.username = "ubuntu"
       override.ssh.private_key_path = ssh_private_key_path
     end
+    # Copy files required by installer tests
+    if ENV['RUN_INSTALLER']
+      abort "ERROR: environment variable ANSWER_FILE must be set! Point it to the basename of the answer file on the Vagrant host." unless ENV['ANSWER_FILE']
+      abort "ERROR: environment variable SCENARIO must be set! It must be a valid scenario name." unless ENV['SCENARIO']
+
+      installer_dir="/usr/share/puppetmaster-installer"
+      scenarios_dir="#{installer_dir}/config/installer-scenarios.d"
+
+      box.vm.provision "file", source: File.join(File.dirname(__FILE__), "vagrant/test/#{ENV['ANSWER_FILE']}"), destination: "/tmp/#{ENV['ANSWER_FILE']}"
+      box.vm.provision "shell", inline: "rm -f #{scenarios_dir}/last_scenario.yaml"
+      box.vm.provision "shell", inline: "cp /tmp/#{ENV['ANSWER_FILE']} #{scenarios_dir}/#{ENV['SCENARIO']}-answers.yaml"
+      box.vm.provision "shell", inline: "ln -s #{scenarios_dir}/#{ENV['SCENARIO']}.yaml #{scenarios_dir}/last_scenario.yaml"
+
+      # Copy r10k key over for setups that need it
+      if ENV['R10K_KEY']
+        box.vm.provision "file", source: ENV['R10K_KEY'], destination: "/tmp/r10k_key"
+        box.vm.provision "shell", inline: "mv /tmp/r10k_key #{installer_dir}/"
+      end
+
+      # We need to wait until systemd apt timers have ran or running the installer will fail mysteriously
+      #
+      # <https://unix.stackexchange.com/questions/315502/how-to-disable-apt-daily-service-on-ubuntu-cloud-vm-image>
+      # <https://github.com/Puppet-Finland/scripts/blob/master/bootstrap/linux/install-puppet.sh>
+      #
+      box.vm.provision "shell", path: File.join(File.dirname(__FILE__), "vagrant/wait_for_apt.sh")
+      box.vm.provision "shell", inline: "#{installer_dir}/bin/puppetmaster-installer --scenario #{ENV['SCENARIO']} --dont-save-answers "
+      box.vm.provision "shell", inline: "/opt/puppetlabs/puppet/bin/r10k deploy environment production -vp" if ENV['R10K_KEY']
+      box.vm.provision "shell", inline: "/opt/puppetlabs/bin/puppet agent -t"
+    end
   end
 end

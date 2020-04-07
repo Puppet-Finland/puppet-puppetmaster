@@ -174,6 +174,13 @@ Once all these are set, you can use create, connect to and destroy the AWS insta
     $ vagrant ssh puppetserver-bionic-aws
     $ vagrant destroy puppetserver-bionic-aws
 
+To run automated tests against an AWS instance use:
+
+    $ cd vagrant
+    $ AWS_AMI=<ami-id> ./run_aws_tests.sh
+
+The log files are written to vagrant/test/logs.
+
 ## Creating deb/rpm packages
 
 Creating Debian and RPM packages is straightforward with the Debian 9 -based packager VM:
