@@ -29,3 +29,4 @@
 ubuntu-*-cloudimg-console.log
 last_scenario.yaml
 /packaging/build
+/vagrant/test/logs
