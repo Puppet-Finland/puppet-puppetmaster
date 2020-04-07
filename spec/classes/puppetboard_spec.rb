@@ -28,11 +28,11 @@ describe 'puppetmaster::puppetboard' do
     end
   end
 
-  # Run the following tests on only one platform. Details on the syntax are here:
+  # Run the following tests on only one platform. Details of the syntax are here:
   #
   # <https://github.com/mcanevet/rspec-puppet-facts>
   #
-  bionic = { supported_os: [{ operatingsystem: 'Ubuntu', operatingsystemrelease: ['18.04'] }] }
+  bionic = { supported_os: [{ 'operatingsystem' => 'Ubuntu', 'operatingsystemrelease' => ['18.04'] }] }
 
   on_supported_os(bionic).each do |_os, os_facts|
     context 'with bitbucket provider' do
