@@ -45,17 +45,17 @@ class puppetmaster::puppetboard
   String                   $puppetboard_username = 'admin',
   String                   $timezone = 'Etc/UTC',
   Boolean                  $manage_packetfilter = false,
-  String                   $puppetserver_allow_ipv4 = '127.0.0.1',
-  String                   $puppetserver_allow_ipv6 = '::1',
+  Stdlib::IP::Address::V4  $puppetserver_allow_ipv4 = '127.0.0.1',
+  Stdlib::IP::Address::V6  $puppetserver_allow_ipv6 = '::1',
   String                   $server_reports = 'store,puppetdb',
   Variant[Boolean, String] $autosign = '/etc/puppetlabs/puppet/autosign.conf',
   String                   $server_external_nodes = '',
   Optional[Array[String]]  $autosign_entries = undef,
-  String                   $key_path = '/etc/puppetlabs/r10k/ssh/r10k_key',
+  Stdlib::AbsolutePath     $key_path = '/etc/puppetlabs/r10k/ssh/r10k_key',
   Boolean                  $control_repo = false,
   Optional[String]         $provider = undef,
   Optional[String]         $repo_url = undef,
-  Optional[String]         $repo_host = undef,
+  Optional[Stdlib::Host]   $repo_host = undef,
 )
 {
   # From Debian 8 onwards (and on recent Ubuntu versions) use conf-enabled 

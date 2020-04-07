@@ -40,19 +40,19 @@ class puppetmaster::puppetdb
   String                   $puppetdb_database_password,
   String                   $timezone = 'Etc/UTC',
   Boolean                  $manage_packetfilter = false,
-  String                   $puppetserver_allow_ipv4 = '127.0.0.1',
-  String                   $puppetserver_allow_ipv6 = '::1',
+  Stdlib::IP::Address::V4  $puppetserver_allow_ipv4 = '127.0.0.1',
+  Stdlib::IP::Address::V6  $puppetserver_allow_ipv6 = '::1',
   String                   $server_reports = 'store,puppetdb',
   Variant[Boolean, String] $autosign = '/etc/puppetlabs/puppet/autosign.conf',
   Boolean                  $show_diff = false,
   Boolean                  $server_foreman = false,
   String                   $server_external_nodes = '',
-  String                   $key_path = '/etc/puppetlabs/r10k/ssh/r10k_key',
+  Stdlib::AbsolutePath     $key_path = '/etc/puppetlabs/r10k/ssh/r10k_key',
   Boolean                  $control_repo = false,
   Optional[Array[String]]  $autosign_entries = undef,
   Optional[String]         $provider = undef,
   Optional[String]         $repo_url = undef,
-  Optional[String]         $repo_host = undef,
+  Optional[Stdlib::Host]   $repo_host = undef,
 )
 {
   include ::puppetmaster::package_cache
