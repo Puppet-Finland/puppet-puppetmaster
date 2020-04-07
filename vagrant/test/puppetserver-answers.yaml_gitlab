@@ -6,13 +6,12 @@ puppetmaster::puppetserver:
   puppetserver_allow_ipv6: "::1"
   server_reports: store
   autosign: "/etc/puppetlabs/puppet/autosign.conf"
-  autosign_entries: 
   show_diff: false
   server_foreman: false
   server_external_nodes: ''
-  autosign_entries:
-  control_repo: true
-  repo_host: gitlab.com
-  repo_url: "git@gitlab.com:puppeteers/control-repo.git"
-  provider: gitlab
   key_path: "/etc/puppetlabs/r10k/ssh/r10k_key"
+  control_repo: true
+  provider: gitlab
+  autosign_entries:
+  repo_url: git@gitlab.com:puppeteers_oy/control-repo.git
+  repo_host: gitlab.com
