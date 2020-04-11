@@ -1,8 +1,8 @@
 {
   "name": "puppetfinland-puppetmaster",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "author": "Puppet-Finland team",
-  "summary": "A simple wrapper class for setting up puppetmasters",
+  "summary": "A module for setting up puppetmasters",
   "license": "BSD-2-Clause",
   "source": "https://github.com/Puppet-Finland/puppet-puppetmaster",
   "project_page": "https://github.com/Puppet-Finland/puppet-puppetmaster",
