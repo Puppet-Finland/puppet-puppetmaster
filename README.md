@@ -118,12 +118,14 @@ $ pdk test unit
 To validate code run
 
 ```
-$ pdk validate
+$ ./pdk-validate.sh
 ```
 
-Note that you should move away or remove the "modules" directory that r10k
-creates when you launch a Vagrant VM. Otherwise you will get tons of complaints
-about issues in dependency modules.
+You cannot run "pdk validate" directly as it would scan through all the
+dependency modules multiple times (r10k modules, fixtures, build directories)
+and give tons of false positives and be really slow in general. If you
+interrupt that script you can just run it again to restore the offending
+directories to their original places.
 
 ## Testing with Vagrant
 
