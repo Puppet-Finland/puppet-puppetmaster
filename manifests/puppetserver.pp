@@ -8,10 +8,19 @@
 #
 # $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki' or 'Etc/UTC'.
 #
-# $control_repo:: Enable control repository. You MUST also set up $provider, $repo_url, $key_path and $repo_host
-#                 in Advanced parameters to use this functionality. Defaults to false.
+# == control repo parameters
 #
-# == Advanced parameters:
+# $control_repo:: Enable control repository. You MUST also set up $provider, $repo_url, $key_path and $repo_host.
+#
+# $provider:: Your git repository provider. Providers 'gitlab' (gitlab.com) and 'bitbucket' are fully supported, but this parameter can be any string: you just need to add the public SSH key of the Git server to /root/.ssh/known_hosts manually.
+#
+# $repo_url:: The url to your control repository. Example: 'git@gitlab.com:mycompany/control-repo.git'
+#
+# $key_path:: The private key to use for accessing $repo_url. defaults to '/etc/puppetlabs/r10k/ssh/r10k_key'
+#
+# $repo_host:: The fully qualified name of the $provider host. For example 'gitlab.com' or 'bitbucket.org'.
+#
+# == iptables parameters:
 #
 # $manage_packetfilter:: Manage IPv4 and IPv6 rules. Defaults to false.
 #
@@ -20,6 +29,8 @@
 #
 # $puppetserver_allow_ipv6:: Allow connections to puppetserver from this IPv6 address or subnet. Defaults to '::1'.
 #
+# == advanced parameters:
+#
 # $server_reports:: Where to store reports. Defaults to 'store'.
 #
 # $server_external_nodes:: The path to the ENC executable. Defaults to empty string.
@@ -27,14 +38,6 @@
 # $server_foreman:: Used internally in Foreman scenarios. Do not change the default (false) unless you know what you are doing.
 #
 # $show_diff:: Used internally in Foreman scenarios. Do not change the default (false) unless you know what you are doing.
-#
-# $provider:: Your git repository provider. Providers 'gitlab' (gitlab.com) and 'bitbucket' are fully supported, but this parameter can be any string: you just need to add the public SSH key of the Git server to /root/.ssh/known_hosts manually. 
-# 
-# $repo_url:: The url to your control repository. Example: 'git@gitlab.com:mycompany/control-repo.git'
-#
-# $key_path:: The private key to use for accessing $repo_url. defaults to '/etc/puppetlabs/r10k/ssh/r10k_key'
-# 
-# $repo_host:: The fully qualified name of the $provider host. For example 'gitlab.com' or 'bitbucket.org'.
 #
 class puppetmaster::puppetserver
 (
