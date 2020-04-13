@@ -27,10 +27,10 @@ run_test() {
       RUN_R10K=false
     fi
 
-    LOGFILE="test/logs/${VM}-${AWS_AMI}-${SCENARIO}-${ANSWER_FILE_NAME}-${TIMESTAMP}.log"
+    LOGFILE="test/logs/${VM}-${AWS_AMI}-${SCENARIO}-${ANSWER_FILE}-${TIMESTAMP}.log"
 
     echo >> $LOGFILE 2>&1
-    echo "TEST CASE: VM=$VM AWS_AMI=$AWS_AMI SCENARIO=$SCENARIO ANSWER_FILE_NAME=$ANSWER_FILE_NAME" >> $LOGFILE 2>&1
+    echo "TEST CASE: VM=$VM AWS_AMI=$AWS_AMI SCENARIO=$SCENARIO ANSWER_FILE=$ANSWER_FILE" >> $LOGFILE 2>&1
     echo >> $LOGFILE 2>&1
 
     AWS_AMI=$AWS_AMI vagrant up $VM >> $LOGFILE 2>&1
