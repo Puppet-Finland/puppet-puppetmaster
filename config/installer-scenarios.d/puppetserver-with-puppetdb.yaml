@@ -1,6 +1,5 @@
 ---
-:name: Configuration Manager with Puppetdb
-:description: install puppetserver with puppetdb
+:name: Install Puppetserver and PuppetDB
 :enabled: true
 :log_dir: "/var/log/kafo"
 :store_dir: ''
@@ -21,6 +20,7 @@
 :hook_dirs:
 - "/usr/share/puppetmaster-installer/hooks"
 :custom: {}
+:facts: {}
 :low_priority_modules: []
 :verbose_log_level: info
 :skip_puppet_version_check: true
