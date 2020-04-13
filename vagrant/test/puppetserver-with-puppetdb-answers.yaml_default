@@ -1,6 +1,6 @@
 ---
 puppetmaster::puppetdb:
-  puppetdb_database_password: changeme
+  puppetdb_database_password: 89cwvg1wi18aicv5
   timezone: Etc/UTC
   manage_packetfilter: false
   puppetserver_allow_ipv4: 127.0.0.1
@@ -10,4 +10,10 @@ puppetmaster::puppetdb:
   show_diff: false
   server_foreman: false
   server_external_nodes: ''
+  key_path: "/etc/puppetlabs/r10k/ssh/r10k_key"
+  control_repo: false
   autosign_entries: 
+  provider: 
+  repo_url: 
+  repo_host: 
+
