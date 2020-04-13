@@ -31,10 +31,18 @@ mkdir $BUILD_DIR
 cp -r ../bin $BUILD_DIR/
 cp -r ../config $BUILD_DIR/
 cp -r ../hooks $BUILD_DIR/
+cp -r ../modules $BUILD_DIR/
+
 # Get rid of useless files
 find $BUILD_DIR -name "ubuntu-*-cloudimg-console.log" -exec rm -f {} \;
 rm -f $BUILD_DIR/config/installer-scenarios.d/last_scenario.yaml
-cp -r ../modules $BUILD_DIR/
+
+# Ensure that populated answer files do not get pulled in into the packages
+for ANSWER_FILE in `ls ../config/installer-scenarios.d/*-answers.yaml`; do
+    BASENAME=`basename $ANSWER_FILE`
+    git show HEAD:$ANSWER_FILE > $BUILD_DIR/config/installer-scenarios.d/$BASENAME
+done
+
 # Remove broken symbolic link to puppetmaster module, so that the files are
 # copied there correctlyi
 rm -f $BUILD_DIR/modules/puppetmaster
