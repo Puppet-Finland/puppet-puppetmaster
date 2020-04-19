@@ -143,9 +143,10 @@ Vagrant.configure("2") do |config|
       # <https://github.com/Puppet-Finland/scripts/blob/master/bootstrap/linux/install-puppet.sh>
       #
       box.vm.provision "shell", path: File.join(File.dirname(__FILE__), "vagrant/wait_for_apt.sh")
-      box.vm.provision "shell", inline: "/bin/systemctl stop puppet"
+      box.vm.provision "shell", inline: "/usr/bin/hostnamectl set-hostname puppet.vagrant.example.lan"
       box.vm.provision "shell", inline: "#{installer_dir}/bin/puppetmaster-installer --scenario #{ENV['SCENARIO']} --dont-save-answers "
       box.vm.provision "shell", inline: "/opt/puppetlabs/puppet/bin/r10k deploy environment production -vp" if ENV['RUN_R10K'] == 'true'
+      box.vm.provision "shell", path: File.join(File.dirname(__FILE__), "vagrant/wait_for_puppet_agent.sh")
       box.vm.provision "shell", inline: "/opt/puppetlabs/bin/puppet agent -t"
     end
   end
