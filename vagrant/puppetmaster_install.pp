@@ -15,3 +15,4 @@ exec { "Run puppetmaster scenario ${facts['scenario']}":
   timeout   => 600,
   path      => ['/opt/puppetlabs/bin','/opt/puppetlabs/puppet/bin', '/bin', '/usr/bin'],
 }
+

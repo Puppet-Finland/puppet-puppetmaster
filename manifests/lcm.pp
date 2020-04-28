@@ -5,17 +5,21 @@
 #
 # $foreman_db_password:: The password for the foreman database.
 #
-# $foreman_admin_firstname:: The first name for Foreman Administator
+# $foreman_initial_admin_firstname:: The first name for Foreman Administator
 #
-# $foreman_admin_lastname:: The last name for Foreman Administator
+# $foreman_initial_admin_lastname:: The last name for Foreman Administator
 # 
-# $foreman_admin_email:: Foreman admin email
+# $foreman_initial_admin_email:: Foreman admin email
 #
-# $foreman_admin_password:: Foreman admin password
+# $foreman_initial_admin_password:: Foreman admin password
 #
 # $puppetdb_database_password:: Puppetdb database password
 #
-# $primary_names:: Primary names for this machine. Example: ['puppet.local', 'puppet' ]
+# $foreman_proxy_trusted_hosts:: An array of hosts that the smart proxy allows connections from. Defaults to the fqdn of the host.
+#
+# $foreman_initial_organization:: Your Organization 
+# 
+# $foreman_initial_location:: Your location
 #
 # $timezone:: The timezone the server wants to be located in. Example: 'Europe/Helsinki' or 'Etc/UTC'. Defaults to 'Etc/UTC'
 #
@@ -65,17 +69,9 @@
 #
 # Foreman Proxy parameters
 #
-# $foreman_proxy_foreman_base_url:: The foreman URL the proxy wants to talk to 
-#
 # $foreman_proxy_templates:: Enable support for templates
 #
-# $foreman_proxy_templates_listen_on:: Adress to listen on for templates
-#
-# $foreman_proxy_trusted_hosts:: The hosts the proxy allows to talk
-#
 # $foreman_proxy_dhcp:: Enable support for dhcp
-#
-# $foreman_proxy_dhcp_listen_on:: Addresses to listen on for DHCP
 #
 # $foreman_proxy_dns:: Enable support for DNS
 #
@@ -127,11 +123,7 @@
 #
 # $foreman_proxy_tftp_manage_wget:: If enabled will install the wget package
 #
-# $foreman_proxy_tftp_listen_on:: TFTP proxy to listen on https, http, or both
-#
 # $foreman_proxy_bmc:: Enable BMC feature
-#
-# $foreman_proxy_bmc_listen_on:: BMC proxy to listen on https, http, or both
 #
 # $foreman_proxy2_hostnames:: List of hostnames for additional smart proxy 2. Example [ 'foo2.example.com', 'foo2' ]
 #
@@ -149,12 +141,13 @@
 class puppetmaster::lcm
 (
   String $foreman_db_password,
-  String $foreman_admin_firstname,
-  String $foreman_admin_lastname,
-  String $foreman_admin_email,
-  String $foreman_admin_password,
+  String $foreman_initial_admin_firstname,
+  String $foreman_initial_admin_lastname,
+  String $foreman_initial_admin_email,
+  String $foreman_initial_admin_password,
+  String $foreman_initial_organization,
+  String $foreman_initial_location,
   String $puppetdb_database_password,
-  Array[String] $primary_names,
   Boolean $foreman_plugin_cockpit = false,
   Boolean $foreman_compute_vmware = false,
   Boolean $foreman_compute_libvirt = false,
@@ -176,12 +169,11 @@ class puppetmaster::lcm
   Boolean $foreman_plugin_remote_execution = false,
   Boolean $foreman_plugin_tasks = false,
   Boolean $foreman_plugin_templates = false,
-  String $foreman_proxy_foreman_base_url = undef,
   Boolean $foreman_proxy_templates = false,
-  String $foreman_proxy_templates_listen_on = '',
-  Array[String] $foreman_proxy_trusted_hosts = [],
+
+  Array[String] $foreman_proxy_trusted_hosts = [$facts['fqdn']],
   Boolean $foreman_proxy_dhcp = false,
-  String $foreman_proxy_dhcp_listen_on = '',
+
   Boolean $foreman_proxy_dns = false,
   Boolean $foreman_proxy_dhcp_managed = false,
   String $foreman_proxy_dhcp_interface = '',
@@ -207,9 +199,9 @@ class puppetmaster::lcm
   Boolean $foreman_proxy_tftp_managed = false,
   String $foreman_proxy_tftp_servername = '',
   Boolean $foreman_proxy_tftp_manage_wget = false,
-  String $foreman_proxy_tftp_listen_on = '',
+
   Boolean $foreman_proxy_bmc = false,
-  String $foreman_proxy_bmc_listen_on = '',
+
   Array[String] $foreman_proxy2_hostnames = [],
   String $foreman_proxy2_ipaddress = '',
   Array[String] $foreman_proxy3_hostnames = [],
@@ -220,8 +212,8 @@ class puppetmaster::lcm
   Boolean $manage_packetfilter = false,
 )
 {
-  $foreman_version                          = '1.15.6'
-  $foreman_repo                             = '1.15'
+  $foreman_version                          = '1.24.2'
+  $foreman_repo                             = '1.24'
   $foreman_manage_memcached                 = true
   $foreman_memcached_max_memory             = '8%'
   $foreman_url                              = "https://${facts['fqdn']}"
@@ -230,9 +222,11 @@ class puppetmaster::lcm
   $foreman_puppetdb_dashboard_address       = "http://${facts['fqdn']}:8080/pdb/dashboard"
   $foreman_puppetdb_address                 = "https://${facts['fqdn']}:8081/v2/commands"
   $puppetdb_server                          = $facts['fqdn']
+  $foreman_proxy_foreman_base_url           = $foreman_url
+  $foreman_proxy_templates_listen_on        = 'both'
   $foreman_proxy_registered_name            = 'puppet.local'
-  $foreman_proxy_repo                       = '1.15'
-  $foreman_proxy_version                    = '1.15.6'
+  $foreman_proxy_repo                       = '1.24'
+  $foreman_proxy_version                    = '1.24.2'
   $foreman_proxy_bind_host                  = '0.0.0.0'
   $foreman_proxy_register_in_foreman        = true
   $foreman_proxy_registered_proxy_url       = 'https://puppet.local:8443'
@@ -241,12 +235,14 @@ class puppetmaster::lcm
   $foreman_proxy_manage_sudoersd            = true
   $foreman_proxy_use_sudoers                = true
   $foreman_proxy_use_sudoersd               = true
+  $foreman_proxy_dhcp_listen_on             = 'both'
+  $foreman_proxy_tftp_listen_on             = 'both'
+  $foreman_proxy_bmc_listen_on              = 'both'
   # puppet
   $foreman_proxy_puppet                     = true
   $foreman_proxy_autosignfile               = '/etc/puppetlabs/puppet/autosign.conf'
   $foreman_proxy_puppet_url                 = 'https://puppet.local:8140'
   $foreman_proxy_puppet_use_environment_api = true
-  $foreman_proxy_puppet_use_cache           = true
   # puppetca settings
   $foreman_proxy_puppetca                   = true
   $foreman_proxy_puppetca_listen_on         = https
@@ -261,14 +257,6 @@ class puppetmaster::lcm
 
   unless ($facts['osfamily'] == 'RedHat' and $facts['os']['release']['major'] == '7') {
     fail("${facts['os']['name']} ${facts['os']['release']['full']} not supported yet")
-  }
-
-  # See https://github.com/theforeman/puppet-foreman#foreman-version-compatibility-notes
-  if versioncmp($foreman_version, '1.17') < 0 {
-    $dynflow_in_core = false
-  }
-  else {
-    $dynflow_in_core = true
   }
 
   unless $facts['osfamily'] != 'RedHat' {
@@ -306,7 +294,6 @@ class puppetmaster::lcm
     user        => 'root',
     hour        => 0,
     minute      => 0/30,
-    require     => Class['::foreman'],
   }
 
   cron { 'Expire Foreman reports':
@@ -315,7 +302,6 @@ class puppetmaster::lcm
     user        => 'root',
     hour        => 2,
     minute      => 0,
-    require     => Class['::foreman'],
   }
 
   cron { 'Expire Foreman not useful=ok reports':
@@ -324,15 +310,37 @@ class puppetmaster::lcm
     user        => 'root',
     hour        => 2,
     minute      => 0,
-    require     => Class['::foreman'],
   }
 
   class { '::epel':
     before => [
       Class['::foreman'],
       Class['::foreman_proxy'],
+      Class['::puppetmaster::puppetdb'],
+      Class['::redis'],
     ],
   }
+
+#  package { 'tfm-ror52-rubygem-sqlite3':
+#    ensure => 'present',
+#  }
+
+#  yumrepo { 'foreman-plugins-hack':
+#    ensure    => 'present',
+#    name      => 'Foreman-plugins-1.24',
+#    baseurl   => 'https://yum.theforeman.org/plugins/1.24/el7/$basearch',
+#    enabled   => '1',
+#    gpgcheck  => '0',
+#    target    => '/etc/yum.repo.d/foreman-plugins-hack.repo',
+#    before    => Class['::foreman'],
+#  }
+
+  
+  #foreman::repos { 'plugins':
+  #  repo     => $foreman_proxy::repo,
+  #  gpgcheck => 1,
+  #  before   => Class['foreman'],
+  #}
 
   class { '::puppetmaster::puppetdb':
     show_diff                  => true,
@@ -343,47 +351,35 @@ class puppetmaster::lcm
     timezone                   => $timezone,
     manage_packetfilter        => $manage_packetfilter,
     server_external_nodes      => $foreman_server_external_nodes,
-    before                     => [
-      Class['::foreman'],
-      Class['::foreman_proxy'],
-    ],
   }
 
   ::puppetmaster::database { 'foreman':
     dbname   => foreman,
     username => foreman,
     password => $foreman_db_password,
-    require  => Class['::puppetdb'],
-    before   => Class['::foreman'],
   }
 
   class { '::foreman':
-    foreman_url           => $foreman_url,
-    db_manage             => false,
-    db_username           => 'foreman',
-    db_password           => $foreman_db_password,
-    db_type               => 'postgresql',
-    db_host               => 'localhost',
-    db_database           => 'foreman',
-    authentication        => true,
-    admin_username        => 'admin',
-    admin_password        => $foreman_admin_password,
-    servername            => 'foreman',
-    serveraliases         => $foreman_serveraliases,
-    admin_first_name      => $foreman_admin_firstname,
-    admin_last_name       => $foreman_admin_lastname,
-    admin_email           => $foreman_admin_email,
-    organizations_enabled => false,
-    initial_organization  => '',
-    repo                  => $foreman_repo,
-    version               => $foreman_version,
-    configure_epel_repo   => false,
-    configure_scl_repo    => true,
-    locations_enabled     => true,
-    initial_location      => 'Foreman Cloud',
-    selinux               => true,
-    unattended            => true,
-    dynflow_in_core       => $dynflow_in_core,
+    foreman_url              => $foreman_url,
+    db_manage                => false,
+    db_username              => 'foreman',
+    db_password              => $foreman_db_password,
+    db_host                  => 'localhost',
+    db_database              => 'foreman',
+    initial_admin_username   => 'admin',
+    initial_admin_password   => $foreman_initial_admin_password,
+    servername               => 'foreman',
+    serveraliases            => $foreman_serveraliases,
+    initial_admin_first_name => $foreman_initial_admin_firstname,
+    initial_admin_last_name  => $foreman_initial_admin_lastname,
+    initial_admin_email      => $foreman_initial_admin_email,
+    initial_organization     => $foreman_initial_organization,
+    repo                     => $foreman_repo,
+    version                  => $foreman_version,
+    configure_epel_repo      => false,
+    configure_scl_repo       => true,
+    initial_location         => $foreman_initial_location,
+    unattended               => false,
   }
 
   if $foreman_compute_vmware {
@@ -514,15 +510,14 @@ END
   }
 
   class { '::foreman::plugin::puppetdb':
-    dashboard_address => $foreman_puppetdb_dashboard_address,
-    address           => $foreman_puppetdb_address,
+    address => $foreman_puppetdb_address,
   }
 
   class { '::foreman::cli':
     version            => $foreman_version,
     foreman_url        => $foreman_url,
     username           => 'admin',
-    password           => $foreman_admin_password,
+    password           => $foreman_initial_admin_password,
     manage_root_config => true,
   }
 
@@ -667,7 +662,6 @@ END
     trusted_hosts           => $foreman_proxy_trusted_hosts,
     bind_host               => $foreman_proxy_bind_host,
     puppet                  => $foreman_proxy_puppet,
-    puppet_use_cache        => $foreman_proxy_puppet_use_cache,
     puppetca                => $foreman_proxy_puppetca,
     puppetca_cmd            => $foreman_proxy_puppetca_cmd,
     tftp                    => $foreman_proxy_tftp,
@@ -696,6 +690,7 @@ END
     templates_listen_on     => $foreman_proxy_templates_listen_on,
     template_url            => $foreman_proxy_template_url,
     tftp_servername         => $foreman_proxy_tftp_servername,
+    tftp_listen_on          => $foreman_proxy_tftp_listen_on,
     manage_sudoersd         => $foreman_proxy_manage_sudoersd,
     use_sudoersd            => $foreman_proxy_use_sudoersd,
     use_sudoers             => $foreman_proxy_use_sudoers,

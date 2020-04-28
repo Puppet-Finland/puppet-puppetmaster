@@ -12,7 +12,7 @@ mod 'stm-debconf', '3.0.0'
 mod 'theforeman/dhcp', '5.1.1'
 mod 'theforeman/dns', '7.0.0'
 mod 'ghoneycutt-dnsclient', '3.6.0'
-mod 'stahnma-epel', '1.3.0'
+mod 'puppet-epel', '3.0.1'
 mod 'puppetlabs-firewall', '2.2.0'
 mod 'theforeman/foreman', '14.0.0'
 mod 'theforeman/foreman_proxy', '13.0.0'
@@ -48,6 +48,9 @@ mod 'saz-timezone',
   :git => 'https://github.com/Puppet-Finland/puppet-timezone.git',
   :ref => 'puppet6'
 mod 'puppetlabs-vcsrepo', '3.1.0'
-mod 'puppetlabs-yumrepo_core', '1.0.6'
+mod 'puppetlabs-yumrepo_core', '1.0.7'
+mod 'puppet-redis', '5.0.0'
+mod 'puppet-extlib', '5.0.0'
+mod 'richardc-datacat', '0.6.2'
 
 

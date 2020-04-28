@@ -3,6 +3,9 @@
 
 Vagrant.configure("2") do |config|
 
+  #config.env.enable
+  config.vm.box = "puppeteers.box"
+  
   config.vm.define "packager" do |box|
     box.vm.box = "ubuntu/bionic64"
     box.vm.box_version = "20200402.0.0"
@@ -35,13 +38,14 @@ Vagrant.configure("2") do |config|
     box.vm.provision "shell", path: "vagrant/install_keys.sh"
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
-      vb.memory = 4096
+      vb.memory = 5120
     end
   end
 
   config.vm.define "puppetserver-centos7" do |box|
-    box.vm.box = "centos/7"
-    box.vm.box_version = "1905.1"
+    box.vm.box = "puppeteers/centos7"
+    #config.vm.box_url = "http://cloud.centos.org/centos/7/vagrant/x86_64/images/CentOS-7.box"
+    #box.vm.box_version = "1.2.22"
     box.vm.hostname = "puppet.local"
     box.vm.network "private_network", ip: "192.168.221.203"
     box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
@@ -55,7 +59,7 @@ Vagrant.configure("2") do |config|
     box.vm.provision "shell", path: "vagrant/install_keys.sh"
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
-      vb.memory = 4096
+      vb.memory = 5120
     end
   end
 
