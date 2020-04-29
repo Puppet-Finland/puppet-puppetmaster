@@ -21,8 +21,9 @@
 :hook_dirs:
 - "/usr/share/puppetmaster-installer/hooks"
 :custom: {}
+:facts: {}
 :low_priority_modules: []
-:verbose_log_level: info
-:skip_puppet_version_check: true
-:hiera_config: "/usr/share/puppetmaster-installer/config/hiera.conf"
+:verbose_log_level: debug
+:skip_puppet_version_check: false
+:hiera_config: "/usr/share/puppetmaster-installer/config/hiera.yaml"
 :password: UGi1m8QKCX-0jRjHBF2B189MaVtPfwJ83mAURXjkp68

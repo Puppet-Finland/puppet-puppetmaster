@@ -32,13 +32,12 @@ If you're using the Git version of this installer, then additional setup is need
 Then you need to fetch the Puppet modules this installer depends on:
 
     $ /opt/puppetlabs/puppet/bin/gem install librarian-puppet
-    $ cd /usr/share/puppetmaster
+    $ cd /usr/share/puppetmaster-installer
     $ librarian-puppet install --verbose
 
 Finally you need to ensure that the puppetmaster module is visible to the Kafo installer:
 
-    $ cd /usr/share/puppetmaster/modules
-    $ ln -s /usr/share/puppetmaster /usr/share/puppetmaster/modules/puppetmaster
+    $ ln -s /usr/share/puppetmaster-installer /usr/share/puppetmaster-installer/modules/puppetmaster
 
 These extra steps can be omitted when running the Vagrant boxes as the provisioning steps handle all of them automatically. The provisioning scripts are in general a good reference for what this installer needs to work properly.
 

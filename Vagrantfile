@@ -55,7 +55,7 @@ Vagrant.configure("2") do |config|
     box.vm.provision "shell", path: "vagrant/install_keys.sh"
     box.vm.provider "virtualbox" do |vb|
       vb.gui = false
-      vb.memory = 4096
+      vb.memory = 5120
     end
   end
 
