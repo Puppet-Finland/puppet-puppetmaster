@@ -10,6 +10,10 @@ This is a Puppet module and [Kafo](https://github.com/theforeman/kafo) installer
 
 Each of the above is a separate Kafo installer scenario. This installer works on CentOS 7, Debian 9, Ubuntu 16.04 and Ubuntu 18.04. However, the Foreman scenarios are only supported on CentOS 7.
 
+Note that files related to Kafo installer and Vagrant are only available in the
+[GitHub project](https://github.com/Puppet-Finland/puppet-puppetmaster), not in
+the version published on Puppet Forge.
+
 # Setup
 
 To run the installer outside of Vagrant do 

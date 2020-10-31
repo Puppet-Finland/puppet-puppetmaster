@@ -6,6 +6,7 @@
   "license": "BSD-2-Clause",
   "source": "https://github.com/Puppet-Finland/puppet-puppetmaster",
   "project_page": "https://github.com/Puppet-Finland/puppet-puppetmaster",
+  "issues_url": "https://github.com/Puppet-Finland/puppet-puppetmaster/issues",
   "dependencies": [
 
   ],

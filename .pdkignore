@@ -40,3 +40,14 @@
 /.yardopts
 /spec/
 /.vscode/
+/bin
+/config
+/hooks
+/packaging
+/vagrant
+/Vagrantfile
+/Puppetfile
+/r10k_key
+/pdk-validate.sh
+*.log
+*.tar.gz
