@@ -1,6 +1,6 @@
 {
   "name": "puppetfinland-puppetmaster",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "author": "Puppet-Finland team",
   "summary": "A module for setting up puppetmasters",
   "license": "BSD-2-Clause",
