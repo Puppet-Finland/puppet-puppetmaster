@@ -57,6 +57,9 @@ fixtures:
     r10k:
       repo: "puppet/r10k"
       ref:  "8.0.0"
+    selinux_core:
+      repo: "puppetlabs/selinux_core"
+      ref: "1.0.4"
     sshkeys_core:
       repo: "puppetlabs/sshkeys_core"
       ref:  "1.0.3"

@@ -40,6 +40,7 @@ mod 'puppetlabs-ruby',
   :git => 'https://github.com/Puppet-Finland/puppetlabs-ruby.git',
   :ref => 'puppet6'
 mod 'puppet-selinux', '3.1.0'
+mod 'puppetlabs-selinux_core', '1.0.4'
 mod 'puppetlabs-stdlib', '6.2.0'
 mod 'puppetlabs-sshkeys_core', '1.0.3'
 mod 'camptocamp-systemd', '2.8.0'
