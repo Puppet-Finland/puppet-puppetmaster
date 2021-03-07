@@ -4,3 +4,6 @@ vagrant:
   images: ['ubuntu/bionic64']
   params:
     vagrant_memory: 4096
+docker:
+  provisioner: docker
+  images: ['litmusimage/ubuntu:18.04']
