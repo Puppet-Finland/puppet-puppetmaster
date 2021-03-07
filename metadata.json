@@ -1,6 +1,6 @@
 {
   "name": "puppetfinland-puppetmaster",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "author": "Puppet-Finland team",
   "summary": "A module for setting up puppetmasters",
   "license": "BSD-2-Clause",
@@ -8,7 +8,110 @@
   "project_page": "https://github.com/Puppet-Finland/puppet-puppetmaster",
   "issues_url": "https://github.com/Puppet-Finland/puppet-puppetmaster/issues",
   "dependencies": [
-
+    {
+      "name": "puppetlabs/apt",
+      "version_requirement": ">= 7.3.0 < 8.0.0"
+    },
+    {
+      "name": "puppetlabs/apache",
+      "version_requirement": ">= 5.4.0 < 6.0.0"
+    },
+    {
+      "name": "puppetlabs/augeas_core",
+      "version_requirement": ">= 1.0.5 < 2.0.0"
+    },
+    {
+      "name": "puppetlabs/concat",
+      "version_requirement": ">= 6.2.0 < 7.0.0"
+    },
+    {
+      "name": "puppetlabs/cron_core",
+      "version_requirement": ">= 1.0.3 < 2.0.0"
+    },
+    {
+      "name": "stm/debconf",
+      "version_requirement": ">= 3.0.0 < 4.0.0"
+    },
+    {
+      "name": "stahnma/epel",
+      "version_requirement": ">= 1.3.0 < 2.0.0"
+    },
+    {
+      "name": "puppetlabs/firewall",
+      "version_requirement": ">= 2.2.0 < 3.0.0"
+    },
+    {
+      "name": "puppetlabs/puppetserver_gem",
+      "version_requirement": ">= 1.1.1 < 2.0.0"
+    },
+    {
+      "name": "theforeman/git",
+      "version_requirement": ">= 6.0.1 < 7.0.0"
+    },
+    {
+      "name": "chrekh/hosts",
+      "version_requirement": ">= 2.3.1 < 3.0.0"
+    },
+    {
+      "name": "puppetlabs/inifile",
+      "version_requirement": ">= 4.1.0 < 5.0.0"
+    },
+    {
+      "name": "puppetlabs/postgresql",
+      "version_requirement": ">= 6.3.0 < 7.0.0"
+    },
+    {
+      "name": "theforeman/puppet",
+      "version_requirement": ">= 12.1.0 < 13.0.0"
+    },
+    {
+      "name": "puppetlabs/puppet_authorization",
+      "version_requirement": ">= 0.5.0 < 1.0.0"
+    },
+    {
+      "name": "puppet/puppetboard",
+      "version_requirement": ">= 6.0.0 < 7.0.0"
+    },
+    {
+      "name": "puppetlabs/puppetdb",
+      "version_requirement": ">= 7.4.0 < 8.0.0"
+    },
+    {
+      "name": "puppet/python",
+      "version_requirement": ">= 3.0.0 < 5.0.0"
+    },
+    {
+      "name": "puppet/r10k",
+      "version_requirement": ">= 7.0.0 < 10.0.0"
+    },
+    {
+      "name": "puppetlabs/selinux_core",
+      "version_requirement": ">= 1.0.4 < 2.0.0"
+    },
+    {
+      "name": "puppetlabs/sshkeys_core",
+      "version_requirement": ">= 1.0.3 < 2.0.0"
+    },
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 6.2.0 < 7.0.0"
+    },
+    {
+      "name": "camptocamp/systemd",
+      "version_requirement": ">= 2.12.0 < 3.0.0"
+    },
+    {
+      "name": "saz/timezone",
+      "version_requirement": ">= 6.1.0 < 7.0.0"
+    },
+    {
+      "name": "puppetlabs/vcsrepo",
+      "version_requirement": ">= 3.1.0 < 4.0.0"
+    },
+    {
+      "name": "puppetlabs/yumrepo_core",
+      "version_requirement": ">= 1.0.6 < 2.0.0"
+    }
   ],
   "operatingsystem_support": [
     {

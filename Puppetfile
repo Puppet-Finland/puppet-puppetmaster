@@ -43,11 +43,9 @@ mod 'puppet-selinux', '3.1.0'
 mod 'puppetlabs-selinux_core', '1.0.4'
 mod 'puppetlabs-stdlib', '6.2.0'
 mod 'puppetlabs-sshkeys_core', '1.0.3'
-mod 'camptocamp-systemd', '2.8.0'
+mod 'camptocamp-systemd', '2.12.0'
 mod 'theforeman/tftp', '5.0.2'
-mod 'saz-timezone',
-  :git => 'https://github.com/Puppet-Finland/puppet-timezone.git',
-  :ref => 'puppet6'
+mod 'saz-timezone', '6.1.0'
 mod 'puppetlabs-vcsrepo', '3.1.0'
 mod 'puppetlabs-yumrepo_core', '1.0.7'
 mod 'puppet-redis', '5.0.0'

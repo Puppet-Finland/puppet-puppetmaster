@@ -1,0 +1,6 @@
+---
+vagrant:
+  provisioner: vagrant
+  images: ['ubuntu/bionic64']
+  params:
+    vagrant_memory: 4096

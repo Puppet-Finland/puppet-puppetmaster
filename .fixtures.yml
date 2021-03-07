@@ -66,6 +66,12 @@ fixtures:
     stdlib:
       repo: "puppetlabs/stdlib"
       ref:  "6.2.0"
+    systemd:
+      repo: "camptocamp/systemd"
+      ref:  "2.12.0"
+    timezone:
+      repo: "saz/timezone"
+      ref:  "6.1.0"
     vcsrepo:
       repo: "puppetlabs-vcsrepo"
       ref:  "3.1.0"
@@ -73,6 +79,9 @@ fixtures:
       repo: "puppetlabs/yumrepo_core"
       ref:  "1.0.6"
   repositories:
-    timezone:
-      repo: 'https://github.com/Puppet-Finland/puppet-timezone.git'
-      branch: 'puppet6'
+    facts:
+      repo: 'https://github.com/puppetlabs/puppetlabs-facts.git'
+    puppet_agent:
+      repo: 'https://github.com/puppetlabs/puppetlabs-puppet_agent.git'
+    provision:
+      repo: 'https://github.com/puppetlabs/provision.git'
