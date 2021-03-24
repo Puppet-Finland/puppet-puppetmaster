@@ -61,26 +61,14 @@ class puppetmaster::puppetboard
   Optional[String]         $provider = undef,
   Optional[String]         $repo_url = undef,
   Optional[String]         $repo_host = undef,
-)
+) inherits puppetmaster::params
 {
-  # From Debian 8 onwards (and on recent Ubuntu versions) use conf-enabled 
-  # instead of conf.d dir. puppetlabs-apache module does not follow this 
-  # convention, and config files are not read from the correct place.
-  #
-  # https://tickets.puppetlabs.com/browse/MODULES-5990
-  # https://tickets.puppetlabs.com/browse/MODULES-3116
-  #
-  case $::osfamily {
-    'Debian': {
-      $apache_conf_dir = '/etc/apache2'
-      $apache_confd_dir = "${apache_conf_dir}/conf-enabled" }
-    'RedHat': {
-      $apache_conf_dir = '/etc/httpd'
-      $apache_confd_dir = "${apache_conf_dir}/conf.d" }
-    default: {
-      $apache_conf_dir = '/etc/httpd'
-      $apache_confd_dir = "${apache_conf_dir}/conf.d" }
-  }
+  $apache_conf_dir    = $::puppetmaster::params::apache_conf_dir
+  $apache_confd_dir   = $::puppetmaster::params::apache_confd_dir
+  $seltype            = $::puppetmaster::params::seltype
+  $wsgi_mod_path      = $::puppetmaster::params::wsgi_mod_path
+  $wsgi_package_name  = $::puppetmaster::params::wsgi_package_name
+  $wsgi_socket_prefix = $::puppetmaster::params::wsgi_socket_prefix
 
   include ::puppetmaster::package_cache
 
@@ -135,13 +123,6 @@ class puppetmaster::puppetboard
   "${puppet_ssldir}/private_keys/${::fqdn}.pem"    => $puppetdb_key,
   "${puppet_ssldir}/certs/ca.pem"                  => $puppetdb_ca_cert, }
 
-  # Allow httpd to read Puppetboard's SSL keys
-  if $::osfamily == 'RedHat' {
-    $seltype = 'httpd_sys_content_t'
-  } else {
-    $seltype = undef
-  }
-
   $keys.each |$key| {
     exec { $key[1]:
       command => "cp -f ${key[0]} ${key[1]}",
@@ -169,19 +150,17 @@ class puppetmaster::puppetboard
 
   if $facts['osfamily'] == 'RedHat' {
     include ::apache::mod::version
-
-    class { '::apache::mod::wsgi':
-      wsgi_socket_prefix => '/var/run/wsgi'
-    }
-
   }
-  else {
-    class { '::apache::mod::wsgi': }
+
+  class { '::apache::mod::wsgi':
+    wsgi_socket_prefix => $wsgi_socket_prefix,
+    package_name       => $wsgi_package_name,
+    mod_path           => $wsgi_mod_path,
   }
 
   class { '::puppetboard':
     # puppet-puppetboard clones puppetboard from Git, so we need to specify a known-good version
-    revision            => 'c215ebd0a734b2a6d2f5711310bef441aab10e2d',
+    revision            => '7e19ee73aca2d887459156f003f71e8f98289ee8',
     groups              => $puppetboard_groups,
     puppetdb_host       => $puppetboard_puppetdb_host,
     puppetdb_port       => $puppetboard_puppetdb_port,
@@ -194,10 +173,6 @@ class puppetmaster::puppetboard
     require             => Class['::puppet'],
   }
 
-  # Currently we need to patch Puppetboard to make it work with Puppet 2.x.
-  # Moreover, Puppet 3 support in Puppetboard is incomplete.  This fix is based on
-  #
-  # <https://github.com/voxpupuli/puppetboard/pull/548>
   file { '/srv/puppetboard/puppetboard/puppetboard/app.py':
     ensure  => 'present',
     content => template('puppetmaster/app.py.erb'),

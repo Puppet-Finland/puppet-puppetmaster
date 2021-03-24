@@ -45,15 +45,9 @@ fixtures:
     puppet_authorization:
       repo: "puppetlabs/puppet_authorization"
       ref:  "0.5.0"
-    puppetboard:
-      repo: "puppet/puppetboard"
-      ref:  "6.0.0"
     puppetdb:
       repo: "puppetlabs/puppetdb"
       ref:  "7.4.0"
-    python:
-      repo: "puppet/python"
-      ref:  "4.0.0"
     r10k:
       repo: "puppet/r10k"
       ref:  "8.0.0"
@@ -81,7 +75,13 @@ fixtures:
   repositories:
     facts:
       repo: 'https://github.com/puppetlabs/puppetlabs-facts.git'
-    puppet_agent:
-      repo: 'https://github.com/puppetlabs/puppetlabs-puppet_agent.git'
     provision:
       repo: 'https://github.com/puppetlabs/provision.git'
+    puppet_agent:
+      repo: 'https://github.com/puppetlabs/puppetlabs-puppet_agent.git'
+    puppetboard:
+      repo: 'https://github.com/Puppet-Finland/puppet-module-puppetboard.git'
+      ref:  'd716c55022e54046002666f7c63df39a14daffce'
+    python:
+      repo: 'https://github.com/voxpupuli/puppet-python.git'
+      ref:  'd7be32bcd801feaae2e490972c4c1237119be90a'

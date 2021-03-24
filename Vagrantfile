@@ -108,6 +108,26 @@ Vagrant.configure("2") do |config|
     end
   end
 
+  config.vm.define "puppetserver-focal" do |box|
+    box.vm.box = "ubuntu/focal64"
+    box.vm.box_version = "20210320.0.0"
+    box.vm.hostname = "puppet.local"
+    box.vm.network "private_network", ip: "192.168.221.207"
+    box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
+    box.vm.synced_folder ".", "/usr/share/puppetmaster-installer", type: "virtualbox"
+    box.vm.provision "shell" do |s|
+      s.path = "vagrant/prepare.sh"
+      s.args = ["-b", "/usr/share/puppetmaster-installer", "-m"]
+      s.env = {"RUN_INSTALLER" => ENV['RUN_INSTALLER'],
+               "SCENARIO"      => ENV['SCENARIO'] }
+    end
+    box.vm.provision "shell", path: "vagrant/install_keys.sh"
+    box.vm.provider "virtualbox" do |vb|
+      vb.gui = false
+      vb.memory = 4096
+    end
+  end
+
   config.vm.define "puppetserver-bionic-aws" do |box|
     # Create an empty file to keep vagrant-aws happy
     dummy_keypair_path = "/tmp/.puppetserver-bionic-aws-dummy-keypair"

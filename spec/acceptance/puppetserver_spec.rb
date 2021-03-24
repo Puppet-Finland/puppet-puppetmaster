@@ -11,11 +11,6 @@ describe 'puppetserver - default settings', if: ['debian', 'redhat', 'ubuntu'].i
     idempotent_apply(pp)
   end
 
-  #describe file("/etc/feature.conf") do
-  #  it { is_expected.to be_file }
-  #  its(:content) { is_expected.to match %r{key = default value} }
-  #end
-
   describe port(8140) do
     it { is_expected.to be_listening }
   end
