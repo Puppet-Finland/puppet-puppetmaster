@@ -41,13 +41,13 @@ fixtures:
       ref:  "6.3.0"
     puppet:
       repo: "theforeman/puppet"
-      ref:  "12.1.0"
+      ref:  "14.2.1"
     puppet_authorization:
       repo: "puppetlabs/puppet_authorization"
       ref:  "0.5.0"
     puppetdb:
       repo: "puppetlabs/puppetdb"
-      ref:  "7.4.0"
+      ref:  "7.7.1"
     r10k:
       repo: "puppet/r10k"
       ref:  "8.0.0"

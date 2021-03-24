@@ -28,12 +28,12 @@ mod 'puppetlabs/mysql', '10.3.0'
 mod 'puppetlabs-ntp', '8.2.0'
 mod 'puppetfinland-packetfilter', '2.0.3'
 mod 'puppetlabs/postgresql', '6.3.0'
-mod 'theforeman/puppet', '13.0.0'
+mod 'theforeman/puppet', '14.2.1'
 mod 'puppetlabs-puppet_authorization', '0.5.0'
 mod 'puppet-puppetboard',
   :git => 'https://github.com/Puppet-Finland/puppet-module-puppetboard.git',
   :ref => 'd716c55022e54046002666f7c63df39a14daffce'
-mod 'puppetlabs/puppetdb', '7.4.0'
+mod 'puppetlabs/puppetdb', '7.7.1'
 mod 'puppetlabs-puppetserver_gem', '1.1.1'
 mod 'puppet-python',
   :git => 'https://github.com/voxpupuli/puppet-python.git',
