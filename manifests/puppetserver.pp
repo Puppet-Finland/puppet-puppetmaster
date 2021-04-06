@@ -128,16 +128,6 @@ class puppetmaster::puppetserver
     *       => $ini_setting_defaults,
   }
 
-  puppet_authorization::rule { 'files':
-    match_request_path => '^/puppet/v3/file_(content|metadata)s?/files/',
-    match_request_type => 'regex',
-    allow              => '*',
-    sort_order         => 400,
-    path               => '/etc/puppetlabs/puppetserver/conf.d/auth.conf',
-    require            => Class['::puppet'],
-  }
-
-
   if $manage_packetfilter {
     include ::packetfilter::endpoint
 

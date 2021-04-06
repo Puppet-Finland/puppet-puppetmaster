@@ -111,6 +111,21 @@ class puppetmaster::puppetboard
     before                     => Class['::puppetboard'],
   }
 
+  # On Ubuntu 20.04 and CentOS 8 there's an issue with PuppetDB <-> Puppetboard
+  # interaction:
+  #
+  # <https://github.com/voxpupuli/puppetboard/issues/535>
+  #
+  ini_setting { 'puppetdb-cipher-suites':
+    ensure  => present,
+    path    => '/etc/puppetlabs/puppetdb/conf.d/jetty.ini',
+    section => 'jetty',
+    setting => 'cipher-suites',
+    value   => '”TLS_RSA_WITH_AES_256_CBC_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA,TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA"',
+    require => Class['::puppetmaster::puppetdb'],
+    notify  => Service['puppetdb'],
+  }
+
   file { [ $puppetboard_config_dir, $puppetboard_ssl_dir ]:
     ensure  => directory,
     owner   => 'root',
@@ -160,7 +175,7 @@ class puppetmaster::puppetboard
 
   class { '::puppetboard':
     # puppet-puppetboard clones puppetboard from Git, so we need to specify a known-good version
-    revision            => '7e19ee73aca2d887459156f003f71e8f98289ee8',
+    revision            => '18120d520b7ea15bfc734b57742530c3d2b769ff',
     groups              => $puppetboard_groups,
     puppetdb_host       => $puppetboard_puppetdb_host,
     puppetdb_port       => $puppetboard_puppetdb_port,

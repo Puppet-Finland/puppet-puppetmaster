@@ -36,9 +36,6 @@ mod 'puppetlabs/postgresql', '7.0.2'
 mod 'theforeman/puppet',
   :git => 'https://github.com/Puppet-Finland/puppet-puppet.git',
   :ref => 'puppet-7'
-mod 'puppetlabs-puppet_authorization',
-  :git => 'https://github.com/Puppet-Finland/puppetlabs-puppet_authorization.git',
-  :ref => 'puppet7'
 mod 'puppet-puppetboard',
   :git => 'https://github.com/Puppet-Finland/puppet-module-puppetboard.git',
   :ref => 'latest_python_module'
