@@ -21,6 +21,9 @@ mod 'puppetlabs-firewall', '3.0.0'
 mod 'theforeman/git',
   :git => 'https://github.com/Puppet-Finland/puppet-git.git',
   :ref => 'puppet7'
+mod 'puppetlabs/hocon',
+  :git => 'https://github.com/Puppet-Finland/puppetlabs-hocon.git',
+  :ref => 'puppet7'
 mod 'chrekh-hosts', '2.3.1'
 mod 'puppetlabs-inifile', '5.0.0'
 mod 'saz-locales',
@@ -36,7 +39,7 @@ mod 'puppetlabs/postgresql', '7.0.2'
 mod 'theforeman/puppet',
   :git => 'https://github.com/Puppet-Finland/puppet-puppet.git',
   :ref => 'puppet-7'
-mod 'puppetlabs-puppet_authorization',
+mod 'puppetlabs/puppet_authorization',
   :git => 'https://github.com/Puppet-Finland/puppetlabs-puppet_authorization.git',
   :ref => 'puppet7'
 mod 'puppet-puppetboard',

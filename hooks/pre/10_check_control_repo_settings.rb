@@ -23,7 +23,7 @@ err = false
       end
 
       # Check that r10k deployment key is actually present
-      r10k_key = '/usr/share/puppetmaster-installer/r10k_key'
+      r10k_key = '/usr/share/puppetmaster-installer/keys/r10k_key'
 
       unless File.file?(r10k_key)
         say "<%= color('ERROR: #{r10k_key} not found! Please copy your control repo deployment key to that location!', :bad) %>"

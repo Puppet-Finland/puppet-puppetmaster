@@ -67,14 +67,14 @@ class puppetmaster::common::r10k
     mode   => '0755',
   }
 
-  # If user has added an r10k key into the installer directory copy it to the
-  # correct place. Even if keys are not there, ensure that their permissions
-  # are correct.
+  # If user has added an r10k key into the keys directory under the installer
+  # directory copy it to the correct place. Even if keys are not there, ensure
+  # that their permissions are correct.
   $installer_dir = '/usr/share/puppetmaster-installer'
 
   exec { 'copy-r10k-key':
     cwd     => $installer_dir,
-    command => "test -r r10k_key && cp -v r10k_key ${r10k_key_dir}/ && chown root:root ${r10k_key_dir}/r10k_key && chmod 600 ${r10k_key_dir}/r10k_key", # lint:ignore:140chars
+    command => "test -r keys/r10k_key && cp -v keys/r10k_key ${r10k_key_dir}/ && chown root:root ${r10k_key_dir}/r10k_key && chmod 600 ${r10k_key_dir}/r10k_key", # lint:ignore:140chars
     path    => ['/bin','/sbin','/usr/bin','/usr/sbin'],
     require => File[$r10k_key_dir],
   }

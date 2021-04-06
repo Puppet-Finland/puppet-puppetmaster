@@ -134,9 +134,8 @@ class puppetmaster::puppetserver
     allow              => '*',
     sort_order         => 400,
     path               => '/etc/puppetlabs/puppetserver/conf.d/auth.conf',
-    require            => Class['::puppet'],
+    require            => Package['puppetserver'],
   }
-
 
   if $manage_packetfilter {
     include ::packetfilter::endpoint

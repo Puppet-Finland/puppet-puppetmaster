@@ -5,7 +5,7 @@ package { 'rubygems':
 }
 
 package { 'kafo':
-  ensure   => '4.1.0',
+  ensure   => '6.3.0',
   provider => 'puppet_gem',
 }
 

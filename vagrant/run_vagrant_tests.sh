@@ -15,9 +15,11 @@ if ! [ -r "./run_vagrant_tests.sh" ]; then
 fi
 
 # Ensure that modules directory is present and link to puppetmaster module is there
-if ! [ -d "../modules/puppetmaster" ]; then
-    echo "ERROR: ../modules/puppetmaster directory is missing. Either r10k did not run or the link to the root of puppet-puppetmaster is missing."
-    exit 1
+if ! [ -L "../modules/puppetmaster" ]; then
+    CWD=`pwd`
+    cd ../modules
+    ln -s .. puppetmaster
+    cd $CWD
 fi
 
 # Run an individual Vagrant test
@@ -36,7 +38,7 @@ run_test() {
 
     cp "test/$ANSWER_FILE_NAME" $TARGET_ANSWER_FILE_PATH
 
-    RUN_INSTALLER=true SCENARIO=$SCENARIO vagrant up $VM >> $LOGFILE 2>&1
+    RUN_INSTALLER=true SCENARIO=$SCENARIO ANSWER_FILE=$ANSWER_FILE vagrant up $VM >> $LOGFILE 2>&1
 
 
     vagrant destroy -f $VM >> $LOGFILE 2>&1
@@ -52,13 +54,13 @@ TIMESTAMP=$(date +'%s')
 COMMIT=$(git rev-parse --short HEAD)
 
 # Puppetserver with GitLab r10k configuration
-run_test puppetserver-bionic puppetserver puppetserver-answers.yaml_gitlab
+run_test puppetserver-focal puppetserver puppetserver-answers.yaml_gitlab
 
 # Puppetserver with default settings
-#run_test puppetserver-bionic puppetserver puppetserver-answers.yaml_default
+run_test puppetserver-focal puppetserver puppetserver-answers.yaml_default
 
 # Puppetserver + PuppetDB with default settings
-#run_test puppetserver-bionic puppetserver-with-puppetdb puppetserver-with-puppetdb-answers.yaml_default
+run_test puppetserver-focal puppetserver-with-puppetdb puppetserver-with-puppetdb-answers.yaml_default
 
 # Puppetserver + PuppetDB + Puppetboard with default settings
-run_test puppetserver-bionic puppetserver-with-puppetboard puppetserver-with-puppetboard-answers.yaml_default
+run_test puppetserver-focal puppetserver-with-puppetboard puppetserver-with-puppetboard-answers.yaml_default
