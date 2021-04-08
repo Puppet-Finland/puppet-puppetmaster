@@ -30,6 +30,9 @@ fixtures:
     git:
       repo: "theforeman/git"
       ref:  "6.0.1"
+    hocon:
+      repo: "puppetlabs/hocon"
+      ref:  "1.1.0"
     hosts:
       repo: "chrekh/hosts"
       ref:  "2.3.1"
