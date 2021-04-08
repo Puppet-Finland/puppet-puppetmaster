@@ -1,6 +1,6 @@
 {
   "name": "puppetfinland-puppetmaster",
-  "version": "2.1.2",
+  "version": "3.0.0",
   "author": "Puppet-Finland team",
   "summary": "A module for setting up puppetmasters",
   "license": "BSD-2-Clause",
@@ -129,7 +129,8 @@
     {
       "operatingsystem": "Ubuntu",
       "operatingsystemrelease": [
-        "18.04"
+        "18.04",
+        "20.04"
       ]
     }
   ],
