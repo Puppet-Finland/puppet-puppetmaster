@@ -16,36 +16,23 @@ the version published on Puppet Forge.
 
 # Setup
 
-To run the installer outside of Vagrant do 
+To run the installer outside of Vagrant you need to do Vagrant's work manually: 
 
-* Install Puppet 5 from Puppetlabs
-* Install rubygems from system packages using apt or yum
-* Install Kafo's dependencies using /opt/puppetlabs/puppet/bin/gem
-    * ```$ /opt/puppetlabs/puppet/bin/gem install yard puppet-strings kafo rdoc```
-* Ensure that executables under /opt/puppetlabs are in PATH. You can do this with a shell profile fragment (e.g. /etc/profile.d/puppetmaster-installer.sh) that has the following content:
-    * ```export PATH=/opt/puppetlabs/bin:/opt/puppetlabs/puppet/bin:/usr/share/puppetmaster-installer/bin:$PATH```
-* Run the above export command in the currently active terminal, or logout and log back in
+    $ apt-get update && apt-get install git
+    $ cd /usr/share
+    $ git clone https://github.com/Puppet-Finland/puppet-puppetmaster puppetmaster-installer
+    $ cd puppetmaster-installer
+    $ vagrant/prepare.sh -b /usr/share/puppetmaster-installer -m
 
-If you using the release Debian/RPM packages then this is all you need to do.
+If you are going to use r10k and/or eyaml create a directory for their keys:
 
-If you're using the Git version of this installer, then additional setup is needed. First ensure that /usr/share/puppetmaster is present by creating a symbolic link. For example:
+    $ mkdir /usr/share/puppetmaster-installer/keys
 
-    $ sudo -i
-    $ ln -s /home/joe/puppet-puppetmaster /usr/share/puppetmaster
+Then copy your eyaml keys and your r10k private key there, naming them
+*private_key.pkcs7.pem*, *public_key.pkcs7.pem* and *r10k_key*.
 
-Then you need to fetch the Puppet modules this installer depends on:
-
-    $ /opt/puppetlabs/puppet/bin/gem install librarian-puppet
-    $ cd /usr/share/puppetmaster-installer
-    $ librarian-puppet install --verbose
-
-Finally you need to ensure that the puppetmaster module is visible to the Kafo installer:
-
-    $ ln -s /usr/share/puppetmaster-installer /usr/share/puppetmaster-installer/modules/puppetmaster
-
-These extra steps can be omitted when running the Vagrant boxes as the provisioning steps handle all of them automatically. The provisioning scripts are in general a good reference for what this installer needs to work properly.
-
-Also note that as Foreman and Smart Proxies communicate via TLS you will need to ensure that their names resolve correctly before running the installer. The best way to do this is to have records for them in DNS, but using /etc/hosts is also an option.
+Now restart your shell session to refresh your PATH. After this you can just run
+the installer.
 
 # Usage
 
