@@ -64,8 +64,6 @@ class puppetmaster::puppetdb
     autosign                => $autosign,
     autosign_entries        => $autosign_entries,
     timezone                => $timezone,
-    show_diff               => false,
-    server_foreman          => false,
     server_external_nodes   => $server_external_nodes,
     provider                => $provider,
     key_path                => $key_path,
