@@ -26,3 +26,9 @@
 .envrc
 /inventory.yaml
 /keys
+/packaging/build
+/packaging/*.rpm
+/packaging/*.deb
+/modules
+ubuntu-*.log
+/config/installer-scenarios.d/last_scenario.yaml
