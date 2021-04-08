@@ -31,7 +31,7 @@ class puppetmaster::puppetboard::ssl_workarounds {
   # We just apply the above recipe to puppetserver.conf which determines
   # outbound connection ciphers in puppetserver.
   #
-  hocon_setting { "puppetserver.conf cipher-suites":
+  hocon_setting { 'puppetserver.conf cipher-suites':
     ensure  => absent,
     path    => '/etc/puppetlabs/puppetserver/conf.d/puppetserver.conf',
     setting => 'http-client.cipher-suites',

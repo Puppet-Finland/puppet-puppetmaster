@@ -16,7 +16,7 @@ err = false
       # Check that repo_host is defined when not using a preconfigured Git provider
       provider = param(module_name, 'provider').value
       unless ['gitlab', 'bitbucket'].include? provider
-        unless param(module_name, 'repo_host').value
+        unless param(module_name, 'repo_host').value # rubocop:disable Metrics/BlockNesting
           say "<%= color('ERROR: Must set \"repo_host\" when control_repo = true and you are not using a preconfigured provider such as \"gitlab\" or \"bitbucket\".', :bad) %>"
           err = true
         end
