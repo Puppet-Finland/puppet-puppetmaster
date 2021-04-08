@@ -5,10 +5,9 @@ This is a Puppet module and [Kafo](https://github.com/theforeman/kafo) installer
 * Puppetserver
 * Puppetserver with PuppetDB
 * Puppetserver with PuppetDB and [Puppetboard](https://github.com/voxpupuli/puppetboard)
-* Puppetserver with [Foreman Smart Proxy](https://github.com/theforeman/smart-proxy)
-* Puppetserver with [Foreman Smart Proxy](https://github.com/theforeman/smart-proxy) and [Foreman](https://github.com/theforeman/foreman)
 
-Each of the above is a separate Kafo installer scenario. This installer works on CentOS 7, Debian 9, Ubuntu 16.04 and Ubuntu 18.04. However, the Foreman scenarios are only supported on CentOS 7.
+Each of the above is a separate Kafo installer scenario. This installer should
+work on CentOS 7, Debian 9, Ubuntu 18.04 and Ubuntu 20.04.
 
 Note that files related to Kafo installer and Vagrant are only available in the
 [GitHub project](https://github.com/Puppet-Finland/puppet-puppetmaster), not in

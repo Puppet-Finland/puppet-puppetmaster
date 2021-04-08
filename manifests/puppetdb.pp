@@ -36,10 +36,6 @@
 #
 # $server_external_nodes:: The path to the ENC executable. Defaults to empty string.
 #
-# $server_foreman:: Used internally in Foreman scenarios. Do not change the default (false) unless you know what you are doing.
-#
-# $show_diff:: Used internally in Foreman scenarios. Do not change the default (false) unless you know what you are doing.
-#
 class puppetmaster::puppetdb
 (
   String                   $puppetdb_database_password,
@@ -49,8 +45,6 @@ class puppetmaster::puppetdb
   String                   $puppetserver_allow_ipv6 = '::1',
   String                   $server_reports = 'store,puppetdb',
   Variant[Boolean, String] $autosign = '/etc/puppetlabs/puppet/autosign.conf',
-  Boolean                  $show_diff = false,
-  Boolean                  $server_foreman = false,
   String                   $server_external_nodes = '',
   String                   $key_path = '/etc/puppetlabs/r10k/ssh/r10k_key',
   Boolean                  $control_repo = false,
@@ -70,8 +64,8 @@ class puppetmaster::puppetdb
     autosign                => $autosign,
     autosign_entries        => $autosign_entries,
     timezone                => $timezone,
-    show_diff               => $show_diff,
-    server_foreman          => $server_foreman,
+    show_diff               => false,
+    server_foreman          => false,
     server_external_nodes   => $server_external_nodes,
     provider                => $provider,
     key_path                => $key_path,
