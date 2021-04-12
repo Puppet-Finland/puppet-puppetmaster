@@ -44,6 +44,6 @@ mkdir -p test/logs
 TIMESTAMP=$(date +'%s')
 COMMIT=$(git rev-parse --short HEAD)
 
-run_test puppetserver-bionic-aws puppetserver-with-puppetboard puppetserver-with-puppetboard-answers.yaml_default false
-run_test puppetserver-bionic-aws puppetserver-with-puppetdb puppetserver-with-puppetdb-answers.yaml_default false
-run_test puppetserver-bionic-aws puppetserver puppetserver-answers.yaml_gitlab true
+run_test puppetserver-focal-aws puppetserver-with-puppetboard puppetserver-with-puppetboard-answers.yaml_default false
+run_test puppetserver-focal-aws puppetserver-with-puppetdb puppetserver-with-puppetdb-answers.yaml_default false
+run_test puppetserver-aws puppetserver puppetserver-answers.yaml_gitlab true

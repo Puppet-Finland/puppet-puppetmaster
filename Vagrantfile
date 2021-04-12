@@ -128,9 +128,9 @@ Vagrant.configure("2") do |config|
     end
   end
 
-  config.vm.define "puppetserver-bionic-aws" do |box|
+  config.vm.define "puppetserver-aws" do |box|
     # Create an empty file to keep vagrant-aws happy
-    dummy_keypair_path = "/tmp/.puppetserver-bionic-aws-dummy-keypair"
+    dummy_keypair_path = "/tmp/.puppetserver-aws-dummy-keypair"
     dummy_keypair = File.new(dummy_keypair_path, "w")
     dummy_keypair.close
 
@@ -166,7 +166,8 @@ Vagrant.configure("2") do |config|
       # Copy r10k key over for setups that need it
       if ENV['R10K_KEY']
         box.vm.provision "file", source: ENV['R10K_KEY'], destination: "/tmp/r10k_key"
-        box.vm.provision "shell", inline: "mv /tmp/r10k_key #{installer_dir}/"
+        box.vm.provision "shell", inline: "mkdir #{installer_dir}/keys"
+        box.vm.provision "shell", inline: "mv /tmp/r10k_key #{installer_dir}/keys"
       end
 
       # We need to wait until systemd apt timers have ran or running the installer will fail mysteriously
