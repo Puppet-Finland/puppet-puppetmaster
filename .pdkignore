@@ -51,3 +51,8 @@
 /pdk-validate.sh
 *.log
 *.tar.gz
+/keys
+/modules
+/run-litmus-tests.sh
+/provision.yaml
+/.puppet-lint.rc
