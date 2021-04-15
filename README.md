@@ -84,15 +84,6 @@ root:
  * public_key.pkcs7.pem (eyaml public key)
  * r10k_key (r10k deployment key)
 
-# Puppetboard patches
-
-Currently (Feb 2020) Puppetboard is slowly being migrated over to Python 3, yet
-some dependency libraries such as pyPuppetDB have already move over. This means
-that getting Puppetboard to actually run is quite tricky. The installer
-patches Puppetboard with [this PR](https://github.com/voxpupuli/puppetboard/pull/548)
-automatically to make the process as smooth as it can. Later, when Puppetboard
-is in a more stable state the patching logic can be removed.
-
 # Development
 
 ## Testing with PDK
