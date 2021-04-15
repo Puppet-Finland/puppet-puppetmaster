@@ -13,9 +13,14 @@ Note that files related to Kafo installer and Vagrant are only available in the
 [GitHub project](https://github.com/Puppet-Finland/puppet-puppetmaster), not in
 the version published on Puppet Forge.
 
-# Setup
+# Setup outside of Vagrant
 
-To run the installer outside of Vagrant you need to do Vagrant's work manually: 
+You can run the installer outside of Vagrant quite easily.  First remove any
+old Puppet packages you might have installed. For example:
+
+    $ apt-get remove puppet-agent puppet5-release
+
+Then do what Vagrant does to prepare the installer:
 
     $ apt-get update && apt-get install git
     $ cd /usr/share
@@ -28,19 +33,29 @@ If you are going to use r10k and/or eyaml create a directory for their keys:
     $ mkdir /usr/share/puppetmaster-installer/keys
 
 Then copy your eyaml keys and your r10k private key there, naming them
-*private_key.pkcs7.pem*, *public_key.pkcs7.pem* and *r10k_key*.
+*private_key.pkcs7.pem*, *public_key.pkcs7.pem* and *r10k_key*. You need to
+configure control repo settings within the installer as well.
 
-Now restart your shell session to refresh your PATH. After this you can just run
-the installer.
+As the final preparatory step set the hostname, e.g.
 
-# Usage
+    $ hostnamectl set-hostname puppet.example.org
 
-To run the installer from the installer directory:
+Now restart your shell session to refresh your PATH and Ruby environment. After
+this you can run the installer.
+
+# Interactive usage
+
+To run the installer just
 
     $ sudo -i
-    $ bin/puppetmaster-installer -i
+    $ puppetmaster-installer -i
 
-The "-i" switch to sudo ensures that the environment is root's environment, which is particularly important on Ubuntu and Debian. The -i switch to the installer makes it run in interactive mode, which is probably what you want to do.
+The "-i" switch to sudo ensures that the environment is root's environment,
+which is particularly important on Ubuntu and Debian. The -i switch to the
+installer makes it run in interactive mode, which is probably what you want to
+do.
+
+# Automatic installs
 
 You can run the installer automatically like this:
 
@@ -80,9 +95,9 @@ Vagrant will automatically copy your r10k deployment key and eyaml keys to
 correct locations if they are placed under keys directory in the repository
 root:
 
- * private_key.pkcs7.pem (eyaml private key)
- * public_key.pkcs7.pem (eyaml public key)
- * r10k_key (r10k deployment key)
+ * keys/private_key.pkcs7.pem (eyaml private key)
+ * keys/public_key.pkcs7.pem (eyaml public key)
+ * keys/r10k_key (r10k deployment key)
 
 # Development
 
@@ -186,6 +201,10 @@ by Git. To prevent these local answer file modifications from getting committed
 by accident you can use a command like this:
 
     $ find config -name "*-answers.yaml"|xargs git update-index --assume-unchanged
+
+# Known issues
+
+* The installer will fail miserably if something else is locking dpkg/apt. This happens easily with Ubuntu Cloud images as they are configured (with systemd timers) to upgrade system packages on every boot. You should let the package upgrade process finish before trying to run the installer.
 
 # LICENSE
 
