@@ -45,7 +45,7 @@ mod 'puppetlabs/puppet_authorization',
 mod 'puppet-puppetboard',
   :git => 'https://github.com/Puppet-Finland/puppet-module-puppetboard.git',
   :ref => 'latest_python_module'
-mod 'puppetlabs/puppetdb', '7.7.1'
+mod 'puppetlabs/puppetdb', '7.10.0'
 mod 'puppetlabs-puppetserver_gem',
   :git => 'https://github.com/Puppet-Finland/puppetlabs-puppetserver_gem.git',
   :ref => 'puppet7'
