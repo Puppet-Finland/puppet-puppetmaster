@@ -63,7 +63,7 @@ You can run the installer automatically like this:
     $ /usr/share/puppetmaster-installer/bin/puppetmaster-installer\
      --scenario puppetserver-with-puppetboard\
      --puppetmaster-puppetboard-puppetdb-database-password='pass'\
-     --puppetmaster-puppetboard-timezone='Europe/Helsinki'
+     --puppetmaster-puppetboard-timezone='Europe/Helsinki'\
      --puppetmaster-puppetboard-puppetboard-password=‘pass’
 
 When using Vagrant you can automate puppetserver setup during provisioning as
