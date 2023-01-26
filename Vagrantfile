@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
     box.vm.box = "ubuntu/bionic64"
     box.vm.box_version = "20200402.0.0"
     box.vm.hostname = "packager.local"
-    box.vm.network "private_network", ip: "192.168.221.200"
+    box.vm.network "private_network", ip: "192.168.57.200"
     box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
     box.vm.synced_folder ".", "/home/ubuntu/puppetmaster-installer", type: "virtualbox"
     box.vm.provision "shell", path: "vagrant/prepare_packager.sh"
@@ -33,7 +33,7 @@ Vagrant.configure("2") do |config|
     box.vm.box = "debian/contrib-buster64"
     box.vm.box_version = "10.3.0"
     box.vm.hostname = "puppet.local"
-    box.vm.network "private_network", ip: "192.168.221.202"
+    box.vm.network "private_network", ip: "192.168.57.202"
     # Disable default rsync shared folder. Some boxes like debian/stretch64
     # require this or the vboxsf mount will fail.
     box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
@@ -55,7 +55,7 @@ Vagrant.configure("2") do |config|
     box.vm.box = "centos/7"
     box.vm.box_version = "1905.1"
     box.vm.hostname = "puppet.local"
-    box.vm.network "private_network", ip: "192.168.221.203"
+    box.vm.network "private_network", ip: "192.168.57.203"
     box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
     box.vm.synced_folder ".", "/usr/share/puppetmaster-installer", type: "virtualbox"
     box.vm.provision "shell" do |s|
@@ -75,7 +75,7 @@ Vagrant.configure("2") do |config|
     box.vm.box = "centos/7"
     box.vm.box_version = "2020.01"
     box.vm.hostname = "proxy2.local"
-    box.vm.network "private_network", ip: "192.168.221.205"
+    box.vm.network "private_network", ip: "192.168.57.205"
     box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
     box.vm.synced_folder ".", "/home/puppetmaster", type: "virtualbox"
     box.vm.provision "shell" do |s|
@@ -92,7 +92,7 @@ Vagrant.configure("2") do |config|
     box.vm.box = "ubuntu/bionic64"
     box.vm.box_version = "20200402.0.0"
     box.vm.hostname = "puppet.local"
-    box.vm.network "private_network", ip: "192.168.221.206"
+    box.vm.network "private_network", ip: "192.168.57.206"
     box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
     box.vm.synced_folder ".", "/usr/share/puppetmaster-installer", type: "virtualbox"
     box.vm.provision "shell" do |s|
@@ -112,7 +112,7 @@ Vagrant.configure("2") do |config|
     box.vm.box = "ubuntu/focal64"
     box.vm.box_version = "20210320.0.0"
     box.vm.hostname = "puppet.local"
-    box.vm.network "private_network", ip: "192.168.221.207"
+    box.vm.network "private_network", ip: "192.168.57.207"
     box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
     box.vm.synced_folder ".", "/usr/share/puppetmaster-installer", type: "virtualbox"
     box.vm.provision "shell" do |s|
