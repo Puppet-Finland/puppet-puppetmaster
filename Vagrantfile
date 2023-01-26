@@ -110,7 +110,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "puppetserver-focal" do |box|
     box.vm.box = "ubuntu/focal64"
-    box.vm.box_version = "20210320.0.0"
+    box.vm.box_version = "20230119.0.0"
     box.vm.hostname = "puppet.local"
     box.vm.network "private_network", ip: "192.168.57.207"
     box.vm.synced_folder ".", "/vagrant", type: "rsync", disabled: true
